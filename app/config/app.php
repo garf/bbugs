@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'locale' => 'en',
+	'locale' => 'ru',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -97,7 +97,7 @@ return array(
 	'providers' => array(
 
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
-//		'Illuminate\Auth\AuthServiceProvider',
+		'Illuminate\Auth\AuthServiceProvider',
 		'Illuminate\Cache\CacheServiceProvider',
 		'Illuminate\Session\CommandsServiceProvider',
 		'Illuminate\Foundation\Providers\ConsoleSupportServiceProvider',
@@ -125,8 +125,8 @@ return array(
 
         'Barryvdh\Debugbar\ServiceProvider',
         'Mews\Captcha\CaptchaServiceProvider',
-        'Ollieread\Multiauth\MultiauthServiceProvider',
         'Torann\GeoIP\GeoIPServiceProvider',
+        'Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider',
 
 	),
 
@@ -197,6 +197,7 @@ return array(
         'Debugbar'        => 'Barryvdh\Debugbar\Facade',
         'Captcha'         => 'Mews\Captcha\Facades\Captcha',
         'GeoIP'           => 'Torann\GeoIP\GeoIPFacade',
+        'Gravatar'        => 'Thomaswelton\LaravelGravatar\Facades\Gravatar',
 
 	),
 );

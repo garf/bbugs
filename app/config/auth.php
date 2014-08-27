@@ -15,7 +15,7 @@ return array(
 	|
 	*/
 
-//	'driver' => 'database',
+	'driver' => 'database',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-//	'model' => 'AgentsModel',
+	'model' => 'Users',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ return array(
 	|
 	*/
 
-//	'table' => 'sat_agents',
+	'table' => 'lb_users',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -57,18 +57,6 @@ return array(
 	| they have less time to be guessed. You may change this as needed.
 	|
 	*/
-    'multi' => array(
-        'user' => array(
-            'driver' => 'database',
-            'model' => 'UsersModel',
-            'table' => 'lb_users',
-        ),
-        'root' => array(
-            'driver' => 'database',
-            'model' => 'RootsModel',
-            'table' => 'sat_roots'
-        )
-    ),
 
 	'reminder' => array(
 

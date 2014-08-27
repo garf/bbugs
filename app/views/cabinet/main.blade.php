@@ -1,66 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html class="no-js">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <title>{{{Config::get('app.sitename')}}} : {{{$title}}}</title>
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Garfild">
-    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="stylesheet" href="/template/common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/template/common/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/template/common/css/metis/main.min.css">
 
-    <title>{{{Config::get('app.sitename')}}} : {{{$title}}}</title>
-    <!-- Bootstrap Core CSS -->
-    <link href="/template/common/css/bootstrap.min.css" rel="stylesheet">
-    <!-- MetisMenu CSS -->
-    <link href="/template/common/css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="/template/common/css/sb-admin-2.css" rel="stylesheet">
-    <!-- Custom Fonts -->
-    <link href="/template/common/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <?php if(isset($css)){echo TplHelpers::addCss($css);} ?>
+    <!--[if lt IE 9]>
+    <script src="/template/common/js/metis/html5shiv/html5shiv.js"></script>
+    <script src="/template/common/js/metis/respond/respond.min.js"></script>
+    <![endif]-->
+    <script src="/template/common/js/metis/modernizr/modernizr.min.js"></script>
+    <script src="/template/common/js/jquery-1.11.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="/template/common/js/bootstrap.min.js"></script>
+    <script src="/template/common/js/metis/core.js"></script>
 
     <?php if(isset($js)){echo TplHelpers::addJs($js);} ?>
 
-    <!-- jQuery Version 1.11.0 -->
-    <script src="/template/common/js/jquery-1.11.0.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/template/common/js/bootstrap.min.js"></script>
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="/template/common/js/plugins/metisMenu/metisMenu.min.js"></script>
-    <!-- Custom Theme JavaScript -->
-    <script src="/template/common/js/sb-admin-2.js"></script>
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 </head>
+<body class="<?php echo (isset($body_class) ? $body_class : ''); ?> menu-affix">
+<div class="bg-dark dk" id="wrap">
+<div id="top">
 
-<body>
+    {{View::make('cabinet.widgets.navbar')}}
+    <header class="head">
+        <div class="search-bar">
+            <form class="main-search" action="">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="{{{trans('menu.search_ph')}}}">
+                <span class="input-group-btn">
+            <button class="btn btn-primary btn-sm text-muted" type="button">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+                </div>
+            </form>
+        </div>
+        <div class="main-bar">
+            <h3><i class="fa fa-th-large"></i>&nbsp; {{{$title}}}</h3>
+        </div>
+    </header>
+</div>
+<div id="left">
 
-<div id="wrapper">
-<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-<?php echo View::make('cabinet.widgets.navbar'); ?>
-<?php echo View::make('cabinet.widgets.left-menu'); ?>
-
-</nav>
-
-<div id="page-wrapper">
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">{{{$title}}}</h1>
+{{View::make('cabinet.widgets.user-info')}}
+{{View::make('cabinet.widgets.left-menu')}}
+</div>
+<div id="content">
+    <div class="outer">
+        <?php echo TplHelpers::systemMessagesFormatted(); ?>
+        <div class="inner bg-light lter">
+            {{$body}}
+        </div>
     </div>
-    <!-- /.col-lg-12 -->
 </div>
 
 </div>
-<!-- /#page-wrapper -->
-
-</div>
-<!-- /#wrapper -->
+<footer class="Footer bg-dark dker">
+    <p>2014 &copy; Last Bugs</p>
+</footer>
 
 
 </body>
-
 </html>

@@ -23,7 +23,19 @@ ClassLoader::addDirectories(array(
 
 require_once(app_path() . '/creators/widgets.php');
 
+//Debugbar::disable();
 Debugbar::info(Session::all());
+
+$allowed = array(
+    'ru',
+    'en',
+);
+
+$lang = Cookie::get('lang', Config::get('app.locale'));
+Debugbar::info($lang);
+if(in_array($lang, $allowed)) {
+    App::setLocale($lang);
+}
 
 
 /*

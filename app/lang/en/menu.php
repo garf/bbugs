@@ -1,6 +1,11 @@
 <?php
 
 return array(
-    'dashboard' => 'Dashboard',
+    'menu' => 'Menu',
     'search_ph' => 'Search...',
+    'dashboard' => 'Dashboard',
+    'projects' => 'Projects',
+    'issues' => 'Issues',
+    'contacts' => 'Contact List',
+    'language' => 'Language',
 );

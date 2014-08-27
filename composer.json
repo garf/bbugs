@@ -7,8 +7,8 @@
 		"laravel/framework": "4.2.*",
         "barryvdh/laravel-debugbar": "1.*",
         "mews/captcha": "dev-master",
-        "ollieread/multiauth": "dev-master",
-        "torann/geoip": "dev-master"
+        "torann/geoip": "dev-master",
+        "thomaswelton/laravel-gravatar": "0.1.x"
     },
 	"autoload": {
 		"classmap": [

@@ -51,19 +51,14 @@ Route::filter('xml', function()
 |
 */
 
-Route::filter('root', function()
-{
-	if (Auth::root()->guest()) return Redirect::to('/login-root');
-});
-
 Route::filter('auth', function()
 {
-	if (Auth::user()->guest()) return Redirect::to('/login');
+	if (Auth::guest()) return Redirect::to('/login');
 });
 
 Route::filter('auth.basic', function()
 {
-	return Auth::user()->basic();
+	return Auth::basic();
 });
 
 /*
@@ -72,39 +67,6 @@ Route::filter('auth.basic', function()
 |--------------------------------------------------------------------------
 |
 */
-
-
-Route::filter('partner', function()
-{
-    if(!AgentsModel::getInstance()->inRole('partner', Auth::user()->get()->role)) {
-        App::abort(404);
-    }
-});
-
-Route::filter('agent', function()
-{
-    if(!AgentsModel::getInstance()->inRole('agent', Auth::user()->get()->role)) {
-        App::abort(404);
-    }
-});
-
-Route::filter('observer', function() {
-    if(!RootsModel::getInstance()->inRole('admin', Auth::root()->get()->role)) {
-        if(RootsModel::getInstance()->inRole('observer', Auth::root()->get()->role)) {
-            MiscModel::getInstance()->setSystemMessage('Доступ запрещен', 'danger');
-            return Redirect::to('/404');
-        }
-    }
-});
-
-Route::filter('news', function() {
-    if(!RootsModel::getInstance()->inRole('admin', Auth::root()->get()->role)) {
-        if(RootsModel::getInstance()->inRole('news', Auth::root()->get()->role)) {
-            MiscModel::getInstance()->setSystemMessage('Доступ запрещен', 'danger');
-            return Redirect::to('/404');
-        }
-    }
-});
 
 /*
 |--------------------------------------------------------------------------
@@ -119,7 +81,7 @@ Route::filter('news', function() {
 
 Route::filter('guest', function()
 {
-	if (Auth::user()->check()) return Redirect::to('/');
+	if (Auth::check()) return Redirect::to('/');
 });
 
 /*
@@ -137,7 +99,7 @@ Route::filter('csrf', function()
 {
     if (Session::token() != Input::get('_token'))
     {
-        MiscModel::getInstance()->setSystemMessage("Проверочный токен неверный! Введите данные еще раз!", "error");
+        Misc::getInstance()->setSystemMessage("Проверочный токен неверный! Введите данные еще раз!", "error");
         return Redirect::back()->withInput();
     }
 });
