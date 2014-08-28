@@ -56,7 +56,7 @@
 <div id="content">
     <div class="outer">
         <?php echo TplHelpers::systemMessagesFormatted(); ?>
-        <div class="inner bg-light lter">
+        <div class="inner bg-light lter"  style="min-height: 500px;">
             {{$body}}
         </div>
     </div>
