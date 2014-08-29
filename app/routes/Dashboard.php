@@ -2,6 +2,6 @@
 
 Route::get('/', array(
     'before' => 'auth',
-    'as' => 'cabinet',
+    'as' => 'index',
     'uses' => 'DashboardController@index',
 ));

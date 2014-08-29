@@ -2,7 +2,7 @@
 <html class="no-js">
 <head>
     <meta charset="UTF-8">
-    <title>{{{Config::get('app.sitename')}}} : {{{$title}}}</title>
+    <title><@ Config::get('app.sitename') @> : <@@ $title @@></title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,7 +17,8 @@
     <![endif]-->
     <script src="/template/common/js/metis/modernizr/modernizr.min.js"></script>
     <script src="/template/common/js/jquery-1.11.0.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<!--    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>-->
+    <script src="/template/common/js/angular.min.js"></script>
     <script src="/template/common/js/bootstrap.min.js"></script>
     <script src="/template/common/js/metis/core.js"></script>
 
@@ -25,16 +26,16 @@
 
 
 </head>
-<body class="<?php echo (isset($body_class) ? $body_class : ''); ?> menu-affix">
-<div class="bg-dark dk" id="wrap">
+<body class="<@ (isset($body_class) ? $body_class : '') @> menu-affix bgimage <@ TplHelpers::getBgClass(); @>" ng-app>
+<div class=" dk bgimage <@ TplHelpers::getBgClass(); @>" id="wrap">
 <div id="top">
 
-    {{View::make('cabinet.widgets.navbar')}}
+    <@ View::make('cabinet.widgets.navbar') @>
     <header class="head">
         <div class="search-bar">
             <form class="main-search" action="">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="{{{trans('menu.search_ph')}}}">
+                    <input type="text" class="form-control" placeholder="<@ trans('menu.search_ph') @>">
                 <span class="input-group-btn">
             <button class="btn btn-primary btn-sm text-muted" type="button">
                 <i class="fa fa-search"></i>
@@ -44,20 +45,20 @@
             </form>
         </div>
         <div class="main-bar">
-            <h3><i class="fa fa-th-large"></i>&nbsp; {{{$title}}}</h3>
+            <h3><i class="fa fa-th-large"></i>&nbsp; <@@ $title @@></h3>
         </div>
     </header>
 </div>
-<div id="left">
+<div id="left" class="">
 
-{{View::make('cabinet.widgets.user-info')}}
-{{View::make('cabinet.widgets.left-menu')}}
+<@ View::make('cabinet.widgets.user-info') @>
+<@ View::make('cabinet.widgets.left-menu') @>
 </div>
 <div id="content">
     <div class="outer">
-        <?php echo TplHelpers::systemMessagesFormatted(); ?>
+        <@ TplHelpers::systemMessagesFormatted() @>
         <div class="inner bg-light lter"  style="min-height: 500px;">
-            {{$body}}
+            <@ $body @>
         </div>
     </div>
 </div>

@@ -7,7 +7,7 @@ class AuthController extends BaseController {
     {
         if (Auth::check())
         {
-            return Redirect::to('/');
+            return Redirect::to(URL::route('index'));
         }
         $data = array(
             'css' => array(),
@@ -29,10 +29,10 @@ class AuthController extends BaseController {
             $user->last_ip = Request::getClientIp();
             $user->save();
 
-            return Redirect::intended('/');
+            return Redirect::intended(URL::route('index'));
         } else {
             Misc::getInstance()->setSystemMessage('Неверный логин/пароль', 'danger');
-            return Redirect::to('/login');
+            return Redirect::to(URL::route('login'));
         }
     }
 

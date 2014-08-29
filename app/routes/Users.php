@@ -18,6 +18,19 @@ Route::get('/contact-list', array(
     'uses' => 'UsersController@contactList',
 ));
 
+Route::post('/contact-add', array(
+    'before' => 'auth',
+    'as' => 'contact-add',
+    'uses' => 'UsersController@contactAdd',
+))->where(array('id' => '[0-9]+'));
+
+Route::post('/contact-add-search', array(
+    'before' => 'auth',
+    'as' => 'contact-add-search',
+    'uses' => 'UsersController@contactAddSearch',
+))->where(array('id' => '[0-9]+'));
+
+
 Route::get('/contact-delete/{id}', array(
     'before' => 'auth',
     'as' => 'contact-delete',

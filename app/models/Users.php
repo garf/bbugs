@@ -26,6 +26,15 @@ class Users extends Eloquent {
         return in_array($role, $roles);
     }
 
+    public function getByEmail($email)
+    {
+        return DB::selectOne("
+            SELECT * FROM lb_users
+            WHERE email=?
+            LIMIT 1
+        ", array(mb_strtolower($email)));
+    }
+
     public function getRole($role, $default=false)
     {
         $roles = array(

@@ -75,4 +75,35 @@ class TplHelpers
         $suffix_key = ($mod > 7 && $mod < 20) ? 2 : $keys[min($mod % 10, 5)];
         return $suffix[$suffix_key];
     }
+
+    public static function getBgClass()
+    {
+
+        $bgs = array(
+            'bg-brillant',
+            'bg-always_grey',
+            'bg-retina_wood',
+            'bg-low_contrast_linen',
+            'bg-egg_shell',
+            'bg-cartographer',
+            'bg-batthern',
+            'bg-noisy_grid',
+            'bg-diamond_upholstery',
+            'bg-greyfloral',
+            'bg-white_tiles',
+            'bg-gplaypattern',
+            'bg-arches',
+            'bg-purty_wood',
+            'bg-diagonal_striped_brick',
+            'bg-large_leather',
+            'bg-bo_play_pattern',
+            'bg-irongrip wood_1',
+            'bg-pool_table',
+            'bg-crissXcross',
+            'bg-rip_jobs',
+            'bg-random_grey_variations',
+            'bg-carbon_fibre',
+        );
+        return $bgs[22];
+    }
 }

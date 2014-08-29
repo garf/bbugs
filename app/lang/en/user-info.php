@@ -2,4 +2,5 @@
 
 return array(
     'last_access' => 'Last Access',
+    'change_avatar' => 'Change Gravatar',
 );

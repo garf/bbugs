@@ -21,6 +21,9 @@ ClassLoader::addDirectories(array(
 
 ));
 
+Blade::setContentTags('<@', '@>');
+Blade::setEscapedContentTags('<@@', '@@>');
+
 require_once(app_path() . '/creators/widgets.php');
 
 //Debugbar::disable();
@@ -75,7 +78,7 @@ App::error(function(Exception $exception, $code)
 App::missing(function($exception)
 {
     Debugbar::disable();
-    return Response::view('system.errors.notfound', array(), 404);
+    return Response::view('system.errors.404', array(), 404);
 });
 
 /*
@@ -91,7 +94,8 @@ App::missing(function($exception)
 
 App::down(function()
 {
-	return Response::make("Ведутся работы на сайте. Пожалуйста, возвращайтесь позже.", 503);
+    Debugbar::disable();
+    return Response::view('system.errors.offline', array(), 503);
 });
 
 /*

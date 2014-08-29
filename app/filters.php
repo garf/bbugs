@@ -56,6 +56,14 @@ Route::filter('auth', function()
 	if (Auth::guest()) return Redirect::to('/login');
 });
 
+Route::filter('project-user', function($route)
+{
+    $id = $route->getParameter('project_id');
+    if(!Projects::getInstance()->isUserProject(Auth::user()->id, $id)) {
+        return Redirect::to(URL::route('index'));
+    }
+});
+
 Route::filter('auth.basic', function()
 {
 	return Auth::basic();

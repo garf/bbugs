@@ -5,6 +5,7 @@ class DashboardController extends BaseController {
 
     public function index()
     {
+        View::share('menu_item', 'index');
         $data = array(
             'css' => array(),
             'js' => array(),

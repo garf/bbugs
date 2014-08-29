@@ -1,8 +1,8 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" >
 <head>
     <meta charset="UTF-8">
-    <title>{{{Config::get('app.sitename')}}} : {{{$title}}}</title>
+    <title><@ Config::get('app.sitename') @> : <@@ $title @@></title>
 
     <!--IE Compatibility modes-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,15 +28,15 @@
 
     <script src="/template/common/js/metis/modernizr/modernizr.min.js"></script>
     <script src="/template/common/js/jquery-1.11.0.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<!--    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>-->
+    <script src="/template/common/js/angular.min.js"></script>
     <script src="/template/common/js/bootstrap.min.js"></script>
     <script src="/template/common/js/metis/core.js"></script>
 
     <?php if(isset($js)){echo TplHelpers::addJs($js);} ?>
 
 </head>
-<body class="<?php echo (isset($body_class) ? $body_class : ''); ?>">
-{{$body}}
-
+<body class="<@ (isset($body_class) ? $body_class : '') @>" ng-app>
+    <@ $body @>
 </body>
 </html>
