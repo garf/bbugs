@@ -57,7 +57,7 @@ return array(
 			'host'      => 'localhost',
 			'database'  => 'lastbugs',
 			'username'  => 'lastbugs',
-			'password'  => 'hGVWBCNarx5c7hWn',
+			'password'  => 'BbN39BDJvaFcNzzA',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_general_ci',
 			'prefix'    => '',
