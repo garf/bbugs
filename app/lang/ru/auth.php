@@ -16,5 +16,7 @@ return array(
     'enter_email' => 'Введите ваш email, на который были зарегистрированы.',
     'recover_button' => 'Восстановить пароль',
     'new_password_sent' => 'Новый пароль отправлен на ваш e-mail',
+    'your_name' => 'Ваше имя',
+    'signup' => 'Зарегистрироваться',
 
 );

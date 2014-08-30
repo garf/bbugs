@@ -6,7 +6,7 @@
     <?php echo TplHelpers::systemMessagesFormatted(); ?>
     <div class="tab-content">
         <div id="login" class="tab-pane active">
-            <form action="<@ URL::route('login') @>" method="post">
+            <form action="<@ URL::route('login') @>" method="post" id="loginForm">
                 <p class="text-muted text-center">
                     <@ trans('auth.enter_your') @>
                 </p>
@@ -21,7 +21,7 @@
             </form>
         </div>
         <div id="forgot" class="tab-pane">
-            <form action="<@ URL::route('recover') @>">
+            <form action="<@ URL::route('recover') @>" method="post"  id="recoverForm">
                 <p class="text-muted text-center"><@ trans('auth.enter_email') @></p>
                 <input type="email" placeholder="mail@domain.com" class="form-control">
                 <br>
@@ -29,12 +29,10 @@
             </form>
         </div>
         <div id="signup" class="tab-pane">
-            <form action="<@ URL::route('login') @>">
-                <input type="text" placeholder="username" class="form-control top">
-                <input type="email" placeholder="mail@domain.com" class="form-control middle">
-                <input type="password" placeholder="password" class="form-control middle">
-                <input type="password" placeholder="re-password" class="form-control bottom">
-                <button class="btn btn-lg btn-success btn-block" type="submit">Register</button>
+            <form action="<@ URL::route('login') @>" method="post" id="signupForm">
+                <input type="text" placeholder="<@ trans('auth.your_name') @>" class="form-control top">
+                <input type="email" placeholder="<@ trans('auth.email') @>" class="form-control bottom">
+                <button class="btn btn-lg btn-success btn-block signup" type="submit"><@ trans('auth.signup') @></button>
             </form>
         </div>
     </div>

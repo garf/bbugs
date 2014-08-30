@@ -16,5 +16,7 @@ return array(
     'enter_email' => 'Enter you email, which you were registered with',
     'recover_button' => 'Recover',
     'new_password_sent' => 'New password has been sent to your e-mail',
+    'your_name' => 'Your name',
+    'signup' => 'Sign up',
 
 );
