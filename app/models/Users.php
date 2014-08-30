@@ -35,6 +35,19 @@ class Users extends Eloquent {
         ", array(mb_strtolower($email)));
     }
 
+    public function getContact($user_id, $contact_user_id)
+    {
+        return DB::selectOne("
+            SELECT u.*, co.title, co.notes
+            FROM lb_users u
+            LEFT JOIN
+            lb_contacts co
+            ON u.id=co.contact_id AND co.user_id=?
+            WHERE u.id=?
+            LIMIT 1
+        ", array($user_id, $contact_user_id));
+    }
+
     public function getRole($role, $default=false)
     {
         $roles = array(

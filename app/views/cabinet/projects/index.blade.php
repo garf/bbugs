@@ -17,6 +17,8 @@
                     <div><@ Str::limit($project->description, 400) @></div>
                 </td>
                 <td class="col-lg-2 text-center">
+                    <a href="#" class="btn btn-sm btn-success btn-block disabled"><@ trans('projects.add_users') @></a>
+                    <a href="#" class="btn btn-sm btn-warning btn-block disabled"><@ trans('projects.edit_project') @></a>
                     <a href="#" class="btn btn-sm btn-danger btn-block disabled"><@ trans('projects.delete_project') @></a>
                 </td>
             </tr>

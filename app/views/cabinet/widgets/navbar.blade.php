@@ -14,7 +14,9 @@
         </header>
         <div class="topnav">
             <div class="btn-group">
-                <a href="#"></a>
+                <a data-placement="bottom" data-original-title="Show / Hide Left" data-toggle="tooltip" class="btn btn-primary btn-sm toggle-left" id="menu-toggle">
+                    <i class="fa fa-bars"></i>
+                </a>
                 <a href="<@ URL::route('logout') @>"
                    data-toggle="tooltip"
                    data-original-title="<@ trans('navbar.logout') @>"

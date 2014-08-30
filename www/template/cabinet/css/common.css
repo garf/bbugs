@@ -1,0 +1,23 @@
+.priority_low {
+    color: #777777;
+}
+.priority_normal {
+    color: #000077;
+}
+.priority_high {
+    color: #ee7523;
+}
+.priority_urgent {
+    color: #b11400;
+    font-weight:bold;
+}
+.priority_critical {
+    color: #ff0000;
+    font-weight:bold;
+}
+
+textarea {
+    transition: height 0.2s;
+    -webkit-transition: height 0.2s;
+    -moz-transition: height 0.2s;
+}

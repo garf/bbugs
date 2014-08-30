@@ -104,6 +104,6 @@ class TplHelpers
             'bg-random_grey_variations',
             'bg-carbon_fibre',
         );
-        return $bgs[22];
+        return $bgs[17];
     }
 }

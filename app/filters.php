@@ -64,6 +64,14 @@ Route::filter('project-user', function($route)
     }
 });
 
+Route::filter('issue-user', function($route)
+{
+    $id = $route->getParameter('issue_id');
+    if(!Issues::getInstance()->isUserIssue(Auth::user()->id, $id)) {
+        return Redirect::to(URL::route('index'));
+    }
+});
+
 Route::filter('auth.basic', function()
 {
 	return Auth::basic();

@@ -14,15 +14,24 @@ class Issues extends Eloquent {
         return self::$_instance;
     }
 
-    public function getProjectIssues($project_id)
+    public function getProjectIssues($params)
     {
-        return DB::select('
+        $in = trim(str_repeat('?, ', count($params['statuses'])), ', ');
+        $where = $params['statuses'];
+        $where[] = $params['project_id'];
+        return DB::select("
             SELECT *
             FROM lb_issues
-            WHERE project_id=?
+            WHERE status IN (" . $in . ")
+            AND project_id=?
             ORDER BY priority ASC
             LIMIT 50
-        ', array($project_id));
+        ", $where);
     }
 
+    public function isUserIssue($user_id, $issue_id)
+    {
+        $issue = self::find($issue_id);
+        return Projects::getInstance()->isUserProject($user_id, $issue->project_id);
+    }
 }

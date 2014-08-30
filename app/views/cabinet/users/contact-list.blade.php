@@ -49,7 +49,7 @@
                             <div><@@ $contact->notes @@></div>
                             <div class="message<@ $contact->coid @>"></div>
                         </div>
-                        <div class="text-muted text-right "><@ trans('users.created') @>: <@ date('Y.m.d H:i', $contact->created) @></div>
+                        <div class="text-muted text-right "><@ trans('users.created') @>: <@ date(trans('common.date_format'), $contact->created) @></div>
                     </div>
                 </td>
             </tr>
