@@ -26,7 +26,7 @@ Blade::setEscapedContentTags('<@@', '@@>');
 
 require_once(app_path() . '/creators/widgets.php');
 
-//Debugbar::disable();
+Debugbar::disable();
 Debugbar::info(Session::all());
 
 $allowed = array(

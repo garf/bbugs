@@ -18,15 +18,7 @@
     <script src="/template/common/js/metis/respond/respond.min.js"></script>
     <![endif]-->
     <script src="/template/common/js/metis/modernizr/modernizr.min.js"></script>
-    <script src="/template/common/js/jquery-1.11.0.js"></script>
-    <script src="/template/common/js/angular.min.js"></script>
-    <script src="/template/common/js/bootstrap.min.js"></script>
-    <script src="/template/common/js/metis/jasny-bootstrap/js/jasny-bootstrap.min.js"></script>
-    <script src="/template/common/js/metis/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-    <script src="/template/common/js/metis/core.js"></script>
-    <script src="/template/common/js/metis/app.min.js"></script>
 
-    <?php if(isset($js)){echo TplHelpers::addJs($js);} ?>
 
 
 </head>
@@ -71,11 +63,14 @@
 <footer class="Footer bg-dark dker">
     <p>2014 &copy; Last Bugs</p>
 </footer>
-<script>
-    $(function() {
-        Metis.metisButton();
-    });
-</script>
+<script src="/template/common/js/jquery-1.11.0.js"></script>
+<script src="/template/common/js/angular.min.js"></script>
+<script src="/template/common/js/bootstrap.min.js"></script>
+<script src="/template/common/js/metis/jasny-bootstrap/js/jasny-bootstrap.min.js"></script>
+<script src="/template/common/js/metis/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+<script src="/template/common/js/metis/core.js"></script>
+
+<?php if(isset($js)){echo TplHelpers::addJs($js);} ?>
 
 </body>
 </html>

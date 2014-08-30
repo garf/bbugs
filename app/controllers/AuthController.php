@@ -10,8 +10,12 @@ class AuthController extends BaseController {
             return Redirect::to(URL::route('index'));
         }
         $data = array(
-            'css' => array(),
-            'js' => array(),
+            'css' => array(
+                '/template/common/js/metis/animate.css/animate.min.css'
+            ),
+            'js' => array(
+
+            ),
             'body_class' => 'login',
             'title' => trans('auth.authorization'),
         );

@@ -88,7 +88,10 @@
                     </div>
                 </div>
                 <div style="margin-top: 15px;" class="col-md-12" ng-hide="isMaxMessage()">
-                    <a class="btn btn-xs btn-success" ng-click="addFile();"><i class="fa fa-plus"></i> One more file</a>
+                    <a class="btn btn-xs btn-success btn-labeled" ng-click="addFile();">
+                        <span class="btn-label"><i class="fa fa-plus"></i></span>
+                        One more file
+                    </a>
                 </div>
                 <div class=" clearfix"></div>
                 <br />
