@@ -18,12 +18,17 @@ class Email extends Eloquent {
     {
         try
         {
-            $params['body'] = View::make('emails.agents.registration', $params);
-            Mail::send('emails.agents.main', $params, function($message) use ($params) {
-//                var_dump($params);
-                $message->to($params['email'], $params['name'])->subject('Регистрация на ' . Config::get('app.sitename'));
+            $params['body'] = View::make('emails.users.registration', $params);
+            Mail::send('emails.users.main', $params, function($message) use ($params) {
+                $message->to($params['email'], $params['name'])->subject(
+                    trans('email.registration_subject',
+                        array(
+                            'sitename' => Config::get('app.sitename')
+                        )
+                    )
+                );
             });
-            return array('error' => false, 'message' => 'Отправлено успешно!');
+            return array('error' => false, 'message' => 'SEND OK!');
         } catch (Exception $e) {
             return array('error' => true, 'message' => $e->getMessage());
         }
@@ -46,37 +51,28 @@ class Email extends Eloquent {
                     $message->to($params['admin_email'], $params['admin_name'])->subject('Новый пользователь на ' . Config::get('app.sitename'));
                 });
             }
-            return array('error' => false, 'message' => 'Отправлено успешно!');
+            return array('error' => false, 'message' => 'SEND OK!');
         } catch (Exception $e) {
             return array('error' => true, 'message' => $e->getMessage());
         }
     }
 
-    public function registrationPartner($params)
-    {
-        try
-        {
-            $params['body'] = View::make('emails.agents.registration-partner', $params);
-            Mail::send('emails.agents.main', $params, function($message) use ($params) {
-//                var_dump($params);
-                $message->to($params['email'], $params['name'])->subject('Регистрация на ' . Config::get('app.sitename'));
-            });
-            return array('error' => false, 'message' => 'Отправлено успешно!');
-        } catch (Exception $e) {
-            return array('error' => true, 'message' => $e->getMessage());
-        }
-    }
 
     public function recoverPassword($params)
     {
         try
         {
-            $params['body'] = View::make('emails.agents.recover-password', $params);
-            Mail::send('emails.agents.main', $params, function($message) use ($params) {
-//                var_dump($params);
-                $message->to($params['email'], $params['name'])->subject('Новый пароль для ' . Config::get('app.sitename'));
+            $params['body'] = View::make('emails.users.recover-password', $params);
+            Mail::send('emails.users.main', $params, function($message) use ($params) {
+                $message->to($params['email'], $params['name'])->subject(
+                    trans('email.recover_subject',
+                        array(
+                            'sitename' => Config::get('app.sitename')
+                        )
+                    )
+                );
             });
-            return array('error' => false, 'message' => 'Отправлено успешно!');
+            return array('error' => false, 'message' => 'SEND OK!');
         } catch (Exception $e) {
             return array('error' => true, 'message' => $e->getMessage());
         }
@@ -100,7 +96,7 @@ class Email extends Eloquent {
                     $message->to($params['admin_email'], $params['admin_name'])->subject('Сообщение с ' . Config::get('app.sitename'));
                 });
             }
-            return array('error' => false, 'message' => 'Отправлено успешно!');
+            return array('error' => false, 'message' => 'SEND OK!');
         } catch (Exception $e) {
             return array('error' => true, 'message' => $e->getMessage());
         }

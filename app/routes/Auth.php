@@ -1,10 +1,5 @@
 <?php
 
-Route::get('/recover', array(
-    'as' => 'recover',
-    'uses' => 'AuthController@recover',
-));
-
 Route::post('/recover', array(
     'as' => 'recover',
     'uses' => 'AuthController@recoverPost',
@@ -23,4 +18,9 @@ Route::post('/login', array(
 Route::any('/logout', array(
     'as' => 'logout',
     'uses' => 'AuthController@logout',
+));
+
+Route::post('/signup', array(
+    'as' => 'signup-post',
+    'uses' => 'AuthController@registerPost',
 ));

@@ -48,6 +48,37 @@ class Users extends Eloquent {
         ", array($user_id, $contact_user_id));
     }
 
+    public function setAgentPassword($user_id, $password)
+    {
+        return DB::update("
+            UPDATE lb_users
+            SET password=?, recover_time=?
+            WHERE id=?
+            LIMIT 1
+        ", array(
+            Hash::make($password),
+            time(),
+            $user_id
+        ));
+    }
+
+    public function register($params)
+    {
+        DB::insert("
+            INSERT INTO lb_users
+            (name, email, password, reg_date, status)
+            VALUES
+            (?, ?, ?, ?, ?)
+        ", array(
+            $params['name'],
+            mb_strtolower($params['email']),
+            Hash::make($params['password']),
+            time(),
+            '1'
+        ));
+        return DB::getPdo()->lastInsertId();
+    }
+
     public function getRole($role, $default=false)
     {
         $roles = array(

@@ -14,17 +14,17 @@ class AuthController extends BaseController {
                 '/template/common/js/metis/animate.css/animate.min.css'
             ),
             'js' => array(
-
+                '/template/cabinet/js/auth/login.js'
             ),
             'body_class' => 'login',
             'title' => trans('auth.authorization'),
         );
-        return View::make('cabinet/main-empty', $data)->nest('body', 'cabinet/auth/login', $data);
+        return View::make('cabinet/auth/login', $data);
     }
 
     public function loginPost()
     {
-        $email = trim(Input::get('email', ''));
+        $email = trim(mb_strtolower(Input::get('email', '')));
         $password = trim(Input::get('password', ''));
         $remember = (Input::get('remember', '0') == '1') ? true : false;
         if (Auth::attempt(array('email' => $email, 'password' => $password, 'status' => '1'), $remember)) {
@@ -35,48 +35,77 @@ class AuthController extends BaseController {
 
             return Redirect::intended(URL::route('index'));
         } else {
-            Misc::getInstance()->setSystemMessage('Неверный логин/пароль', 'danger');
-            return Redirect::to(URL::route('login'));
+            Misc::getInstance()->setSystemMessage(trans('auth.wrong_credentials'), 'danger');
+            return Redirect::to(URL::route('login'))->withInput();
         }
-    }
-
-    public function recover()
-    {
-        $data = array(
-            'css' => array(),
-            'js' => array(),
-            'title' => 'Восстановить пароль'
-        );
-        return View::make('cabinet/main-empty', $data)->nest('body', 'cabinet/auth/recover', $data);
     }
 
     public function recoverPost()
     {
-        $agent = Users::getInstance()->getByEmail(e(Input::get('email')));
-        if (!empty($agent) && $agent->status == '1') {
-            if(time() - 300 < $agent->recover_time) {
-                Misc::getInstance()->setSystemMessage('Нельзя делать восстановление пароля так часто', 'danger');
-                return Redirect::to('/recover');
+        $user = Users::getInstance()->getByEmail(e(Input::get('email')));
+        if (!empty($user) && $user->status == '1') {
+            if(time() - 300 < $user->recover_time) {
+                Misc::getInstance()->setSystemMessage(trans('auth.recover_time_fast'), 'danger');
+                return Redirect::to(URL::route('login', ['#recover']));
             }
             $newpass = Misc::getInstance()->generatePassword(8);
-            Users::getInstance()->setAgentPassword($agent->id, $newpass);
+            //Users::getInstance()->setAgentPassword($user->id, $newpass);
             $params = array(
-                'email' => $agent->email,
+                'email' => $user->email,
                 'password' => $newpass,
-                'name' => $agent->first_name . ' ' . $agent->middle_name,
+                'name' => $user->name,
             );
-            Email::getInstance()->recoverPassword($params);
-            Session::flash('done', true);
-            return Redirect::to('/recover');
+            dd(Email::getInstance()->recoverPassword($params));
+            Misc::getInstance()->setSystemMessage(trans('auth.recover_success'), 'success');
+            return Redirect::to(URL::route('login'));
         } else {
-            Misc::getInstance()->setSystemMessage('Такой e-mail не зарегистрирован в системе.', 'danger');
-            return Redirect::to('/recover');
+            Misc::getInstance()->setSystemMessage(trans('auth.no_such_email'), 'danger');
+            return Redirect::to(URL::route('login', ['#recover']));
         }
+    }
+
+    public function registerPost()
+    {
+        $input = Input::all();
+
+        $validator = $this->_registerValidation($input);
+
+        if($validator->fails()) {
+
+            foreach($validator->messages()->all() as $message) {
+                Misc::getInstance()->setSystemMessage($message, 'danger');
+            }
+            return Redirect::to(URL::route('login', ['#signup']))->withInput();
+
+        } else {
+
+            $input['password'] = Misc::getInstance()->generatePassword(8);
+            Users::getInstance()->register($input);
+
+            Email::getInstance()->registration($input);
+
+            Misc::getInstance()->setSystemMessage(trans('auth.register_success'), 'success');
+            return Redirect::to(URL::route('login'));
+
+        }
+    }
+
+    private function _registerValidation($input)
+    {
+        $validator = Validator::make(
+            $input,
+            array(
+                'name' => array('required', 'max:25'),
+                'email' => array('required', 'email', 'unique:lb_users,email', 'confirmed'),
+            )
+        );
+
+        return $validator;
     }
 
     public function logout()
     {
         Auth::logout();
-        return Redirect::to('/login');
+        return Redirect::to(URL::route('login'));
     }
 }

@@ -83,9 +83,16 @@ return array(
 	*/
 
 	'custom' => array(
-		'attribute-name' => array(
-			'rule-name' => 'custom-message',
-		),
+        'email' => array(
+            'required' => 'Не указан E-mail',
+            'email' => 'Не указан корректный E-mail',
+            'unique' => 'Данный E-mail уже зарегистрирован',
+            'confirmed' => 'E-mail адреса не соответствуют',
+        ),
+        'name' => array(
+            'required' => 'Вы не указали свое имя',
+            'max' => 'Длинна имени не может быть больше 25 символов',
+        ),
 	),
 
 	/*

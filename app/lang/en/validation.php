@@ -83,9 +83,16 @@ return array(
 	*/
 
 	'custom' => array(
-		'attribute-name' => array(
-			'rule-name' => 'custom-message',
-		),
+        'email' => array(
+            'required' => 'E-mail must be provided',
+            'email' => 'E-mail is not correct',
+            'unique' => 'This E-mail already registered',
+            'confirmed' => 'E-mail confirmation required',
+        ),
+        'name' => array(
+            'required' => 'Your name is required',
+            'max' => 'Name length cannot be more that 25 symbols',
+        ),
 	),
 
 	/*

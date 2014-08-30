@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title><@@ $title @@> : <@ Config::get('app.sitename') @></title>
+    <link rel="shortcut icon" href="/favicon.png">
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,7 +23,7 @@
 
 
 </head>
-<body class="<@ (isset($body_class) ? $body_class : '') @> menu-affix bgimage <@ TplHelpers::getBgClass(); @>" ng-app>
+<body class="<@ (isset($body_class) ? $body_class : '') @> bgimage <@ TplHelpers::getBgClass(); @>" ng-app>
 <div class=" dk bgimage <@ TplHelpers::getBgClass(); @>" id="wrap">
 <div id="top">
 
@@ -45,7 +46,7 @@
         </div>
     </header>
 </div>
-<div id="left" class="">
+<div id="left">
 
 <@ View::make('cabinet.widgets.user-info') @>
 <@ View::make('cabinet.widgets.left-menu') @>
