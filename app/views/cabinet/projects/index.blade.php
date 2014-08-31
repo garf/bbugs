@@ -29,9 +29,3 @@
 @else
     <div class="alert alert-info">Нет созданных проектов</div>
 @endif
-
-<?php
-    $str = '[code=sql] SELECT title FROM users LIMIT 1; [/code]';
-    echo Markupy::parse($str);
-    echo htmlspecialchars(Markupy::parse($str));
-?>
