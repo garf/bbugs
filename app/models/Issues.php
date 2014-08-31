@@ -29,6 +29,20 @@ class Issues extends Eloquent {
         ", $where);
     }
 
+    public function changeAssignee($id, $user_id)
+    {
+        return DB::update("
+            UPDATE lb_issues
+            SET assigned=?, updated=?
+            WHERE id=?
+            LIMIT 1
+        ", array(
+            $user_id,
+            time(),
+            $id
+        ));
+    }
+
     public function isUserIssue($user_id, $issue_id)
     {
         $issue = self::find($issue_id);

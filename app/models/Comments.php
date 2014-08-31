@@ -33,13 +33,14 @@ class Comments extends Eloquent {
     {
         DB::insert("
             INSERT INTO lb_comments
-            (issue_id, comment, creator, created)
+            (issue_id, comment, files_count, creator, created)
             VALUES
-            (?, ?, ?, ?)
+            (?, ?, ?, ?, ?)
         ",
             array(
                 $params['issue_id'],
                 $params['comment'],
+                $params['files_count'],
                 $params['creator'],
                 time(),
             )

@@ -48,6 +48,21 @@ class Users extends Eloquent {
         ", array($user_id, $contact_user_id));
     }
 
+    public function getProjectContacts($user_id, $project_id)
+    {
+        return DB::select("
+            SELECT u.*, co.title, co.notes
+            FROM lb_project_user pu
+            LEFT JOIN lb_users u
+            ON pu.user_id=u.id
+            LEFT JOIN lb_contacts co
+            ON co.user_id=? AND pu.user_id=co.contact_id
+            WHERE pu.project_id=?
+            ORDER BY co.title ASC, u.name ASC
+            LIMIT 50
+        ", array($user_id, $project_id));
+    }
+
     public function setAgentPassword($user_id, $password)
     {
         return DB::update("

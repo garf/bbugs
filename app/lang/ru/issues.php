@@ -41,12 +41,26 @@ return array(
     'detailed_description' => 'Подробное описание',
     'comments' => 'Коментарии',
     'files' => 'Файлы',
-    'add_comment' => 'Добавиь комментарий',
+    'add_comment' => 'Добавить коментарий',
 
     'all_opened' => 'Все открытые',
     'all_closed' => 'Все закрытые',
     'filter' => 'Фильтр',
 
+    'no_more_files' => 'Больше файлов нельзя',
+    'max_file_size' => 'Максимальный размер файла',
+    'parameters' => 'Параметры',
+    'attach_files' => 'Прикрепить файлы',
+    'one_more_file' => 'Еще один файл',
+    'assign_to' => 'Назначить для',
+    'change_status' => 'Изменить статус',
+    'ph_comment' => 'Введите ваш комментарий...',
+    'delete' => 'Удалить',
+    'edit' => 'Изменить',
+
+
+    'files_were_uploaded' => ':num :pl',
+    'files_pl' => 'файл был загружен|файла было загружено|файлов было загружено',
 
     'priority' => array(
         '1' => array(

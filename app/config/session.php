@@ -96,7 +96,7 @@ return array(
 	|
 	*/
 
-	'cookie' => 'jupiter_session',
+	'cookie' => 'lastbugs_session',
 
 	/*
 	|--------------------------------------------------------------------------

@@ -60,6 +60,7 @@ class IssuesController extends BaseController {
             'assigned' => Users::getInstance()->getContact(Auth::user()->id, $issue->assigned),
             'comments' => Comments::getInstance()->getComments($commentsParams),
             'files' => Files::getInstance()->getByIssue(array('issue_id' => $issue_id)),
+            'contacts' => Users::getInstance()->getProjectContacts(Auth::user()->id, $issue->project_id),
         );
 
         return View::make('cabinet.main', $data)
@@ -73,15 +74,27 @@ class IssuesController extends BaseController {
 
     public function addComment($issue_id)
     {
-        dd(Input::file('userfile'));
+        $comment = Input::get('comment', '');
+
+        $userfiles = Input::file('userfile');
+
         $params = array(
             'creator' => Auth::user()->id,
-            'comment' => e(Input::get('comment', '')),
+            'comment' => Markupy::parse(e($comment)),
+            'files_count' => count($userfiles),
             'issue_id' => intval($issue_id),
         );
         $commentId = Comments::getInstance()->addComment($params);
 
+        Issues::getInstance()->changeAssignee($issue_id, intval(Input::get('assigned')));
+        $params = array(
+            'file_object' => $userfiles,
+            'issue_id' => $issue_id,
+            'comment_id' => $commentId,
+        );
+        Files::getInstance()->uploadCommentFiles($params);
 
+        return Redirect::to(URL::route('issue-view', array('issue_id' => $issue_id, '#comment' . $commentId)));
     }
 
     private function _statsMapper($stats)

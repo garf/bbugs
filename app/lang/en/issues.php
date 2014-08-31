@@ -47,6 +47,21 @@ return array(
     'all_closed' => 'All closed',
     'filter' => 'Filter',
 
+    'no_more_files' => 'Can\'t add more files',
+    'max_file_size' => 'Max file size',
+    'parameters' => 'Parameters',
+    'attach_files' => 'Attach files',
+    'one_more_file' => 'One more file',
+    'assign_to' => 'Assign to',
+    'change_status' => 'Change status',
+    'ph_comment' => 'Your comment text goes here...',
+    'delete' => 'Delete',
+    'edit' => 'Edit',
+
+
+    'files_were_uploaded' => ':num :pl ',
+    'files_pl' => 'file was uploaded|files were uploaded',
+
     'priority' => array(
         '1' => array(
             'title' => 'Critical',
