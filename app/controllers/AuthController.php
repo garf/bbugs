@@ -55,7 +55,7 @@ class AuthController extends BaseController {
                 'password' => $newpass,
                 'name' => $user->name,
             );
-            dd(Email::getInstance()->recoverPassword($params));
+            Email::getInstance()->recoverPassword($params);
             Misc::getInstance()->setSystemMessage(trans('auth.recover_success'), 'success');
             return Redirect::to(URL::route('login'));
         } else {
