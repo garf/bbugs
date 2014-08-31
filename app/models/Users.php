@@ -89,7 +89,7 @@ class Users extends Eloquent {
             mb_strtolower($params['email']),
             Hash::make($params['password']),
             time(),
-            '1'
+            '0'
         ));
         return DB::getPdo()->lastInsertId();
     }
