@@ -63,7 +63,7 @@ class Users extends Eloquent {
         ", array($user_id, $project_id));
     }
 
-    public function setAgentPassword($user_id, $password)
+    public function changePassword($user_id, $password)
     {
         return DB::update("
             UPDATE lb_users
