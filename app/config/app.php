@@ -28,7 +28,7 @@ return array(
 
 	'url' => 'http://lastbugs.com',
 	'sitename' => 'LastBugs.com',
-	'cabinet' => 'http://lastbugs.com/cabinet',
+	'cabinet' => 'http://lastbugs.com/login',
 
 	/*
 	|--------------------------------------------------------------------------
