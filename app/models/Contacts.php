@@ -21,9 +21,10 @@ class Contacts extends Eloquent {
             FROM lb_contacts co
             LEFT JOIN lb_users u
             ON co.contact_id=u.id
+            WHERE co.user_id=?
             ORDER BY co.title ASC
             LIMIT 100
-        ');
+        ', array($user_id));
     }
 
     public function addContact($params)
