@@ -43,6 +43,33 @@ class Issues extends Eloquent {
         ));
     }
 
+    public function changeParams($id, $params)
+    {
+        $priorities = array('1','2','3','4','5');
+        $statuses = array('opened', 'in_work', 'need_feedback', 'closed', 'not_actual');
+        $types = array('bug', 'task', 'research');
+
+        $issue = Issues::find($id);
+
+        if(isset($params['assigned']) && $this->isUserIssue($params['assigned'], $id)) {
+            $issue->assigned = intval($params['assigned']);
+        }
+
+        if(isset($params['priority']) && in_array($params['priority'], $priorities)) {
+            $issue->priority = intval($params['priority']);
+        }
+
+        if(isset($params['status']) && in_array($params['status'], $statuses)) {
+            $issue->status = e($params['status']);
+        }
+
+        if(isset($params['issue_type']) && in_array($params['issue_type'], $types)) {
+            $issue->status = e($params['status']);
+        }
+
+        $issue->save();
+    }
+
     public function isUserIssue($user_id, $issue_id)
     {
         $issue = self::find($issue_id);

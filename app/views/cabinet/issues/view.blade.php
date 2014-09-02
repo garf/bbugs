@@ -51,12 +51,18 @@
             </div>
         </div>
         <div id="fileBlock" class="body collapse in">
-            <table class="table table-condensed">
+            <table class="table table-condensed table-hover">
                 @foreach ($files as $file)
                 <tr>
                     <td>
+                        <div style="float: left;">
                         <i class="fa fa-file"></i> <a href=""><@ $file->file_title @></a>
                         (<@ round($file->file_size, 2) @> kb)
+                        </div>
+                        <div style="float: right;">
+                            <a href="#">delete</a>
+                        </div>
+                        <div class="clearfix"></div>
                     </td>
                 </tr>
                 @endforeach
@@ -74,14 +80,14 @@
         </div>
     </div>
     <div id="commentsBlock" class="body collapse in">
-        <table class="table">
+        <table class="table table-hover">
             @foreach ($comments as $comment)
             <tr>
                 <td>
                     <table class="table table-bordered" >
                         <tr class="info" id="comment<@ $comment->id @>">
                             <td colspan="2" class="clearfix">
-                                <div class="col-md-10"><@ !empty($comment->title) ? $comment->title : $comment->name @> <i class="fa fa-chevron-down"></i></div>
+                                <div class="col-md-10"><i class="fa fa-circle"></i> <@ !empty($comment->title) ? $comment->title : $comment->name @></div>
                                 <div class="col-md-2 text-muted"><@ date(trans('common.datetime_format'), $comment->created) @></div>
                             </td>
                         </tr>
@@ -89,30 +95,36 @@
                             <td class="col-md-1">
                                 <img src="<@@ Gravatar::src($comment->email, 64) @@>" alt="" />
                             </td>
-                            <td>
+                            <td id="commentContent<@ $comment->id @>">
                                 <@ $comment->comment @>
-                                @if ($comment->files_count > 0)
-                                <div class="text-right">
+                            </td>
+                        </tr>
+                        <tr class="warning">
+                            <td colspan="2">
+                                <div class="col-md-4">
+                                    <a href="javascript: ;" class="btn btn-primary btn-xs quote-comment" data-quote-id="<@ $comment->id @>"><@ trans('issues.quote') @></a>&nbsp;
+                                    @if ($comment->creator == Auth::user()->id)
+                                    <a href="#" class="btn btn-danger btn-xs"><@ trans('issues.delete') @></a>&nbsp;
+                                    @endif
+                                </div>
+
+                                <div class="col-md-6"></div>
+
+                                <div class="col-md-2">
+                                    @if ($comment->files_count > 0)
                                     <i class="fa fa-file"></i>
                                     <i class="text-muted">
                                         <@ trans('issues.files_were_uploaded',
                                         array(
                                         'num' => $comment->files_count,
                                         'pl' => Lang::choice(
-                                            trans('issues.files_pl'),
-                                            $comment->files_count
+                                        trans('issues.files_pl'),
+                                        $comment->files_count
                                         )))
                                         @>
                                     </i>
+                                    @endif
                                 </div>
-                                @endif
-                            </td>
-                        </tr>
-                        <tr class="warning">
-                            <td colspan="2">
-                                @if ($comment->creator == Auth::user()->id)
-                                <a href="#" class="btn btn-danger btn-xs"><@ trans('issues.delete') @></a>&nbsp;
-                                @endif
                             </td>
                         </tr>
                     </table>
@@ -128,7 +140,7 @@
             <div class="col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <@ View::make('cabinet.widgets.edit-toolbar', array('to' => '#commentTextarea')); @>
+                        <@ trans('issues.new_comment') @>
                     </div>
                     <div class="panel-body">
                         <textarea class="form-control"
@@ -168,7 +180,7 @@
                         <div class=" clearfix"></div>
                         <br />
                         <div class="alert alert-danger" ng-show="isMaxMessage()"><@ trans('issues.no_more_files') @></div>
-                        <div class="alert alert-info"><@ trans('issues.max_file_size') @>: <strong><@ Config::get('files.max_size')/1000000 @></strong> MB</div>
+                        <div class="alert alert-info"><@ trans('issues.max_file_size') @>: <strong><@ TplHelpers::getMaxFilesize() @></strong></div>
                     </div>
                 </div>
                 <div class="panel panel-default">
@@ -177,27 +189,51 @@
                     </div>
                     <div class="panel-body">
                         <div>
-                            <strong><@ trans('issues.assign_to') @></strong><br />
-                            <select name="assigned" class="form-control">
-                                @foreach ($contacts as $contact)
-                                <option value="<@ $contact->id @>"
-                                <@ ($issue->assigned == $contact->id) ? 'selected="selected"' : '' @>>
-                                <@ (trim($contact->title) != '') ? $contact->title : $contact->name @>
-                                </option>
-                                @endforeach
-                            </select>
+                            <div class="form-group">
+                                <label for="assignedSelect" class="control-label col-lg-4"><@ trans('issues.assign_to') @></label>
+                                <div class="col-lg-8">
+                                    <select name="assigned" id="assignedSelect" class="form-control">
+                                        @foreach ($contacts as $contact)
+                                            <option value="<@ $contact->id @>"
+                                            <@ ($issue->assigned == $contact->id) ? 'selected="selected"' : '' @>>
+                                            <@ (trim($contact->title) != '') ? $contact->title : $contact->name @>
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
+                        
                         <div>
-                            <strong><@ trans('issues.change_status') @></strong><br />
-                            <select name="status" class="form-control">
-                                <option value="opened"><@ trans('issues.status.opened') @></option>
-                                <option value="in_work"><@ trans('issues.status.in_work') @></option>
-                                <option value="need_feedback"><@ trans('issues.status.need_feedback') @></option>
-                                <optgroup label="Closed">
-                                    <option value="closed"><@ trans('issues.status.closed') @></option>
-                                    <option value="not_actual"><@ trans('issues.status.not_actual') @></option>
-                                </optgroup>
-                            </select>
+                            <div class="form-group">
+                                <label for="statusSelect" class="control-label col-lg-4"><@ trans('issues.change_status') @></label>
+                                <div class="col-lg-8">
+                                    <select name="status" id="statusSelect" class="form-control">
+                                        <option value="opened" <@ ($issue->status == 'opened') ? 'selected="selected"' : '' @>><@ trans('issues.status.opened') @></option>
+                                        <option value="in_work" <@ ($issue->status == 'in_work') ? 'selected="selected"' : '' @>><@ trans('issues.status.in_work') @></option>
+                                        <option value="need_feedback" <@ ($issue->status == 'need_feedback') ? 'selected="selected"' : '' @>><@ trans('issues.status.need_feedback') @></option>
+                                        <optgroup label="Closed">
+                                            <option value="closed" <@ ($issue->status == 'closed') ? 'selected="selected"' : '' @>><@ trans('issues.status.closed') @></option>
+                                            <option value="not_actual" <@ ($issue->status == 'not_actual') ? 'selected="selected"' : '' @>><@ trans('issues.status.not_actual') @></option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="form-group">
+                                <label for="prioritySelect" class="control-label col-lg-4"><@ trans('issues.issue_priority') @></label>
+                                <div class="col-lg-8">
+                                    <select name="priority" id="prioritySelect" class="form-control">
+                                        <option value="1" <@ ($issue->priority == 1) ? 'selected="selected"' : '' @>><@ trans('issues.priority.1.title') @></option>
+                                        <option value="2"<@ ($issue->priority == 2) ? 'selected="selected"' : '' @>><@ trans('issues.priority.2.title') @></option>
+                                        <option value="3"<@ ($issue->priority == 3) ? 'selected="selected"' : '' @>><@ trans('issues.priority.3.title') @></option>
+                                        <option value="4"<@ ($issue->priority == 4) ? 'selected="selected"' : '' @>><@ trans('issues.priority.4.title') @></option>
+                                        <option value="5"<@ ($issue->priority == 5) ? 'selected="selected"' : '' @>><@ trans('issues.priority.5.title') @></option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

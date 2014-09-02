@@ -16,4 +16,11 @@ function AddCommentController($scope) {
 }
 $(document).ready(function(){
     $('textarea').autosize({append: "\n"});
+    $("#commentTextarea").markupy();
+    $('.quote-comment').click(function(){
+        var id = $(this).attr('data-quote-id');
+        var ct = $("#commentTextarea");
+        ct.val( ct.val() + $('#commentContent' + id).text() );
+        $("html, body").animate({scrollTop: ct.offset().top }, 200);
+    });
 });

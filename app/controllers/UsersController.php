@@ -3,6 +3,72 @@
 class UsersController extends BaseController {
 
 
+    public function settings()
+    {
+
+        View::share('menu_item', 'settings');
+        $data = array(
+            'css' => array(),
+            'js' => array(
+                '/template/cabinet/js/users/settings.js',
+            ),
+            'title' => trans('users.settings'),
+        );
+
+        return View::make('cabinet.main', $data)
+            ->nest('body', 'cabinet.users.settings', $data);
+    }
+
+
+    public function settingsPasswordSave()
+    {
+        $validator = $this->_changePasswordValidation(Input::all());
+
+        if($validator->fails()) {
+            foreach($validator->messages()->all() as $message) {
+                Misc::getInstance()->setSystemMessage($message, 'danger');
+            }
+            return Redirect::to(URL::route('settings'));
+
+        } else {
+
+            $old_password = trim(Input::get('old_password'));
+
+            if(!Hash::check($old_password, Auth::user()->password)) {
+                Misc::getInstance()->setSystemMessage(trans('validation.custom.old_password.wrong'), 'danger');
+                return Redirect::to(URL::route('settings'));
+            }
+
+            $new_password = trim(Input::get('password'));
+            Users::getInstance()->changePassword(Auth::user()->id, $new_password);
+            Misc::getInstance()->setSystemMessage(trans('users.password_changed'), 'success');
+            return Redirect::to(URL::route('settings'));
+
+        }
+
+    }
+
+    public function settingsProfileSave()
+    {
+        Misc::getInstance()->setSystemMessage('Not available', 'danger');
+        return Redirect::to(URL::route('settings'));
+    }
+
+
+    private function _changePasswordValidation($input)
+    {
+        $validator = Validator::make(
+            $input,
+            array(
+                'old_password' => array('required'),
+                'password' => array('required', 'min:6', 'confirmed'),
+            )
+        );
+
+        return $validator;
+    }
+
+
     public function contactList()
     {
         View::share('menu_item', 'contacts');

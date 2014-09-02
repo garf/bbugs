@@ -41,6 +41,7 @@ return array(
     'detailed_description' => 'Подробное описание',
     'comments' => 'Коментарии',
     'files' => 'Файлы',
+    'new_comment' => 'Новый коментарий',
     'add_comment' => 'Добавить коментарий',
 
     'all_opened' => 'Все открытые',
@@ -56,11 +57,12 @@ return array(
     'change_status' => 'Изменить статус',
     'ph_comment' => 'Введите ваш комментарий...',
     'delete' => 'Удалить',
+    'quote' => 'Цитировать',
     'edit' => 'Изменить',
 
 
     'files_were_uploaded' => ':num :pl',
-    'files_pl' => 'файл был загружен|файла было загружено|файлов было загружено',
+    'files_pl' => 'файл загружен|файла загружено|файлов загружено',
 
     'priority' => array(
         '1' => array(

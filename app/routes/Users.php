@@ -12,6 +12,18 @@ Route::get('/settings', array(
     'uses' => 'UsersController@settings',
 ));
 
+Route::post('/settings-password-save', array(
+    'before' => 'auth',
+    'as' => 'settings-password-save',
+    'uses' => 'UsersController@settingsPasswordSave',
+));
+
+Route::post('/settings-profile-save', array(
+    'before' => 'auth',
+    'as' => 'settings-profile-save',
+    'uses' => 'UsersController@settingsProfileSave',
+));
+
 Route::get('/contact-list', array(
     'before' => 'auth',
     'as' => 'contacts',

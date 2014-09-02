@@ -32,5 +32,17 @@ return array(
     'user_not_available' => 'Пользователь недоступен',
     'added' => 'Новый контакт добавлен',
     'no_contacts' => 'Еще не добавлено ни одного контакта',
+    'settings' => 'Настройки',
+    'password_changing' => 'Изменение пароля',
+    'create_strong_password' => 'Создайте надежный пароль',
+    'old_password' => 'Старый пароль',
+    'new_password' => 'Новый пароль',
+    'repeat_password' => 'Повторите пароль',
+    'change_password' => 'Изменить пароль',
+    'profile_settings' => 'Настройки профиля',
+    'your_personal_info' => 'Ваша личная информация и контактные данные',
+    'update_profile' => 'Изменить данные',
+
+    'password_changed' => 'Ваш пароль успещно изменен на новый',
 
 );

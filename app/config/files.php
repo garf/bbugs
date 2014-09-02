@@ -2,5 +2,5 @@
 
 return array(
     'active' => true,
-    'max_size' => 3500000,
+    'max_size' => 512000, //bytes
 );

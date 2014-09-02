@@ -76,6 +76,22 @@ class TplHelpers
         return $suffix[$suffix_key];
     }
 
+    public static function getMaxFilesize()
+    {
+        $mfs = Config::get('files.max_size')/1024;
+        $ext = 'KB';
+        if ($mfs > 1024) {
+            $mfs /= 1024;
+            $ext = 'MB';
+        }
+        if ($mfs > 1024) {
+            $mfs /= 1024;
+            $ext = 'GB';
+        }
+
+        return round($mfs, 2) . ' ' . $ext;
+    }
+
     public static function getBgClass()
     {
 

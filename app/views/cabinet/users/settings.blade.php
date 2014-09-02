@@ -1,35 +1,77 @@
 <div>
-    <?php if(Roles::is('agent')) { ?>
-    <h4>Робот</h4>
-    <div class="well">
-        При стандартных настройках открытия, время сделки назначается с 2 до 5 ночи, так как в это время наиболее
-        спокойный рынок и резкие движения цены происходят редко. Соответственно, уменьшается риск открыть сделки с разными котировками.
-        <br />
-        Но, если вы не хотите ждать более суток со включенным компьютером а хотите,
-        чтобы сделки открылись в течение часа после запуска робота (Будние дни), установите опцию "Быстрое открытие".
-    </div>
-    <?php if ($pair['open_type'] == 'normal') { ?>
-        <span class="alert alert-success">Установлен режим "Нормальное открытие"</span>
-    <?php } else { ?>
-    <span class="alert alert-danger">Установлен режим "Быстрое открытие"</span>
-    <?php } ?>
     <br />
-    <br />
-    <?php if ($pair['open_type'] == 'normal') { ?>
-        <a href="/cabinet/open-type/fast" class="btn btn-danger">Установить Быстрое открытие</a>
-    <?php } else { ?>
-        <a href="/cabinet/open-type/normal" class="btn btn-success">Установить Нормальное открытие</a>
-    <?php } ?>
-    <hr />
-    <?php } ?>
-    <h4>Партнерский кабинет</h4>
-    <?php if(Roles::isNot('partner')) { ?>
-        <div class="well">
-            Для того, чтобы вы могли регистрировать новых покупателей от своего имени и иметь
-            свою партнерскую ссылку, активируйте ваш партнеский кабинет.
+    <div class="col-md-5">
+        <div class="box">
+            <header>
+                <div class="icons">
+                    <i class="fa fa-lock"></i>
+                </div>
+                <h5><@ trans('users.password_changing') @></h5>
+                <div class="toolbar">
+
+                </div><!-- /.toolbar -->
+            </header>
+            <div class="body" ng-controller="ChangePasswordController">
+                <form action="<@ URL::route('settings-password-save') @>" method="post" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="oldPass" class="control-label col-lg-4"><@ trans('users.old_password') @></label>
+                        <div class="col-lg-8">
+                            <input id="oldPass" ng-model="oldPassword" class="form-control" type="password" name="old_password">
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <label for="newPass" class="control-label col-lg-4"><@ trans('users.new_password') @></label>
+                        <div class="col-lg-8">
+                            <input id="newPass" class="form-control" ng-model="newPassword" type="password" name="password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPass" class="control-label col-lg-4"><@ trans('users.repeat_password') @></label>
+                        <div class="col-lg-8">
+                            <input id="confirmPass" class="form-control" ng-model="confirmPassword" type="password" name="password_confirmation">
+                        </div>
+                    </div>
+                    <div class="alert alert-warning" ng-hide="isSimilar()"><@ trans('validation.custom.password.confirmed') @></div>
+                    <div class="alert alert-warning" ng-hide="isMin()"><@ trans('validation.custom.password.min') @></div>
+                    <div class="alert alert-warning" ng-hide="isOldpass()"><@ trans('validation.custom.old_password.required') @></div>
+                    <div class="text-right">
+                        <input type="submit" value="<@ trans('users.change_password') @>" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
         </div>
-        <a href="/cabinet/partner-activate" class="btn btn-success">Активировать режим партнера</a>
-    <?php } else { ?>
-        <div class="alert alert-info">Ваш партнерский кабинет активирован.</div>
-    <?php } ?>
+    </div>
+    <div class="col-md-5">
+        <div class="box">
+            <header>
+                <div class="icons">
+                    <i class="fa fa-user"></i>
+                </div>
+                <h5><@ trans('users.profile_settings') @></h5>
+                <div class="toolbar">
+
+                </div><!-- /.toolbar -->
+            </header>
+            <div class="body">
+                <form action="<@ URL::route('settings-profile-save') @>" method="post" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="profileName" class="control-label col-lg-4"><@ trans('users.name') @></label>
+                        <div class="col-lg-8">
+                            <input id="profileName" class="form-control" type="text" name="name" value="<@ Auth::user()->name @>" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="profilePhone" class="control-label col-lg-4"><@ trans('users.phone') @></label>
+                        <div class="col-lg-8">
+                            <input id="profilePhone" class="form-control" type="text" name="phone" value="+<@ Auth::user()->phone @>" />
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <input type="submit" value="<@ trans('users.update_profile') @>" class="btn btn-primary disabled" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

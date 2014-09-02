@@ -93,6 +93,15 @@ return array(
             'required' => 'Your name is required',
             'max' => 'Name length cannot be more that 25 symbols',
         ),
+        'password' => array(
+            'required' => 'Password is required',
+            'min' => 'Minimal password length is 6 symbols',
+            'confirmed' => 'Passwords do not match',
+        ),
+        'old_password' => array(
+            'required' => 'Old password required',
+            'wrong' => 'Old password is wrong',
+        ),
 	),
 
 	/*

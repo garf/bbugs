@@ -52,6 +52,7 @@ class IssuesController extends BaseController {
             'css' => array(),
             'js' => array(
                 '/template/common/js/metis/autosize/jquery.autosize.min.js',
+                '/template/common/js/markupy.js',
                 '/template/cabinet/js/issues/view.js',
             ),
             'title' => '#' . $issue->id . ' : ' . $issue->title,
@@ -74,25 +75,33 @@ class IssuesController extends BaseController {
 
     public function addComment($issue_id)
     {
-        $comment = Input::get('comment', '');
+        $comment = trim(Input::get('comment', ''));
 
         $userfiles = Input::file('userfile');
 
-        $params = array(
-            'creator' => Auth::user()->id,
-            'comment' => Markupy::parse(e($comment)),
-            'files_count' => count($userfiles),
-            'issue_id' => intval($issue_id),
-        );
-        $commentId = Comments::getInstance()->addComment($params);
+        if(Input::hasFile('userfile') || $comment != '') {
+            $params = array(
+                'creator' => Auth::user()->id,
+                'comment' => Markupy::parse(e($comment)),
+                'files_count' => (Input::hasFile('userfile')) ? count($userfiles) : 0,
+                'issue_id' => intval($issue_id),
+            );
+            $commentId = Comments::getInstance()->addComment($params);
+        } else {
+            $commentId = null;
+        }
 
-        Issues::getInstance()->changeAssignee($issue_id, intval(Input::get('assigned')));
-        $params = array(
-            'file_object' => $userfiles,
-            'issue_id' => $issue_id,
-            'comment_id' => $commentId,
-        );
-        Files::getInstance()->uploadCommentFiles($params);
+        Issues::getInstance()->changeParams($issue_id, Input::all());
+
+
+        if(Input::hasFile('userfile')) {
+            $params = array(
+                'file_object' => $userfiles,
+                'issue_id' => $issue_id,
+                'comment_id' => $commentId,
+            );
+            Files::getInstance()->uploadCommentFiles($params);
+        }
 
         return Redirect::to(URL::route('issue-view', array('issue_id' => $issue_id, '#comment' . $commentId)));
     }

@@ -14,7 +14,7 @@
         </header>
         <div class="topnav">
             <div class="btn-group">
-                <a data-placement="bottom" data-original-title="Show / Hide Left" data-toggle="tooltip" class="btn btn-primary btn-sm toggle-left" id="menu-toggle">
+                <a data-placement="bottom" data-original-title="<@ trans('navbar.show_hide_left') @>" data-toggle="tooltip" class="btn btn-primary btn-sm toggle-left" id="menu-toggle">
                     <i class="fa fa-bars"></i>
                 </a>
                 <a href="<@ URL::route('logout') @>"
@@ -29,12 +29,12 @@
 
             <!-- .nav -->
             <ul class="nav navbar-nav">
-                <li class="">
-                    <a href="<@ URL::route('index') @>"><@trans('menu.dashboard')@></a>
+                <li class="<@ Route::currentRouteName() == 'index' ? 'active' : '' @>">
+                    <a href="<@ URL::route('index') @>"><@trans('navbar.dashboard')@></a>
                 </li>
                 <li class='dropdown '>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <@ trans('menu.language') @>
+                        <@ trans('navbar.language') @>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
@@ -47,6 +47,9 @@
                             <a href="<@ URL::route('set-language', array('ru')) @>"><img src="/template/common/img/flags/ru.png" alt="" /> Русский</a>
                         </li>
                     </ul>
+                </li>
+                <li class="<@ Route::currentRouteName() == 'settings' ? 'active' : '' @>">
+                    <a href="<@ URL::route('settings') @>"><@trans('navbar.settings')@></a>
                 </li>
             </ul>
         </div>

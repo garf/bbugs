@@ -32,5 +32,17 @@ return array(
     'user_not_available' => 'User not available',
     'added' => 'New contact added',
     'no_contacts' => 'There are no contacts yet',
+    'settings' => 'Settings',
+    'password_changing' => 'Change your password',
+    'create_strong_password' => 'Create strong password',
+    'old_password' => 'Old password',
+    'new_password' => 'New password',
+    'repeat_password' => 'Repeat password',
+    'change_password' => 'Change password',
+    'profile_settings' => 'Profile settings',
+    'your_personal_info' => 'Your personal information and contacts',
+    'update_profile' => 'Update profile',
+
+    'password_changed' => 'Your password changed to new one',
 
 );

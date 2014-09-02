@@ -41,6 +41,7 @@ return array(
     'detailed_description' => 'Detailed description',
     'comments' => 'Comments',
     'files' => 'Files',
+    'new_comment' => 'New comment',
     'add_comment' => 'Add comment',
 
     'all_opened' => 'All opened',
@@ -56,11 +57,12 @@ return array(
     'change_status' => 'Change status',
     'ph_comment' => 'Your comment text goes here...',
     'delete' => 'Delete',
+    'quote' => 'Quote',
     'edit' => 'Edit',
 
 
     'files_were_uploaded' => ':num :pl ',
-    'files_pl' => 'file was uploaded|files were uploaded',
+    'files_pl' => 'file uploaded|files uploaded',
 
     'priority' => array(
         '1' => array(
