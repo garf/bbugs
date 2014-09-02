@@ -6,20 +6,31 @@ class IssuesController extends BaseController {
     public function index()
     {
         View::share('menu_item', 'issues');
+
+        $params = array(
+            'assigned' => Auth::user()->id,
+            'statuses' => $this->_statsMapper('not_done'),
+        );
+
         $data = array(
             'css' => array(),
             'js' => array(),
-            'title' => trans('issues.issues'),
+            'title' => trans('issues.issues_to_me'),
+            'issues' => Issues::getInstance()->getByAssignee($params),
         );
 
         return View::make('cabinet.main', $data)
-            ->nest('body', 'cabinet.dashboard.index', $data);
+            ->nest('body', 'cabinet.issues.index', $data);
     }
 
     public function project($project_id, $stats='not_done')
     {
         View::share('menu_item', 'issues');
         $project = Projects::find($project_id);
+
+        if(empty($project)) {
+            return Redirect::to(URL::route('projects'));
+        }
 
         $params = array(
             'project_id' => $project_id,
@@ -43,6 +54,11 @@ class IssuesController extends BaseController {
         View::share('menu_item', 'issues');
 
         $issue = Issues::find($issue_id);
+
+        if(empty($issue)) {
+            App::error('404');
+        }
+
         $commentsParams = array(
             'issue_id' => $issue_id,
             'user_id' => Auth::user()->id,
@@ -92,6 +108,45 @@ class IssuesController extends BaseController {
             ->nest('body', 'cabinet.issues.new', $data);
     }
 
+    public function addIssue($project_id)
+    {
+        View::share('menu_item', 'issues');
+
+        if(!Projects::getInstance()->isUserProject(Input::get('assigned'), $project_id)) {
+            return Redirect::to(URL::route('projects'));
+        }
+
+        $project = Projects::find($project_id);
+
+        if(empty($project)) {
+            return Redirect::to(URL::route('projects'));
+        }
+
+        $params = array(
+            'project_id' => $project_id,
+            'title' => e(Input::get('title', 'Untitled')),
+            'content' => Markupy::parse(e(Input::get('content', ''))),
+            'issue_type' => Input::get('issue_type'),
+            'priority' => Input::get('priority'),
+            'status' => Input::get('status'),
+            'assigned' => Input::get('assigned'),
+            'creator' => Auth::user()->id,
+        );
+
+        $issue_id = Issues::getInstance()->addIssue($params);
+
+        if(Input::hasFile('userfile')) {
+            $params = array(
+                'file_object' => Input::file('userfile'),
+                'issue_id' => $issue_id,
+                'comment_id' => null,
+                'user_id' => Auth::user()->id,
+            );
+            Files::getInstance()->uploadCommentFiles($params);
+        }
+        return Redirect::to(URL::route('issue-view', array('issue_id' => $issue_id, '')));
+    }
+
     public function myIssues($stats='not_done')
     {
         View::share('menu_item', 'issues');
@@ -117,7 +172,7 @@ class IssuesController extends BaseController {
 
         Issues::getInstance()->changeParams($issue_id, Input::all());
 
-        if(Input::hasFile('userfile') && count($userfiles) <= 3) {
+        if(Input::hasFile('userfile') && count($userfiles) <= Files::getInstance()->maxUserFiles(Auth::user()->id, 'comment')) {
             $params = array(
                 'file_object' => $userfiles,
                 'issue_id' => $issue_id,

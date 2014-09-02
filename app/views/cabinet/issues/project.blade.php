@@ -15,22 +15,22 @@
     <ul class="dropdown-menu" role="menu">
         <li>
             <a href="<@ URL::route('issues-project', array('project_id' => $project->id, 'stat' => 'new')) @>">
-                <@ trans('issues.status.news') @>
+                <@ trans('issues.status.news.title') @>
             </a>
         </li>
         <li>
             <a href="<@ URL::route('issues-project', array('project_id' => $project->id, 'stat' => 'opened')) @>">
-                <@ trans('issues.status.openeds') @>
+                <@ trans('issues.status.openeds.title') @>
             </a>
         </li>
         <li>
             <a href="<@ URL::route('issues-project', array('project_id' => $project->id, 'stat' => 'in_work')) @>">
-                <@ trans('issues.status.in_works') @>
+                <@ trans('issues.status.in_works.title') @>
             </a>
         </li>
         <li>
             <a href="<@ URL::route('issues-project', array('project_id' => $project->id, 'stat' => 'need_feedbacks')) @>">
-                <@ trans('issues.status.need_feedbacks') @>
+                <@ trans('issues.status.need_feedbacks.title') @>
             </a>
         </li>
     </ul>
@@ -47,12 +47,12 @@
     <ul class="dropdown-menu" role="menu">
         <li>
             <a href="<@ URL::route('issues-project', array('project_id' => $project->id, 'stat' => 'closed')) @>">
-                <@ trans('issues.status.closed') @>
+                <@ trans('issues.status.closed.title') @>
             </a>
         </li>
         <li>
             <a href="<@ URL::route('issues-project', array('project_id' => $project->id, 'stat' => 'not_actual')) @>">
-                <@ trans('issues.status.not_actual') @>
+                <@ trans('issues.status.not_actual.title') @>
             </a>
         </li>
     </ul>
@@ -69,10 +69,10 @@
         <th><@ trans('issues.created') @></th>
     </tr>
     @foreach ($issues as $issue)
-        <tr>
+        <tr class="<@ ($issue->status == 'new') ? 'info' : '' @> <@ ($issue->priority == '1') ? 'danger' : '' @> " >
             <td>#<@ $issue->id @></td>
             <td><a href="<@ URL::route('issue-view', array($issue->id)) @>"><@ $issue->title @></a></td>
-            <td><@ trans('issues.status.' . $issue->status) @></td>
+            <td><@ trans('issues.status.' . $issue->status . '.title') @></td>
             <td><@ trans('issues.type.' . $issue->issue_type . '.title') @></td>
             <td>
                 <span class="<@ trans('issues.priority.' . $issue->priority . '.class') @>">

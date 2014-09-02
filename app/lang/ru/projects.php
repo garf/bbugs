@@ -19,5 +19,8 @@ return array(
     'place_description' => 'Опишите кратко свой проект...',
     'delete_confirm' => 'Напишите OK чтобы удалить проект :title',
     'deleted' => 'Проект ":title" удален',
+    'no_access' => 'Нет доступа к проекту',
+    'insufficient_privileges' => 'Недостаточно прав',
+    'add_user_to_project' => 'Добавить пользователей к проекту ":title"',
 
 );

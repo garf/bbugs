@@ -2,31 +2,7 @@
 
 return array(
     'issues' => 'Issues',
-    'status' => array(
-        'new' => 'New',
-        'opened' => 'Opened',
-        'in_work' => 'In work',
-        'need_feedback' => 'Need feedback',
-        'closed' => 'Closed',
-        'not_actual' => 'Not actual',
-        'news' => 'New',
-        'openeds' => 'Opened',
-        'in_works' => 'In work',
-        'need_feedbacks' => 'Need feedback',
-        'closeds' => 'Closed',
-        'not_actuals' => 'Not actual',
-    ),
-    'type' => array(
-        'task' => array(
-            'title' => 'Task',
-        ),
-        'bug' => array(
-            'title' => 'Bug',
-        ),
-        'research' => array(
-            'title' => 'Research',
-        ),
-    ),
+    'issues_to_me' => 'Issues assigned to me',
 
     'issue_title' => 'Title',
     'issue_description' => 'Description',
@@ -98,4 +74,30 @@ return array(
             'class' => 'priority_low',
         ),
     ),
+    'status' => array(
+        'new' => array('title' => 'New'),
+        'opened' => array('title' => 'Opened'),
+        'in_work' => array('title' => 'In work'),
+        'need_feedback' => array('title' => 'Need feedback'),
+        'closed' => array('title' => 'Closed'),
+        'not_actual' => array('title' => 'Not actual'),
+        'news' => array('title' => 'New'),
+        'openeds' => array('title' => 'Opened'),
+        'in_works' => array('title' => 'In work'),
+        'need_feedbacks' => array('title' => 'Need feedback'),
+        'closeds' => array('title' => 'Closed'),
+        'not_actuals' => array('title' => 'Not actual'),
+    ),
+    'type' => array(
+        'task' => array(
+            'title' => 'Task',
+        ),
+        'bug' => array(
+            'title' => 'Bug',
+        ),
+        'research' => array(
+            'title' => 'Research',
+        ),
+    ),
+
 );

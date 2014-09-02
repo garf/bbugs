@@ -27,6 +27,21 @@ class Contacts extends Eloquent {
         ', array($user_id));
     }
 
+    public function getUserProjectContacts($user_id, $project_id)
+    {
+        return DB::select('
+            SELECT co.id as coid, co.title, co.is_email, co.is_phone, co.is_skype, co.notes, co.created, u.*, pu.id as puid
+            FROM lb_contacts co
+            LEFT JOIN lb_users u
+            ON co.contact_id=u.id
+            LEFT JOIN lb_project_user pu
+            ON pu.user_id=u.id AND pu.project_id=?
+            WHERE co.user_id=?
+            ORDER BY co.title ASC
+            LIMIT 100
+        ', array($user_id, $project_id));
+    }
+
     public function addContact($params)
     {
         DB::insert('

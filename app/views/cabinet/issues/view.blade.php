@@ -20,7 +20,7 @@
     <div class="panel-footer clearfix">
         <div class="col-md-2">
             <span class="text-muted"><@ trans('issues.issue_status') @>: </span>
-            <span><@ trans('issues.status.' . $issue->status) @></span>
+            <span><@ trans('issues.status.' . $issue->status . '.title') @></span>
         </div>
         <div class="col-md-2">
             <span class="text-muted"><@ trans('issues.issue_priority') @>: </span>
@@ -215,12 +215,12 @@
                                 <label for="statusSelect" class="control-label col-lg-4"><@ trans('issues.change_status') @></label>
                                 <div class="col-lg-8">
                                     <select name="status" id="statusSelect" class="form-control">
-                                        <option value="opened" <@ ($issue->status == 'opened') ? 'selected="selected"' : '' @>><@ trans('issues.status.opened') @></option>
-                                        <option value="in_work" <@ ($issue->status == 'in_work') ? 'selected="selected"' : '' @>><@ trans('issues.status.in_work') @></option>
-                                        <option value="need_feedback" <@ ($issue->status == 'need_feedback') ? 'selected="selected"' : '' @>><@ trans('issues.status.need_feedback') @></option>
+                                        <option value="opened" <@ ($issue->status == 'opened') ? 'selected="selected"' : '' @>><@ trans('issues.status.opened.title') @></option>
+                                        <option value="in_work" <@ ($issue->status == 'in_work') ? 'selected="selected"' : '' @>><@ trans('issues.status.in_work.title') @></option>
+                                        <option value="need_feedback" <@ ($issue->status == 'need_feedback') ? 'selected="selected"' : '' @>><@ trans('issues.status.need_feedback.title') @></option>
                                         <optgroup label="Closed">
-                                            <option value="closed" <@ ($issue->status == 'closed') ? 'selected="selected"' : '' @>><@ trans('issues.status.closed') @></option>
-                                            <option value="not_actual" <@ ($issue->status == 'not_actual') ? 'selected="selected"' : '' @>><@ trans('issues.status.not_actual') @></option>
+                                            <option value="closed" <@ ($issue->status == 'closed') ? 'selected="selected"' : '' @>><@ trans('issues.status.closed.title') @></option>
+                                            <option value="not_actual" <@ ($issue->status == 'not_actual') ? 'selected="selected"' : '' @>><@ trans('issues.status.not_actual.title') @></option>
                                         </optgroup>
                                     </select>
                                 </div>

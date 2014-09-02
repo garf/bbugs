@@ -19,4 +19,7 @@ return array(
     'place_description' => 'Place your description here...',
     'delete_confirm' => 'Type OK to delete project :title',
     'deleted' => 'Project ":title" deleted',
+    'no_access' => 'No access to this project',
+    'insufficient_privileges' => 'Insufficient privileges',
+    'add_user_to_project' => 'Add users to project ":title"',
 );

@@ -67,4 +67,27 @@ class ProjectsController extends BaseController {
         return View::make('cabinet.main', $data)
             ->nest('body', 'cabinet.projects.view', $data);
     }
+
+    public function addUser($project_id)
+    {
+        View::share('menu_item', 'projects');
+
+        if(!Projects::getInstance()->isProjectTeamlead(Auth::user()->id, $project_id)) {
+            Misc::getInstance()->setSystemMessage(trans('projects.insufficient_privileges'), 'danger');
+            return Redirect::to(URL::route('projects'));
+        }
+
+        $project = Projects::find($project_id);
+
+        $data = array(
+            'css' => array(),
+            'js' => array(),
+            'title' => trans('projects.add_user_to_project', array('title' => $project->title)),
+            'project' => $project,
+            'contacts' => Contacts::getInstance()->getUserProjectContacts(Auth::user()->id, $project->id),
+        );
+
+        return View::make('cabinet.main', $data)
+            ->nest('body', 'cabinet.projects.add-user-to-project', $data);
+    }
 }

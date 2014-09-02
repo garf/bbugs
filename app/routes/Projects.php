@@ -23,3 +23,9 @@ Route::get('/projects/view/{id}', array(
     'as' => 'project-view',
     'uses' => 'ProjectsController@view',
 ))->where(array('id' => '[0-9]+'));
+
+Route::get('/projects/{project_id}/add-user', array(
+    'before' => 'auth',
+    'as' => 'add-to-project',
+    'uses' => 'ProjectsController@addUser',
+))->where(array('project_id' => '[0-9]+'));

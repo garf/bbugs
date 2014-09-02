@@ -60,6 +60,7 @@ Route::filter('project-user', function($route)
 {
     $id = $route->getParameter('project_id');
     if(!Projects::getInstance()->isUserProject(Auth::user()->id, $id)) {
+        Misc::getInstance()->setSystemMessage(trans('projects.no_access'), 'danger');
         return Redirect::to(URL::route('index'));
     }
 });
@@ -68,6 +69,7 @@ Route::filter('issue-user', function($route)
 {
     $id = $route->getParameter('issue_id');
     if(!Issues::getInstance()->isUserIssue(Auth::user()->id, $id)) {
+        Misc::getInstance()->setSystemMessage(trans('projects.no_access'), 'danger');
         return Redirect::to(URL::route('index'));
     }
 });

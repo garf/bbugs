@@ -29,6 +29,23 @@ class Issues extends Eloquent {
         ", $where);
     }
 
+    public function getByAssignee($params)
+    {
+        $in = trim(str_repeat('?, ', count($params['statuses'])), ', ');
+        $where = $params['statuses'];
+        $where[] = $params['assigned'];
+        return DB::select("
+            SELECT i.*, p.title as ptitle
+            FROM lb_issues i
+            LEFT JOIN lb_projects p
+            ON i.project_id=p.id
+            WHERE i.status IN (" . $in . ")
+            AND i.assigned=?
+            ORDER BY i.updated DESC
+            LIMIT 100
+        ", $where);
+    }
+
     public function changeAssignee($id, $user_id)
     {
         return DB::update("
@@ -70,9 +87,35 @@ class Issues extends Eloquent {
         $issue->save();
     }
 
+    public function addIssue($params)
+    {
+        DB::insert("
+            INSERT INTO lb_issues
+            (project_id, title, content, status, issue_type, priority, creator, assigned, created, updated)
+            VALUES
+            (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ", array(
+            $params['project_id'],
+            $params['title'],
+            $params['content'],
+            $params['status'],
+            $params['issue_type'],
+            $params['priority'],
+            $params['creator'],
+            $params['assigned'],
+            time(),
+            time()
+        ));
+
+        return DB::getPdo()->lastInsertId();
+    }
+
     public function isUserIssue($user_id, $issue_id)
     {
         $issue = self::find($issue_id);
+        if(empty($issue)) {
+            return false;
+        }
         return Projects::getInstance()->isUserProject($user_id, $issue->project_id);
     }
 }

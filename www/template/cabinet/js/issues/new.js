@@ -17,5 +17,5 @@ function NewIssueController($scope) {
     }
 }
 $(document).ready(function(){
-    $("#descriptionTextarea").markupy();
+    $("#contentTextarea").markupy();
 });

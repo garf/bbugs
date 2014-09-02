@@ -1,6 +1,6 @@
 <br />
 <div ng-controller="NewIssueController">
-    <form method="post" action="<@ URL::route('issue-add', array('project_id' => $project->id)) @>">
+    <form method="post" action="<@ URL::route('issue-add', array('project_id' => $project->id)) @>" enctype="multipart/form-data">
         <input type="hidden" id="maxFiles" value="<@ Files::getInstance()->maxUserFiles(Auth::user()->id, 'new_issue') @>" />
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -9,17 +9,18 @@
                 </div>
                 <div class="panel-body">
                     <div class="form-group">
-                        <label for="titleInput" class="control-label col-lg-4"><@ trans('issues.issue_title') @></label>
-                        <div class="col-md-8">
-                            <input type="text" name="title" id="titleInput" class="form-control" value="<@ Input::old('title') @>" />
+                        <label for="titleInput" class="control-label col-lg-12"><@ trans('issues.issue_title') @></label>
+                        <div class="col-md-12">
+                            <input type="text" name="title" id="titleInput" class="form-control" value="<@ Input::old('title') @>" required="required" />
                         </div>
                     </div>
                     <br />
                     <br />
+                    <br />
                     <div class="form-group">
-                        <label for="descriptionTextarea" class="control-label col-lg-4"><@ trans('issues.issue_description') @></label>
-                        <div class="col-md-8">
-                            <textarea name="description" id="descriptionTextarea" class="form-control"><@ Input::old('description') @></textarea>
+                        <label for="contentTextarea" class="control-label col-lg-12"><@ trans('issues.issue_description') @></label>
+                        <div class="col-md-12">
+                            <textarea name="content" id="contentTextarea" class="form-control"><@ Input::old('description') @></textarea>
                         </div>
                     </div>
                 </div>
@@ -47,12 +48,12 @@
                         <label for="statusSelect" class="control-label col-lg-4"><@ trans('issues.issue_status') @></label>
                         <div class="col-md-8">
                             <select name="status" class="form-control" id="statusSelect">
-                                <option value="new"><@ trans('issues.status.new') @></option>
-                                <option value="opened"><@ trans('issues.status.opened') @></option>
-                                <option value="in_work"><@ trans('issues.status.in_work') @></option>
-                                <option value="need_feedback"><@ trans('issues.status.need_feedback') @></option>
-                                <option value="closed"><@ trans('issues.status.closed') @></option>
-                                <option value="not_actual"><@ trans('issues.status.not_actual') @></option>
+                                <option value="new"><@ trans('issues.status.new.title') @></option>
+                                <option value="opened"><@ trans('issues.status.opened.title') @></option>
+                                <option value="in_work"><@ trans('issues.status.in_work.title') @></option>
+                                <option value="need_feedback"><@ trans('issues.status.need_feedback.title') @></option>
+                                <option value="closed"><@ trans('issues.status.closed.title') @></option>
+                                <option value="not_actual"><@ trans('issues.status.not_actual.title') @></option>
                             </select>
                         </div>
                     </div>

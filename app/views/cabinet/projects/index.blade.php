@@ -23,9 +23,11 @@
                     <a href="#" class="btn btn-sm btn-info btn-block ">
                         <@ trans('projects.view_info') @>
                     </a>
-                    <a href="#" class="btn btn-sm btn-success btn-block ">
+                    @if ($project->role == 'teamlead')
+                    <a href="<@ URL::route('add-to-project', array('project_id' => $project->id)) @>" class="btn btn-sm btn-success btn-block ">
                         <@ trans('projects.add_users') @>
                     </a>
+
                     <a href="#" class="btn btn-sm btn-warning btn-block ">
                         <@ trans('projects.edit_project') @>
                     </a>
@@ -34,6 +36,7 @@
                        class="btn btn-sm btn-danger btn-block delete-project">
                         <@ trans('projects.delete_project') @>
                     </a>
+                    @endif
                 </td>
             </tr>
         @endforeach

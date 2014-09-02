@@ -2,31 +2,7 @@
 
 return array(
     'issues' => 'Задачи',
-    'status' => array(
-        'new' => 'Новая',
-        'opened' => 'Открытая',
-        'in_work' => 'В работе',
-        'need_feedback' => 'Нужен ответ',
-        'closed' => 'Закрытая',
-        'not_actual' => 'Не актуальная',
-        'news' => 'Новые',
-        'openeds' => 'Открытые',
-        'in_works' => 'В работе',
-        'need_feedbacks' => 'Нужен ответ',
-        'closeds' => 'Закрытые',
-        'not_actuals' => 'Не актуальные',
-    ),
-    'type' => array(
-        'task' => array(
-            'title' => 'Задача',
-        ),
-        'bug' => array(
-            'title' => 'Баг',
-        ),
-        'research' => array(
-            'title' => 'Исследование',
-        ),
-    ),
+    'issues_to_me' => 'Задачи назначенные мне',
 
     'issue_title' => 'Название',
     'issue_description' => 'Описание',
@@ -96,6 +72,31 @@ return array(
             'title' => 'Низкий',
             'icon' => '',
             'class' => 'priority_low',
+        ),
+    ),
+    'status' => array(
+        'new' => array('title' => 'Новая'),
+        'opened' => array('title' => 'Открытая'),
+        'in_work' => array('title' => 'В работе'),
+        'need_feedback' => array('title' => 'Нужен ответ'),
+        'closed' => array('title' => 'Закрытая'),
+        'not_actual' => array('title' => 'Не актуальная'),
+        'news' => array('title' => 'Новые'),
+        'openeds' => array('title' => 'Открытые'),
+        'in_works' => array('title' => 'В работе'),
+        'need_feedbacks' => array('title' => 'Нужен ответ'),
+        'closeds' => array('title' => 'Закрытые'),
+        'not_actuals' => array('title' => 'Не актуальные'),
+    ),
+    'type' => array(
+        'task' => array(
+            'title' => 'Задача',
+        ),
+        'bug' => array(
+            'title' => 'Баг',
+        ),
+        'research' => array(
+            'title' => 'Исследование',
         ),
     ),
 );

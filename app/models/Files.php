@@ -60,7 +60,7 @@ class Files extends Eloquent {
                 break;
             }
             $extension = $file->getClientOriginalExtension();
-            $file_title = $file->getClientOriginalName();
+            $file_title = str_replace('%', '', $file->getClientOriginalName());
             $size = $file->getSize()/1024;
             $filename = Misc::getInstance()->generateUniqueFilename($uploadPath, $extension);
             $file->move($uploadPath, $filename);

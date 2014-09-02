@@ -87,6 +87,20 @@ class Projects extends Eloquent {
         return !empty($result);
     }
 
+    public function isProjectTeamlead($user_id, $project_id)
+    {
+        $result = DB::selectOne("
+            SELECT *
+            FROM lb_project_user
+            WHERE user_id=?
+            AND project_id=?
+            AND role='teamlead'
+            LIMIT 1
+        ", array($user_id, $project_id));
+
+        return !empty($result);
+    }
+
     public function setDeleted($project_id)
     {
         return DB::update("
