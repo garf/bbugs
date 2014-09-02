@@ -104,9 +104,9 @@
                         <tr class="warning">
                             <td colspan="2">
                                 <div class="col-md-4">
-                                    <a href="javascript: ;" class="btn btn-primary btn-xs quote-comment" data-quote-id="<@ $comment->id @>"><@ trans('issues.quote') @></a>&nbsp;
+                                    <a href="javascript: ;" class="btn btn-primary btn-line btn-xs quote-comment" data-quote-id="<@ $comment->id @>"><@ trans('issues.quote') @></a>&nbsp;
                                     @if ($comment->creator == Auth::user()->id)
-                                    <a href="#" class="btn btn-danger btn-xs"><@ trans('issues.delete') @></a>&nbsp;
+                                    <a href="#" class="btn btn-danger btn-line btn-xs"><@ trans('issues.delete') @></a>&nbsp;
                                     @endif
                                 </div>
 

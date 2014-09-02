@@ -33,9 +33,13 @@ class Files extends Eloquent {
             SELECT *
             FROM lb_files
             WHERE issue_id=?
+            AND status=?
             ORDER BY uploaded ASC
             LIMIT 100
-        ", array($params['issue_id']));
+        ", array(
+            $params['issue_id'],
+            '1'
+        ));
     }
 
     public function maxUserFiles($user_id, $type='comment')

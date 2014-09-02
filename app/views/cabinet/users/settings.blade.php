@@ -1,5 +1,6 @@
 <div>
     <br />
+    <div class="col-md-1"></div>
     <div class="col-md-5">
         <div class="box">
             <header>
@@ -74,4 +75,6 @@
             </div>
         </div>
     </div>
+    <div class="col-md-1"></div>
+
 </div>
