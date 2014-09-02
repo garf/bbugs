@@ -29,14 +29,21 @@ return array(
     ),
 
     'issue_title' => 'Title',
+    'issue_description' => 'Description',
     'issue_status' => 'Status',
     'issue_type' => 'Type',
     'issue_priority' => 'Priority',
     'creator' => 'Creator',
     'created' => 'Created',
     'assignee' => 'Assignee',
+    'issue_settings' => 'Settings',
+    'issue_content' => 'Content',
+
+    'you' => 'You',
+    'minimize' => 'Minimize',
 
     'new_issue' => 'New issue',
+    'create_issue' => 'Create issue',
 
     'detailed_description' => 'Detailed description',
     'comments' => 'Comments',

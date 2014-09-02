@@ -1,6 +1,6 @@
 <br />
 <div class="well well-sm">
-    <a href="#" class="btn btn-danger"><@ trans('issues.new_issue') @></a>
+    <a href="<@ URL::route('issue-new', array('project_id' => $project->id)); @>" class="btn btn-danger"><@ trans('issues.new_issue') @></a>
 </div>
 <strong><@ trans('issues.filter') @>:</strong>
 <div class="btn-group">

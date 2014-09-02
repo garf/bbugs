@@ -6,6 +6,18 @@ Route::get('/projects', array(
     'uses' => 'ProjectsController@index',
 ));
 
+Route::post('/project-create', array(
+    'before' => 'auth',
+    'as' => 'create-project',
+    'uses' => 'ProjectsController@create',
+));
+
+Route::get('/projects/delete/{id}', array(
+    'before' => 'auth',
+    'as' => 'project-delete',
+    'uses' => 'ProjectsController@delete',
+))->where(array('id' => '[0-9]+'));
+
 Route::get('/projects/view/{id}', array(
     'before' => 'auth',
     'as' => 'project-view',

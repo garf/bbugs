@@ -102,6 +102,9 @@ return array(
             'required' => 'Old password required',
             'wrong' => 'Old password is wrong',
         ),
+        'title' => array(
+            'required' => 'No title provided',
+        ),
 	),
 
 	/*

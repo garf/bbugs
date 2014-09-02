@@ -308,7 +308,7 @@
 })(jQuery, Metis || {});
 ;(function($) {
    $(document).ready(function() {
-    
+    $('textarea').autosize({append: "\n"});
     $('[data-toggle="tooltip"]').tooltip();
  
     $('#menu').metisMenu();

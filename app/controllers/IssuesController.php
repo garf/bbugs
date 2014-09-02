@@ -51,7 +51,6 @@ class IssuesController extends BaseController {
         $data = array(
             'css' => array(),
             'js' => array(
-                '/template/common/js/metis/autosize/jquery.autosize.min.js',
                 '/template/common/js/markupy.js',
                 '/template/cabinet/js/issues/view.js',
             ),
@@ -66,6 +65,31 @@ class IssuesController extends BaseController {
 
         return View::make('cabinet.main', $data)
             ->nest('body', 'cabinet.issues.view', $data);
+    }
+
+    public function newIssue($project_id)
+    {
+        View::share('menu_item', 'issues');
+
+        $project = Projects::find($project_id);
+
+        if(empty($project)) {
+            return Redirect::to(URL::route('projects'));
+        }
+
+        $data = array(
+            'css' => array(),
+            'js' => array(
+                '/template/common/js/markupy.js',
+                '/template/cabinet/js/issues/new.js',
+            ),
+            'title' => trans('issues.new_issue'),
+            'project' => $project,
+            'contacts' => Users::getInstance()->getProjectContacts(Auth::user()->id, $project->id),
+        );
+
+        return View::make('cabinet.main', $data)
+            ->nest('body', 'cabinet.issues.new', $data);
     }
 
     public function myIssues($stats='not_done')
@@ -93,12 +117,12 @@ class IssuesController extends BaseController {
 
         Issues::getInstance()->changeParams($issue_id, Input::all());
 
-
-        if(Input::hasFile('userfile')) {
+        if(Input::hasFile('userfile') && count($userfiles) <= 3) {
             $params = array(
                 'file_object' => $userfiles,
                 'issue_id' => $issue_id,
                 'comment_id' => $commentId,
+                'user_id' => Auth::user()->id,
             );
             Files::getInstance()->uploadCommentFiles($params);
         }

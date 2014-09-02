@@ -1,9 +1,10 @@
-function AddCommentController($scope) {
+function NewIssueController($scope) {
 
     $scope.lines = [];
 
     $scope.addFile = function() {
         $scope.lines.push($scope.lines.length+1);
+
     };
 
     $scope.removeFile = function(index) {
@@ -16,11 +17,5 @@ function AddCommentController($scope) {
     }
 }
 $(document).ready(function(){
-    $("#commentTextarea").markupy();
-    $('.quote-comment').click(function(){
-        var id = $(this).attr('data-quote-id');
-        var ct = $("#commentTextarea");
-        ct.val( ct.val() + $('#commentContent' + id).text() );
-        $("html, body").animate({scrollTop: ct.offset().top }, 200);
-    });
+    $("#descriptionTextarea").markupy();
 });

@@ -1,7 +1,7 @@
 <?php
 
-Route::get('/d/{id}', array(
-    'before' => 'auth|agent',
-    'uses' => 'FilesController@d',
-))->where(array('id' => '[_a-zA-Z0-9]+'));
-
+Route::get('/download/{file_id}', array(
+    'before' => 'auth',
+    'as' => 'download',
+    'uses' => 'FilesController@download',
+))->where(array('file_id' => '[\-a-zA-Z0-9]+'));

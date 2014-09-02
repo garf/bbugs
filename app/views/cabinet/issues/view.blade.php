@@ -1,11 +1,13 @@
 <br />
-<div class="well well-sm"><a href="#" class="btn btn-danger"><@ trans('issues.new_issue') @></a></div>
+<div class="well well-sm">
+    <a href="<@ URL::route('issue-new', array('project_id' => $issue->project_id)); @>" class="btn btn-danger"><@ trans('issues.new_issue') @></a>
+</div>
 <div class="panel panel-success">
     <div class="panel-heading clearfix">
         <div style="float: left;"><strong><@ $issue->title @></strong></div>
         <div style="float: right;">
             <a href="#" class="btn btn-xs btn-warning"><@ trans('issues.edit') @></a>
-            <a href="#contentBlock" data-toggle="collapse" class="btn btn-xs btn-default minimize-box">
+            <a href="#contentBlock" data-toggle="collapse" class="btn btn-xs btn-default minimize-box" title="<@ trans('issues.minimize') @>">
                 <i class="fa fa-angle-up"></i>
             </a></div>
     </div>
@@ -45,7 +47,7 @@
         <div class="panel-heading clearfix">
             <div class=""style="float: left;"><@ trans('issues.files') @></div>
             <div class="" style="float: right;" >
-                <a href="#fileBlock" data-toggle="collapse" class="btn btn-xs btn-default minimize-box">
+                <a href="#fileBlock" data-toggle="collapse" class="btn btn-xs btn-default minimize-box" title="<@ trans('issues.minimize') @>">
                     <i class="fa fa-angle-up"></i>
                 </a>
             </div>
@@ -56,11 +58,11 @@
                 <tr>
                     <td>
                         <div style="float: left;">
-                        <i class="fa fa-file"></i> <a href=""><@ $file->file_title @></a>
+                        <i class="fa fa-file"></i> <a href="<@ URL::route('download', array('file_id' => $file->salt . '-' . $file->id)) @>"><@ $file->file_title @></a>
                         (<@ round($file->file_size, 2) @> kb)
                         </div>
                         <div style="float: right;">
-                            <a href="#">delete</a>
+                            <a href="#" class="disabled"><@ trans('issues.delete') @></a>
                         </div>
                         <div class="clearfix"></div>
                     </td>
@@ -74,7 +76,7 @@
     <div class="panel-heading clearfix">
         <div class=""style="float: left;"><@ trans('issues.comments') @></div>
         <div class="" style="float: right;" >
-            <a href="#commentsBlock" data-toggle="collapse" class="btn btn-xs btn-default minimize-box">
+            <a href="#commentsBlock" data-toggle="collapse" class="btn btn-xs btn-default minimize-box" title="<@ trans('issues.minimize') @>">
                 <i class="fa fa-angle-up"></i>
             </a>
         </div>
@@ -137,6 +139,7 @@
 
     <div id="commentNew" class="panel-body" ng-controller="AddCommentController">
         <form action="<@ URL::route('add-comment', array('issue_id' => $issue->id)) @>" method="post" enctype="multipart/form-data">
+            <input type="hidden" id="maxFiles" value="<@ Files::getInstance()->maxUserFiles(Auth::user()->id, 'comment') @>" />
             <div class="col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -197,13 +200,16 @@
                                             <option value="<@ $contact->id @>"
                                             <@ ($issue->assigned == $contact->id) ? 'selected="selected"' : '' @>>
                                             <@ (trim($contact->title) != '') ? $contact->title : $contact->name @>
+                                            @if ($contact->id == Auth::user()->id)
+                                            (<@ trans('issues.you') @>)
+                                            @endif
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                         </div>
-                        
+                        <br />
                         <div>
                             <div class="form-group">
                                 <label for="statusSelect" class="control-label col-lg-4"><@ trans('issues.change_status') @></label>
@@ -220,7 +226,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        <br />
                         <div>
                             <div class="form-group">
                                 <label for="prioritySelect" class="control-label col-lg-4"><@ trans('issues.issue_priority') @></label>

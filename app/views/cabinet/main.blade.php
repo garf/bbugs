@@ -70,8 +70,8 @@
 
 <script src="/template/common/js/metis/jasny-bootstrap/js/jasny-bootstrap.min.js"></script>
 <script src="/template/common/js/metis/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+<script src="/template/common/js/metis/autosize/jquery.autosize.min.js"></script>
 <script src="/template/common/js/metis/core.js"></script>
-
 <?php if(isset($js)){echo TplHelpers::addJs($js);} ?>
 <script>
     hljs.initHighlightingOnLoad();

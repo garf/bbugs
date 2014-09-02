@@ -29,14 +29,21 @@ return array(
     ),
 
     'issue_title' => 'Название',
+    'issue_description' => 'Описание',
     'issue_status' => 'Статус',
     'issue_type' => 'Тип',
     'issue_priority' => 'Приоритет',
     'creator' => 'Создатель',
     'created' => 'Создано',
     'assignee' => 'Исполнитель',
+    'issue_settings' => 'Параметры',
+    'issue_content' => 'Содержание',
+
+    'you' => 'Вы',
+    'minimize' => 'Свернуть',
 
     'new_issue' => 'Новая задача',
+    'create_issue' => 'Создать задачу',
 
     'detailed_description' => 'Подробное описание',
     'comments' => 'Коментарии',

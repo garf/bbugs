@@ -138,6 +138,21 @@ class Misc extends Eloquent {
         return $filename;
     }
 
+    public function generateFileSalt($title = '')
+    {
+        $random = mt_rand(1, 893745937);
+
+        $len = mb_strlen($title);
+
+        if($len > 5) {
+            $part = mb_substr($title, 0, 5) . $random;
+        } else {
+            $part = $random;
+        }
+        $result = mb_substr(md5(md5($part)), 3, 10);
+        return $result;
+    }
+
     public function generatePassword($length, $type = 'alphanumeric')
     {
         $numbers = array('1','2','3','4','5','6','7','8','9');

@@ -65,11 +65,11 @@ class Markupy
     }
 
     private static function _parseCode($str='') {
-        $pattern = '#\[code=([a-zA-Z0-9]+)\](.+?)\[\/code\]#s';
+        $pattern = '#\@=([a-zA-Z0-9]+)(.+?)\@#s';
         $replace = '<pre><code class="\\1">\\2</code></pre>';
 
         $str = preg_replace($pattern, $replace, $str);
-        $pattern2 = '#\[code\](.+)\[\/code\]#s';
+        $pattern2 = '#\@(.+)\@#s';
         $replace2 = '<pre><code>\\1</code></pre>';
         return preg_replace($pattern2, $replace2, $str);
     }

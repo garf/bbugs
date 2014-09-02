@@ -58,12 +58,12 @@
         }
         text += '</div> <div id="makupy_bar" class="btn-group">';
         if(options.tag_code){
-            text += '<a href="#" class="btn btn-default btn-sm" id="s" data-start="[code]" data-end="[/code]" title="Code">';
+            text += '<a href="#" class="btn btn-default btn-sm" id="s" data-start="@ \r\n" data-end="\r\n @" title="Code">';
             text += '<i class="fa fa-code"></i>';
             text += '</a>';
         }
         if(options.tag_php){
-            text += '<a href="#" class="btn btn-default btn-sm" id="s" data-start="[code=php]" data-end="[/code]" title="PHP Code">';
+            text += '<a href="#" class="btn btn-default btn-sm" id="s" data-start="@=php \r\n" data-end="\r\n @" title="PHP Code">';
             text += 'php';
             text += '</a>';
         }
