@@ -149,7 +149,7 @@ class Misc extends Eloquent {
         } else {
             $part = $random;
         }
-        $result = mb_substr(md5(md5($part)), 3, 10);
+        $result = mb_substr(md5(md5($part)), 3, 16);
         return $result;
     }
 

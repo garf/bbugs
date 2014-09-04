@@ -81,13 +81,112 @@ class ProjectsController extends BaseController {
 
         $data = array(
             'css' => array(),
-            'js' => array(),
+            'js' => array(
+                '/template/cabinet/js/projects/add_user.js'
+            ),
             'title' => trans('projects.add_user_to_project', array('title' => $project->title)),
             'project' => $project,
-            'contacts' => Contacts::getInstance()->getUserProjectContacts(Auth::user()->id, $project->id),
         );
 
         return View::make('cabinet.main', $data)
             ->nest('body', 'cabinet.projects.add-user-to-project', $data);
+    }
+
+    public function projectUsersList($project_id)
+    {
+//        sleep(1);
+        if(!Projects::getInstance()->isProjectTeamlead(Auth::user()->id, $project_id)) {
+            $response = array(
+                'error' => true,
+                'message' => trans('projects.only_teamlead_can_manage_users'),
+                'users' => array(),
+            );
+
+            return json_encode($response);
+        }
+
+        $contacts = Contacts::getInstance()->getUserContacts(Auth::user()->id);
+        $projects = Projects::getInstance()->getProjectUsers($project_id);
+        foreach($contacts as $index=>$contact) {
+            $contacts[$index]->avatar = Gravatar::src($contact->email, 32);
+        }
+
+        $response = array(
+            'error' => false,
+            'message' => '',
+            'contacts' => $contacts,
+            'projects' => $projects,
+        );
+
+        return json_encode($response);
+    }
+
+    public function projectAddUser()
+    {
+        sleep(2);
+        $request = Request::instance();
+        $content = $request->getContent();
+
+        $post = json_decode($content, true);
+
+        if (!Projects::getInstance()->isProjectTeamlead(Auth::user()->id, $post['project_id'])) {
+            $response = array(
+                'error' => true,
+                'message' => trans('projects.only_teamlead_can_manage_users'),
+            );
+
+            return json_encode($response);
+        }
+
+        if (Projects::getInstance()->isUserProject($post['user_id'], $post['project_id'])) {
+            $response = array(
+                'error' => false,
+                'message' => trans('projects.user_already_in_project'),
+            );
+
+            return json_encode($response);
+        }
+
+        $params = array(
+            'project_id' => $post['project_id'],
+            'user_id' => $post['user_id'],
+            'role' => $post['role']
+        );
+
+        Projects::getInstance()->addProjectUser($params);
+
+        $response = array(
+            'error' => false,
+            'message' => trans('project.user_added'),
+        );
+
+        return json_encode($response);
+    }
+
+    public function projectRemoveUser()
+    {
+        sleep(1);
+        $request = Request::instance();
+        $content = $request->getContent();
+
+        $post = json_decode($content, true);
+
+        if (!Projects::getInstance()->isProjectTeamlead(Auth::user()->id, $post['project_id'])) {
+            $response = array(
+                'error' => true,
+                'message' => trans('projects.only_teamlead_can_manage_users'),
+            );
+
+            return json_encode($response);
+        }
+
+        Projects::getInstance()->removeProjectUser($post['user_id'], $post['project_id']);
+
+        $response = array(
+            'error' => false,
+            'message' => trans('project.user_removed'),
+        );
+
+        return json_encode($response);
     }
 }

@@ -52,7 +52,7 @@ class Projects extends Eloquent {
     public function getUserProjects($user_id)
     {
         return DB::select("
-            SELECT pu.id as puid, pu.role, p.*
+            SELECT pu.id as puid, pu.role, pu.user_id, p.*
             FROM lb_project_user pu
             LEFT JOIN
             lb_projects p
@@ -61,6 +61,20 @@ class Projects extends Eloquent {
             ORDER BY pu.role ASC, p.title ASC
             LIMIT 50
         ", array($user_id));
+    }
+
+    public function getProjectUsers($project_id)
+    {
+        return DB::select("
+            SELECT u.*, pu.role
+            FROM lb_project_user pu
+            LEFT JOIN
+            lb_users u
+            ON pu.user_id=u.id
+            WHERE pu.project_id=?
+            ORDER BY u.name ASC
+            LIMIT 50
+        ", array($project_id));
     }
 
     public function isUserProject($user_id, $project_id)
@@ -85,6 +99,15 @@ class Projects extends Eloquent {
         ', array($user_id, $project_id));
 
         return !empty($result);
+    }
+
+    public function removeProjectUser($user_id, $project_id)
+    {
+        return DB::delete('
+            DELETE FROM lb_project_user
+            WHERE user_id=? AND project_id=?
+            LIMIT 1
+        ', array($user_id, $project_id));
     }
 
     public function isProjectTeamlead($user_id, $project_id)

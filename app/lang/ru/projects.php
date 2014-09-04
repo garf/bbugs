@@ -6,7 +6,7 @@ return array(
     'delete_project' => 'Удалить проект',
     'your_role' => 'Ваша роль',
     'view_info' => 'Информация',
-    'add_users' => 'Добавить пользователей',
+    'add_remove_users' => 'Добавить/Удалить пользователей',
     'edit_project' => 'Редактировать проект',
     'created_at' => 'Создан',
     'no_projects' => 'Нет созданных проектов',
@@ -22,5 +22,13 @@ return array(
     'no_access' => 'Нет доступа к проекту',
     'insufficient_privileges' => 'Недостаточно прав',
     'add_user_to_project' => 'Добавить пользователей к проекту ":title"',
+    'only_teamlead_can_manage_users' => 'Только тимлид может управлять пользователями',
+    'user_added' => 'Пользователь добавлен в проект',
+    'user_removed' => 'Пользователь удален из проекта',
+    'user_already_in_project' => 'Пользователь уже в проекте',
+    'teamlead' => 'Тимлид',
+    'developer' => 'Разработчки',
+    'observer' => 'Только просмотр',
+    'remove_user' => 'Удалить из проекта',
 
 );

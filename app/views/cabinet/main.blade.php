@@ -35,7 +35,7 @@
         <div class="search-bar">
             <form class="main-search" action="">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="<@ trans('menu.search_ph') @>">
+                    <input type="text" class="form-control disabled" placeholder="<@ trans('menu.search_ph') @>" disabled="disabled">
                 <span class="input-group-btn">
             <button class="btn btn-primary btn-sm text-muted" type="button">
                 <i class="fa fa-search"></i>

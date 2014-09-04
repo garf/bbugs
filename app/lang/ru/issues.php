@@ -43,6 +43,9 @@ return array(
     'quote' => 'Цитировать',
     'edit' => 'Изменить',
 
+    'no_issues' => 'Нет задач',
+    'no_issues_assigned' => 'Нет задач назначенных мне',
+
 
     'files_were_uploaded' => ':num :pl',
     'files_pl' => 'файл загружен|файла загружено|файлов загружено',

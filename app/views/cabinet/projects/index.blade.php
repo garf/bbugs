@@ -25,7 +25,7 @@
                     </a>
                     @if ($project->role == 'teamlead')
                     <a href="<@ URL::route('add-to-project', array('project_id' => $project->id)) @>" class="btn btn-sm btn-success btn-block ">
-                        <@ trans('projects.add_users') @>
+                        <@ trans('projects.add_remove_users') @>
                     </a>
 
                     <a href="#" class="btn btn-sm btn-warning btn-block ">

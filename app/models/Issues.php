@@ -60,6 +60,20 @@ class Issues extends Eloquent {
         ));
     }
 
+    public function changeStatus($id, $status)
+    {
+        return DB::update("
+            UPDATE lb_issues
+            SET status=?, updated=?
+            WHERE id=?
+            LIMIT 1
+        ", array(
+            $status,
+            time(),
+            $id
+        ));
+    }
+
     public function changeParams($id, $params)
     {
         $priorities = array('1','2','3','4','5');
@@ -68,7 +82,7 @@ class Issues extends Eloquent {
 
         $issue = Issues::find($id);
 
-        if(isset($params['assigned']) && $this->isUserIssue($params['assigned'], $id)) {
+        if(isset($params['assigned']) && ($params['assigned'] == '0' || $this->isUserIssue($params['assigned'], $id))) {
             $issue->assigned = intval($params['assigned']);
         }
 
@@ -81,7 +95,7 @@ class Issues extends Eloquent {
         }
 
         if(isset($params['issue_type']) && in_array($params['issue_type'], $types)) {
-            $issue->status = e($params['status']);
+            $issue->issue_type = e($params['issue_type']);
         }
 
         $issue->save();
@@ -118,4 +132,37 @@ class Issues extends Eloquent {
         }
         return Projects::getInstance()->isUserProject($user_id, $issue->project_id);
     }
+
+    public function statsMapper($stats)
+    {
+        $statsArray = array(
+            'done' => array(
+                'closed',
+                'not_actual'
+            ),
+            'not_done' => array(
+                'new',
+                'opened',
+                'in_work',
+                'need_feedback',
+            ),
+            'all' => array(
+                'new',
+                'opened',
+                'in_work',
+                'need_feedback',
+                'closed',
+                'not_actual'
+            ),
+            'new' => array('new'),
+            'opened' => array('opened'),
+            'in_work' => array('in_work'),
+            'need_feedback' => array('need_feedback'),
+            'closed' => array('closed'),
+            'not_actual' => array('not_actual'),
+        );
+
+        return (isset($statsArray[$stats]) ? $statsArray[$stats] : 'not_done');
+    }
+
 }

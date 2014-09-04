@@ -14,18 +14,6 @@ class Users extends Eloquent {
         return self::$_instance;
     }
 
-    public function isRole($user_id, $role)
-    {
-        $user = $this->find($user_id);
-        return $this->inRole($role, $user->role);
-    }
-
-    public function inRole($role, $roles)
-    {
-        $roles = explode('|', $roles);
-        return in_array($role, $roles);
-    }
-
     public function getByEmail($email)
     {
         return DB::selectOne("

@@ -51,6 +51,9 @@
                 <li class="<@ Route::currentRouteName() == 'settings' ? 'active' : '' @>">
                     <a href="<@ URL::route('settings') @>"><@trans('navbar.settings')@></a>
                 </li>
+                <li class="<@ Route::currentRouteName() == 'feedback' ? 'active' : '' @>">
+                    <a href="<@ URL::route('feedback') @>"><@trans('navbar.feedback')@></a>
+                </li>
             </ul>
         </div>
     </div>

@@ -59,7 +59,7 @@ Route::filter('auth', function()
 Route::filter('project-user', function($route)
 {
     $id = $route->getParameter('project_id');
-    if(!Projects::getInstance()->isUserProject(Auth::user()->id, $id)) {
+    if($id != '0' && !Projects::getInstance()->isUserProject(Auth::user()->id, $id)) {
         Misc::getInstance()->setSystemMessage(trans('projects.no_access'), 'danger');
         return Redirect::to(URL::route('index'));
     }

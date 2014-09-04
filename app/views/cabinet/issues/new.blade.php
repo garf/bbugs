@@ -77,6 +77,7 @@
                         <label for="assigneeSelect" class="control-label col-lg-4"><@ trans('issues.assignee') @></label>
                         <div class="col-md-8">
                             <select name="assigned" class="form-control" id="assigneeSelect">
+                                <option value="0"></option>
                                 @foreach ($contacts as $contact)
                                     <option value="<@ $contact->id @>">
                                         <@ (empty($contact->title)) ? $contact->name : $contact->title @>

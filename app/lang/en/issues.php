@@ -43,6 +43,9 @@ return array(
     'quote' => 'Quote',
     'edit' => 'Edit',
 
+    'no_issues' => 'No issues',
+    'no_issues_assigned' => 'No issues assigned for me',
+
 
     'files_were_uploaded' => ':num :pl ',
     'files_pl' => 'file uploaded|files uploaded',

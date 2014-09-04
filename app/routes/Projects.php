@@ -29,3 +29,21 @@ Route::get('/projects/{project_id}/add-user', array(
     'as' => 'add-to-project',
     'uses' => 'ProjectsController@addUser',
 ))->where(array('project_id' => '[0-9]+'));
+
+Route::get('/projects/{project_id}/users-list', array(
+    'before' => 'auth|project-user',
+    'as' => 'project-users',
+    'uses' => 'ProjectsController@projectUsersList',
+))->where(array('project_id' => '[0-9]+'));
+
+Route::post('/projects/add-user', array(
+    'before' => 'auth',
+    'as' => 'project-add-user',
+    'uses' => 'ProjectsController@projectAddUser',
+));
+
+Route::post('/projects/remove-user', array(
+    'before' => 'auth',
+    'as' => 'project-remove-user',
+    'uses' => 'ProjectsController@projectRemoveUser',
+));

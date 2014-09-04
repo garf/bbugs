@@ -24,6 +24,7 @@ class AuthController extends BaseController {
 
     public function loginPost()
     {
+        sleep(2);
         $email = trim(mb_strtolower(Input::get('email', '')));
         $password = trim(Input::get('password', ''));
         $remember = (Input::get('remember', '0') == '1') ? true : false;

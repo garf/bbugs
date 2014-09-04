@@ -196,6 +196,7 @@
                                 <label for="assignedSelect" class="control-label col-lg-4"><@ trans('issues.assign_to') @></label>
                                 <div class="col-lg-8">
                                     <select name="assigned" id="assignedSelect" class="form-control">
+                                        <option value="0"></option>
                                         @foreach ($contacts as $contact)
                                             <option value="<@ $contact->id @>"
                                             <@ ($issue->assigned == $contact->id) ? 'selected="selected"' : '' @>>

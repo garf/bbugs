@@ -9,7 +9,7 @@ class IssuesController extends BaseController {
 
         $params = array(
             'assigned' => Auth::user()->id,
-            'statuses' => $this->_statsMapper('not_done'),
+            'statuses' => Issues::getInstance()->statsMapper('not_done'),
         );
 
         $data = array(
@@ -79,6 +79,10 @@ class IssuesController extends BaseController {
             'contacts' => Users::getInstance()->getProjectContacts(Auth::user()->id, $issue->project_id),
         );
 
+        if($issue->status == 'new' && $issue->assigned == Auth::user()->id) {
+            Issues::getInstance()->changeStatus($issue->id, 'opened');
+        }
+
         return View::make('cabinet.main', $data)
             ->nest('body', 'cabinet.issues.view', $data);
     }
@@ -112,7 +116,7 @@ class IssuesController extends BaseController {
     {
         View::share('menu_item', 'issues');
 
-        if(!Projects::getInstance()->isUserProject(Input::get('assigned'), $project_id)) {
+        if(Input::get('assigned') != '0' && !Projects::getInstance()->isUserProject(Input::get('assigned'), $project_id)) {
             return Redirect::to(URL::route('projects'));
         }
 
