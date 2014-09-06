@@ -24,18 +24,17 @@
                         <?= trans('projects.view_info') ?>
                     </a>
                     <?php if ($project->role == 'teamlead') { ?>
-                    <a href="<?= URL::route('add-to-project', array('project_id' => $project->id)) ?>" class="btn btn-sm btn-success btn-block ">
-                        <?= trans('projects.users') ?>
-                    </a>
-
-                    <a href="<?= URL::route('edit-project', array('project_id' => $project->id)) ?>" class="btn btn-sm btn-warning btn-block ">
-                        <?= trans('projects.edit_project') ?>
-                    </a>
-                    <a data-url="<?= URL::route('project-delete', array('id' => $project->id )) ?>"
-                       data-message="<?= trans('projects.delete_confirm', array('title' => $project->title)) ?>"
-                       class="btn btn-sm btn-danger btn-block delete-project">
-                        <?= trans('projects.delete_project') ?>
-                    </a>
+                        <a href="<?= URL::route('edit-project', array('project_id' => $project->id)) ?>" class="btn btn-sm btn-warning btn-block ">
+                            <?= trans('projects.edit_project') ?>
+                        </a>
+                        <a href="<?= URL::route('add-to-project', array('project_id' => $project->id)) ?>" class="btn btn-sm btn-success btn-block ">
+                            <?= trans('projects.users') ?>
+                        </a>
+                        <a data-url="<?= URL::route('project-delete', array('id' => $project->id )) ?>"
+                           data-message="<?= trans('projects.delete_confirm', array('title' => $project->title)) ?>"
+                           class="btn btn-sm btn-danger btn-block delete-project">
+                            <?= trans('projects.delete_project') ?>
+                        </a>
                     <?php } ?>
                 </td>
             </tr>
@@ -63,6 +62,16 @@
                     <div class="form-group">
                         <label for="projectDescriptionInput"><?= trans('projects.project_description') ?></label>
                         <textarea name="description" class="form-control" id="projectDescriptionInput" placeholder="<?= trans('projects.place_description') ?>"><?= Input::old('description') ?></textarea>
+                    </div>
+                    <div class="clearfix">
+                        <div class="col-md-8"></div>
+                        <div class="form-group col-md-4">
+                            <label for="projectBudgetInput"><?= trans('projects.budget') ?></label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="text" name="budget" class="form-control" value="<?= Input::old('budget') ?>" id="projectBudgetInput" placeholder="5000.00" />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

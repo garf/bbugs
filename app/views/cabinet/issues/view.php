@@ -198,12 +198,12 @@
                                     <select name="assigned" id="assignedSelect" class="form-control">
                                         <option value="0"></option>
                                         <?php foreach ($contacts as $contact) { ?>
-                                            <option value="<?= $contact->id ?>"
-                                            <?= ($issue->assigned == $contact->id) ? 'selected="selected"' : '' ?>>
-                                            <?= (trim($contact->title) != '') ? $contact->title : $contact->name ?>
-                                            <?php if ($contact->id == Auth::user()->id) { ?>
-                                            (<?= trans('issues.you') ?>)
-                                            <?php } ?>
+                                            <?php if ($contact->role == 'observer') continue; ?>
+                                            <option value="<?= $contact->id ?>" <?= ($issue->assigned == $contact->id) ? 'selected="selected"' : '' ?>>
+                                                <?= (trim($contact->title) != '') ? $contact->title : $contact->name ?>
+                                                <?php if ($contact->id == Auth::user()->id) { ?>
+                                                    (<?= trans('issues.you') ?>)
+                                                <?php } ?>
                                             </option>
                                         <?php } ?>
                                     </select>

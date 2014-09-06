@@ -39,7 +39,7 @@ class Users extends Eloquent {
     public function getProjectContacts($user_id, $project_id)
     {
         return DB::select("
-            SELECT u.*, co.title, co.notes
+            SELECT u.*, co.title, co.notes, pu.role, pu.hour_cost
             FROM lb_project_user pu
             LEFT JOIN lb_users u
             ON pu.user_id=u.id

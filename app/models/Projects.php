@@ -18,14 +18,15 @@ class Projects extends Eloquent {
     {
         DB::insert("
             INSERT INTO lb_projects
-            (parent_id, creator, title, description, created, status)
+            (parent_id, creator, title, description, budget, created, status)
             VALUES
-            (?, ?, ?, ?, ?, ?)
+            (?, ?, ?, ?, ?, ?, ?)
         ", array(
             '0',
             $params['user_id'],
             $params['title'],
             $params['description'],
+            $params['budget'],
             time(),
             '1'
         ));
@@ -66,10 +67,9 @@ class Projects extends Eloquent {
     public function getProjectUsers($project_id)
     {
         return DB::select("
-            SELECT u.*, pu.role
+            SELECT u.*, pu.role, pu.hour_cost
             FROM lb_project_user pu
-            LEFT JOIN
-            lb_users u
+            LEFT JOIN lb_users u
             ON pu.user_id=u.id
             WHERE pu.project_id=?
             ORDER BY u.name ASC

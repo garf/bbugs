@@ -27,6 +27,7 @@ function AddUserToProjectController($scope, $http) {
                             if(pval.id == cval.id) {
                                 $scope.contacts[ckey].already = true;
                                 $scope.contacts[ckey].role = pval.role;
+                                $scope.contacts[ckey].hour_cost = (pval.hour_cost != 0) ? pval.hour_cost : 0;
                                 keepGoing = false;
                             }
                         }

@@ -29,6 +29,7 @@ class ProjectsController extends BaseController {
             'user_id' => Auth::user()->id,
             'title' => e(Input::get('title', 'Untitled')),
             'description' => e(Input::get('description', '')),
+            'budget' => floatval(Input::get('budget', 0)),
             'role' => 'teamlead',
         );
         $project_id = Projects::getInstance()->addProject($params);
@@ -108,7 +109,7 @@ class ProjectsController extends BaseController {
         $contacts = Contacts::getInstance()->getUserContacts(Auth::user()->id);
         $projects = Projects::getInstance()->getProjectUsers($project_id);
         foreach($contacts as $index=>$contact) {
-            $contacts[$index]->avatar = Gravatar::src($contact->email, 32);
+            $contacts[$index]->avatar = Gravatar::src($contact->email, 64);
         }
 
         $response = array(
@@ -196,11 +197,34 @@ class ProjectsController extends BaseController {
 
         $project = Projects::find($project_id);
 
+        $params = array(
+            'project_id' => $project_id,
+        );
+
+        $params['statuses'] = Issues::getInstance()->statsMapper('not_done');
+        $opened = Issues::getInstance()->getProjectIssues($params);
+        $params['statuses'] = Issues::getInstance()->statsMapper('done');
+        $closed = Issues::getInstance()->getProjectIssues($params);
+
+        $opened_count = count($opened);
+        $closed_count = count($closed);
+        $all_count = $opened_count + $closed_count;
+        $opened_percent = ($all_count != 0) ? round($opened_count * 100 /$all_count, 2) : 0;
+        $closed_percent = round(100 - $opened_percent, 2);
+
         $data = array(
             'css' => array(),
             'js' => array(),
             'title' => trans('projects.info', array('title' => $project->title)),
             'project' => $project,
+            'opened' => $opened,
+            'closed' => $closed,
+            'opened_count' => $opened_count,
+            'closed_count' => $closed_count,
+            'all_count' => $all_count,
+            'opened_percent' => $opened_percent,
+            'closed_percent' => $closed_percent,
+            'contacts' => Projects::getInstance()->getProjectUsers($project_id),
         );
 
         return View::make('cabinet.main', $data)
@@ -240,6 +264,7 @@ class ProjectsController extends BaseController {
 
         $project->title = e(Input::get('title', 'Untitled'));
         $project->description = e(Input::get('description', ''));
+        $project->budget = floatval(Input::get('budget', 0));
         $project->save();
         return Redirect::to(URL::route('projects'));
     }

@@ -79,6 +79,7 @@
                             <select name="assigned" class="form-control" id="assigneeSelect">
                                 <option value="0"></option>
                                 <?php foreach ($contacts as $contact) { ?>
+                                    <?php if ($contact->role == 'observer') continue; ?>
                                     <option value="<?= $contact->id ?>">
                                         <?= (empty($contact->title)) ? $contact->name : $contact->title ?>
                                         <?php if ($contact->id == Auth::user()->id) { ?>

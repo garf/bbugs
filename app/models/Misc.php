@@ -56,7 +56,7 @@ class Misc extends Eloquent {
 
     public function moneyFormat($amount)
     {
-        return number_format($amount, 2, '.', ' ')  . ' р.';
+        return '$' . number_format($amount, 2, '.', ' ');
     }
 
     public function moneyFormatForex($amount, $currency='USD')

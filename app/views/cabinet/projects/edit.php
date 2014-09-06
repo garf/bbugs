@@ -9,6 +9,16 @@
             <label for="projectDescriptionInput"><?= trans('projects.project_description') ?></label>
             <textarea name="description" class="form-control" id="projectDescriptionInput" placeholder="<?= trans('projects.place_description') ?>"><?= Input::old('description', $project->description) ?></textarea>
         </div>
+        <div class="clearfix">
+            <div class="col-md-9"></div>
+            <div class="form-group col-md-3">
+                <label for="projectBudgetInput"><?= trans('projects.budget') ?></label>
+                <div class="input-group">
+                    <span class="input-group-addon">$</span>
+                    <input type="text" name="budget" class="form-control" value="<?= Input::old('budget', $project->budget) ?>" id="projectBudgetInput" placeholder="5000.00" />
+                </div>
+            </div>
+        </div>
         <div class="text-right">
             <a href="<?= URL::route('projects') ?>" class="btn btn-default"><?= trans('projects.cancel') ?></a>
             <input type="submit" class="btn btn-primary" value="<?= trans('projects.save') ?>" />
