@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="/template/common/js/metis/datatables/3/dataTables.bootstrap.css" />
 <div class="well well-sm">
     <a href="<?=URL::route('issue-new', array('project_id' => $project->id)); ?>" class="btn btn-danger"><?=trans('issues.new_issue') ?></a>
+    <a href="<?= URL::route('project-info', array('project_id' => $project->id)) ?>" class="btn btn-info"><?= trans('projects.view_info') ?></a>
     <?php if (Projects::getInstance()->isProjectTeamlead(Auth::user()->id, $project->id)) { ?>
     <a href="<?=URL::route('add-to-project', array('project_id' => $project->id)) ?>" class="btn btn-success ">
         <?= trans('projects.users') ?>

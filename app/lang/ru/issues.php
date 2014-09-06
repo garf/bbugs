@@ -9,6 +9,7 @@ return array(
     'issue_status' => 'Статус',
     'issue_type' => 'Тип',
     'issue_priority' => 'Приоритет',
+    'hours_to_complete' => 'Часов на завершение',
     'project' => 'Проект',
     'updated' => 'Обновлена',
     'creator' => 'Создатель',
@@ -41,7 +42,7 @@ return array(
     'one_more_file' => 'Еще один файл',
     'assign_to' => 'Назначить для',
     'change_status' => 'Изменить статус',
-    'ph_comment' => 'Введите ваш комментарий...',
+    'ph_comment' => 'Введите ваш коментарий...',
     'delete' => 'Удалить',
     'quote' => 'Цитировать',
     'edit' => 'Изменить',
@@ -52,6 +53,11 @@ return array(
 
     'files_were_uploaded' => ':num :pl',
     'files_pl' => 'файл загружен|файла загружено|файлов загружено',
+
+    'cant_delete_comment' => 'Невозможно удалить коментарий',
+    'comment_deleted' => 'Коментарий удален',
+    'want_delete_comment' => 'Вы действительно хотите удалить свой коментарий?',
+    'want_delete_file' => 'Вы действительно хотите удалить файл :name?',
 
     'priority' => array(
         '1' => array(

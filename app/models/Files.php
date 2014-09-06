@@ -3,7 +3,7 @@
 class Files extends Eloquent {
 
     public static $_instance = null;
-    protected $table = 'lb_issues';
+    protected $table = 'lb_files';
 
     public static function getInstance()
     {
@@ -54,31 +54,43 @@ class Files extends Eloquent {
 
     public function uploadCommentFiles($params)
     {
-        $uploadPath = base_path() . '/files/';
-        foreach($params['file_object'] as $index=>$file) {
-            if($index > ($this->maxUserFiles($params['user_id'], 'comment') - 2)) {
-                break;
-            }
-            $extension = $file->getClientOriginalExtension();
-            $file_title = str_replace('%', '', $file->getClientOriginalName());
-            $size = $file->getSize()/1024;
-            $filename = Misc::getInstance()->generateUniqueFilename($uploadPath, $extension);
-            $file->move($uploadPath, $filename);
-            DB::insert("
+        try {
+            $uploadPath = base_path() . '/files/';
+            foreach($params['file_object'] as $index=>$file) {
+                if($index > ($this->maxUserFiles($params['user_id'], 'comment') - 2)) {
+                    break;
+                }
+                $extension = $file->getClientOriginalExtension();
+                $file_title = str_replace('%', '', $file->getClientOriginalName());
+                $size = $file->getSize()/1024;
+                if($size * 1024 > Config::get('files.max_size')) {
+                    Misc::getInstance()->setSystemMessage(trans('files.file_size_more', array(
+                        'name' => e($file_title),
+                        'size' => $size
+                    )), 'warning');
+                    continue;
+                }
+                $filename = Misc::getInstance()->generateUniqueFilename($uploadPath, $extension);
+                $file->move($uploadPath, $filename);
+                DB::insert("
                 INSERT INTO lb_files
                 (issue_id, comment_id, filename, file_title, file_size, salt, creator, uploaded)
                 VALUES
                 (?, ?, ?, ?, ?, ?, ?, ?)
             ", array(
-                $params['issue_id'],
-                $params['comment_id'],
-                $filename,
-                $file_title,
-                $size,
-                Misc::getInstance()->generateFileSalt($file_title),
-                $params['user_id'],
-                time()
-            ));
+                    $params['issue_id'],
+                    $params['comment_id'],
+                    $filename,
+                    $file_title,
+                    $size,
+                    Misc::getInstance()->generateFileSalt($file_title),
+                    $params['user_id'],
+                    time()
+                ));
+            }
+        } catch (Exception $e) {
+            Misc::getInstance()->setSystemMessage(trans('files.file_size_exceeds'), 'warning');
         }
+
     }
 }

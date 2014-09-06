@@ -98,6 +98,10 @@ class Issues extends Eloquent {
             $issue->issue_type = e($params['issue_type']);
         }
 
+        if(isset($params['hours_spent'])) {
+            $issue->hours_spent = floatval($params['hours_spent']);
+        }
+
         $issue->save();
     }
 
@@ -131,6 +135,15 @@ class Issues extends Eloquent {
             return false;
         }
         return Projects::getInstance()->isUserProject($user_id, $issue->project_id);
+    }
+
+    public function isIssueTeamlead($user_id, $issue_id)
+    {
+        $issue = self::find($issue_id);
+        if(empty($issue)) {
+            return false;
+        }
+        return Projects::getInstance()->isProjectTeamlead($user_id, $issue->project_id);
     }
 
     public function statsMapper($stats)

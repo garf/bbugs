@@ -17,15 +17,15 @@ class Comments extends Eloquent {
     public function getComments($params=array())
     {
         return DB::select("
-            SELECT com.*, u.name, u.email, co.title, co.notes
+            SELECT com.*, u.name, u.email, con.title, con.notes
             FROM lb_comments com
             LEFT JOIN
             lb_users u
             ON com.creator=u.id
             LEFT JOIN
-            lb_contacts co
-            ON u.id=co.contact_id AND co.user_id=?
-            WHERE com.issue_id=?
+            lb_contacts con
+            ON u.id=con.contact_id AND con.user_id=?
+            WHERE com.issue_id=? AND com.status='1'
         ", array($params['user_id'], $params['issue_id']));
     }
 

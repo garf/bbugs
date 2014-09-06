@@ -64,10 +64,12 @@
                                     <?= $clcount ?>
                                 </td>
                             </tr>
-                            <tr>
-                                <td><?= trans('projects.hour_cost') ?></td>
-                                <td><?= Misc::getInstance()->moneyFormat($contact->hour_cost) ?></td>
-                            </tr>
+                            <?php if ($project->budget != 0) { ?>
+                                <tr>
+                                    <td><?= trans('projects.hour_cost') ?></td>
+                                    <td><?= Misc::getInstance()->moneyFormat($contact->hour_cost) ?></td>
+                                </tr>
+                            <?php } ?>
                             <tr>
                                 <td><?= trans('projects.involvement') ?></td>
                                 <td>
@@ -75,7 +77,12 @@
                                         $inv_percent = ($all_count != 0) ? ($opcount + $clcount) * 100 / $all_count : 0;
                                     ?>
                                     <?= $inv_percent ?>%
-                                    <span class="text-muted">(<?= $hours ?> hours - <?= Misc::getInstance()->moneyFormat($user_spent) ?>)</span>
+                                    <span class="text-muted">
+                                        (<?= $hours ?> hours
+                                        <?php if ($project->budget != 0) { ?>
+                                            - <?= Misc::getInstance()->moneyFormat($user_spent) ?>
+                                        <?php } ?>)
+                                    </span>
                                 </td>
                             </tr>
                             <tr class="info">
@@ -118,28 +125,30 @@
                     </div>
 
                 </div>
-                <div style="margin-top: 20px;" class="well">
-                    <strong><?= trans('projects.budget_spent') ?></strong> <span class="text-muted"><?= Misc::getInstance()->moneyFormat($project->budget) ?></span>
-                    <?php
-                        $budget_left = $project->budget - $budget_spent;
-                        $budget_spent_percent = ($project->budget != 0) ? $budget_spent * 100 / $project->budget : 0;
-                        $budget_left_percent = 100 - $budget_spent_percent;
-                    ?>
-                    <br />
-                    <div class="clearfix" style="margin-top: 10px;">
-                        <div style="float: left;">
-                            <strong><?= Misc::getInstance()->moneyFormat($budget_spent) ?> <strong class="text-danger">(<?= round($budget_spent_percent, 2) ?>%)</strong></strong> <?= trans('projects.spent') ?>
+                <?php if ($project->budget != 0) { ?>
+                    <div style="margin-top: 20px;" class="well">
+                        <strong><?= trans('projects.budget_spent') ?></strong> <span class="text-muted"><?= Misc::getInstance()->moneyFormat($project->budget) ?></span>
+                        <?php
+                            $budget_left = $project->budget - $budget_spent;
+                            $budget_spent_percent = ($project->budget != 0) ? $budget_spent * 100 / $project->budget : 0;
+                            $budget_left_percent = 100 - $budget_spent_percent;
+                        ?>
+                        <br />
+                        <div class="clearfix" style="margin-top: 10px;">
+                            <div style="float: left;">
+                                <strong><?= Misc::getInstance()->moneyFormat($budget_spent) ?> <strong class="text-danger">(<?= round($budget_spent_percent, 2) ?>%)</strong></strong> <?= trans('projects.spent') ?>
+                            </div>
+                            <div  style="float: right;">
+                                <strong><?= Misc::getInstance()->moneyFormat($budget_left) ?> <strong class="text-success">(<?= round($budget_left_percent, 2) ?>%)</strong></strong> <?= trans('projects.left') ?>
+                            </div>
                         </div>
-                        <div  style="float: right;">
-                            <strong><?= Misc::getInstance()->moneyFormat($budget_left) ?> <strong class="text-success">(<?= round($budget_left_percent, 2) ?>%)</strong></strong> <?= trans('projects.left') ?>
-                        </div>
-                    </div>
 
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-danger" style="width: <?= round($budget_spent_percent) ?>%;"></div>
-                        <div class="progress-bar progress-bar-success" style="width: <?= round($budget_left_percent) ?>%"></div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-danger" style="width: <?= round($budget_spent_percent) ?>%;"></div>
+                            <div class="progress-bar progress-bar-success" style="width: <?= round($budget_left_percent) ?>%"></div>
+                        </div>
                     </div>
-                </div>
+                <?php } ?>
             </div>
         </div>
     </div>

@@ -77,6 +77,7 @@ class IssuesController extends BaseController {
             'comments' => Comments::getInstance()->getComments($commentsParams),
             'files' => Files::getInstance()->getByIssue(array('issue_id' => $issue_id)),
             'contacts' => Users::getInstance()->getProjectContacts(Auth::user()->id, $issue->project_id),
+            'is_teamlead' => Projects::getInstance()->isProjectTeamlead(Auth::user()->id, $issue->project_id),
         );
 
         if($issue->status == 'new' && $issue->assigned == Auth::user()->id) {
@@ -156,7 +157,7 @@ class IssuesController extends BaseController {
         View::share('menu_item', 'issues');
     }
 
-    public function addComment($issue_id)
+    public function updateIssue($issue_id)
     {
         $comment = trim(Input::get('comment', ''));
 
@@ -187,6 +188,20 @@ class IssuesController extends BaseController {
         }
 
         return Redirect::to(URL::route('issue-view', array('issue_id' => $issue_id, '#comment' . $commentId)));
+    }
+
+    public function deleteComment($comment_id)
+    {
+        $comment = Comments::find($comment_id);
+        if($comment->creator != Auth::user()->id) {
+            Misc::getInstance()->setSystemMessage(trans('issues.cant_delete_comment'), 'danger');
+            return Redirect::to(URL::route('projects'));
+        }
+        $issue_id = $comment->issue_id;
+        $comment->status = '0';
+        $comment->save();
+        Misc::getInstance()->setSystemMessage(trans('issues.comment_deleted'), 'success');
+        return Redirect::to(URL::route('issue-view', array('issue_id' => $issue_id)));
     }
 
     private function _statsMapper($stats)

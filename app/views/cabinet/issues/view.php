@@ -58,12 +58,20 @@
                 <tr>
                     <td>
                         <div style="float: left;">
-                        <i class="fa fa-file"></i> <a href="<?= URL::route('download', array('file_id' => $file->salt . '-' . $file->id)) ?>"><?= $file->file_title ?></a>
+                        <i class="fa fa-file"></i>
+                            <a href="<?= URL::route('download', array('file_id' => $file->salt . '-' . $file->id)) ?>">
+                                <?= $file->file_title ?>
+                            </a>
                         (<?= round($file->file_size, 2) ?> kb)
                         </div>
+                        <?php if($is_teamlead) { ?>
                         <div style="float: right;">
-                            <a href="#" class="disabled"><?= trans('issues.delete') ?></a>
+                            <a href="<?= URL::route('file-delete', array('file_id' => $file->salt . '-' . $file->id)) ?>"
+                               onclick="return confirm('<?= trans('issues.want_delete_file', array('name' => e($file->file_title))) ?>');">
+                                <?= trans('issues.delete') ?>
+                            </a>
                         </div>
+                        <?php } ?>
                         <div class="clearfix"></div>
                     </td>
                 </tr>
@@ -106,7 +114,11 @@
                                 <div class="col-md-4">
                                     <a href="javascript: ;" class="btn btn-primary btn-line btn-xs quote-comment" data-quote-id="<?= $comment->id ?>"><?= trans('issues.quote') ?></a>&nbsp;
                                     <?php if ($comment->creator == Auth::user()->id) { ?>
-                                        <a href="#" class="btn btn-danger btn-line btn-xs"><?= trans('issues.delete') ?></a>&nbsp;
+                                        <a href="<?= URL::route('delete-comment', array('comment_id' => $comment->id)) ?>"
+                                           onclick="return confirm('<?= trans('issues.want_delete_comment') ?>');"
+                                           class="btn btn-danger btn-line btn-xs">
+                                            <?= trans('issues.delete') ?>
+                                        </a>&nbsp;
                                     <?php } ?>
                                 </div>
 
@@ -138,7 +150,7 @@
     </div>
 
     <div id="commentNew" class="panel-body" ng-controller="AddCommentController">
-        <form action="<?= URL::route('add-comment', array('issue_id' => $issue->id)) ?>" method="post" enctype="multipart/form-data">
+        <form action="<?= URL::route('update-issue', array('issue_id' => $issue->id)) ?>" method="post" enctype="multipart/form-data">
             <input type="hidden" id="maxFiles" value="<?= Files::getInstance()->maxUserFiles(Auth::user()->id, 'comment') ?>" />
             <div class="col-md-8">
                 <div class="panel panel-default">
@@ -239,6 +251,15 @@
                                         <option value="4"<?= ($issue->priority == 4) ? 'selected="selected"' : '' ?>><?= trans('issues.priority.4.title') ?></option>
                                         <option value="5"<?= ($issue->priority == 5) ? 'selected="selected"' : '' ?>><?= trans('issues.priority.5.title') ?></option>
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div>
+                            <div class="form-group">
+                                <label for="hoursInpur" class="control-label col-lg-8"><?= trans('issues.hours_to_complete') ?>:</label>
+                                <div class="col-lg-4">
+                                    <input type="text" name="hours_spent" class="form-control" id="hoursInput" value="<?= $issue->hours_spent ?>" placeholder="0.00" />
                                 </div>
                             </div>
                         </div>

@@ -24,14 +24,20 @@ Route::get('/issues/new/{project_id}', array(
     'uses' => 'IssuesController@newIssue',
 ))->where(array('project_id' => '[0-9]+'));
 
+Route::get('/issues/delete-comment/{comment_id}', array(
+    'before' => 'auth',
+    'as' => 'delete-comment',
+    'uses' => 'IssuesController@deleteComment',
+))->where(array('comment_id' => '[0-9]+'));
+
 Route::post('/issues/add/{project_id}', array(
     'before' => 'auth|project-user',
     'as' => 'issue-add',
     'uses' => 'IssuesController@addIssue',
 ))->where(array('project_id' => '[0-9]+'));
 
-Route::post('/issues/add-comment/{issue_id}', array(
+Route::post('/issues/update/{issue_id}', array(
     'before' => 'auth|issue-user',
-    'as' => 'add-comment',
-    'uses' => 'IssuesController@addComment',
+    'as' => 'update-issue',
+    'uses' => 'IssuesController@updateIssue',
 ))->where(array('issue_id' => '[0-9]+'));
