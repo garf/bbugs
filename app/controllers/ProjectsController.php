@@ -189,4 +189,58 @@ class ProjectsController extends BaseController {
 
         return json_encode($response);
     }
+
+    public function info($project_id)
+    {
+        View::share('menu_item', 'projects');
+
+        $project = Projects::find($project_id);
+
+        $data = array(
+            'css' => array(),
+            'js' => array(),
+            'title' => trans('projects.info', array('title' => $project->title)),
+            'project' => $project,
+        );
+
+        return View::make('cabinet.main', $data)
+            ->nest('body', 'cabinet.projects.info', $data);
+    }
+
+    public function edit($project_id)
+    {
+        View::share('menu_item', 'projects');
+
+        if (!Projects::getInstance()->isProjectTeamlead(Auth::user()->id, $project_id)) {
+            Misc::getInstance()->setSystemMessage(trans('projects.no_access'), 'danger');
+            return Redirect::to(URL::route('index'));
+        }
+
+        $project = Projects::find($project_id);
+
+        $data = array(
+            'css' => array(),
+            'js' => array(),
+            'title' => trans('projects.edit_project_title', array('title' => $project->title)),
+            'project' => $project,
+        );
+
+        return View::make('cabinet.main', $data)
+            ->nest('body', 'cabinet.projects.edit', $data);
+    }
+
+    public function save($project_id)
+    {
+        if (!Projects::getInstance()->isProjectTeamlead(Auth::user()->id, $project_id)) {
+            Misc::getInstance()->setSystemMessage(trans('projects.no_access'), 'danger');
+            return Redirect::to(URL::route('index'));
+        }
+
+        $project = Projects::find($project_id);
+
+        $project->title = e(Input::get('title', 'Untitled'));
+        $project->description = e(Input::get('description', ''));
+        $project->save();
+        return Redirect::to(URL::route('projects'));
+    }
 }

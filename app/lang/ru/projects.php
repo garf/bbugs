@@ -3,11 +3,11 @@
 return array(
     'projects' => 'Проекты',
     'create_project' => 'Создать проект',
-    'delete_project' => 'Удалить проект',
+    'delete_project' => 'Удалить',
     'your_role' => 'Ваша роль',
     'view_info' => 'Информация',
-    'add_remove_users' => 'Добавить/Удалить пользователей',
-    'edit_project' => 'Редактировать проект',
+    'users' => 'Пользователи',
+    'edit_project' => 'Редактировать',
     'created_at' => 'Создан',
     'no_projects' => 'Нет созданных проектов',
     'new_project' => 'Новый проект',
@@ -30,5 +30,9 @@ return array(
     'developer' => 'Разработчки',
     'observer' => 'Только просмотр',
     'remove_user' => 'Удалить из проекта',
+    'edit_project_title' => 'Редактирование проекта ":title"',
+    'info' => 'Информация о проекте ":title"',
+    'save' => 'Сохранить изменения',
+    'cancel' => 'Отмена',
 
 );

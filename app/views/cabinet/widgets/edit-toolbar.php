@@ -19,7 +19,7 @@
 </div>
 <script>
     $(document).ready(function(){
-        var mku = new Markupy('<@ $to @>');
+        var mku = new Markupy('<?= $to ?>');
         mku.run();
     });
 </script>

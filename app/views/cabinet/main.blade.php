@@ -2,7 +2,7 @@
 <html class="no-js">
 <head>
     <meta charset="UTF-8">
-    <title><@@ $title @@> : <@ Config::get('app.sitename') @></title>
+    <title><?= e($title) ?> : <?= Config::get('app.sitename') ?></title>
     <link rel="shortcut icon" href="/favicon.png">
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,16 +26,16 @@
     <script type="text/javascript" src="/template/common/js/markupy-toolbar.js"></script>
 
 </head>
-<body class="<@ (isset($body_class) ? $body_class : '') @> bgimage <@ TplHelpers::getBgClass(); @>" ng-app>
-<div class=" dk bgimage <@ TplHelpers::getBgClass(); @>" id="wrap">
+<body class="<?= (isset($body_class) ? $body_class : '') ?> bgimage <?= TplHelpers::getBgClass(); ?>" ng-app>
+<div class=" dk bgimage <?= TplHelpers::getBgClass(); ?>" id="wrap">
 <div id="top">
 
-    <@ View::make('cabinet.widgets.navbar') @>
+    <?= View::make('cabinet.widgets.navbar') ?>
     <header class="head">
         <div class="search-bar">
             <form class="main-search" action="">
                 <div class="input-group">
-                    <input type="text" class="form-control disabled" placeholder="<@ trans('menu.search_ph') @>" disabled="disabled">
+                    <input type="text" class="form-control disabled" placeholder="<?= trans('menu.search_ph') ?>" disabled="disabled">
                 <span class="input-group-btn">
             <button class="btn btn-primary btn-sm text-muted" type="button">
                 <i class="fa fa-search"></i>
@@ -45,20 +45,20 @@
             </form>
         </div>
         <div class="main-bar">
-            <h3><i class="fa fa-th-large"></i>&nbsp; <@@ $title @@></h3>
+            <h3><i class="fa fa-th-large"></i>&nbsp; <?= e($title) ?></h3>
         </div>
     </header>
 </div>
 <div id="left">
 
-<@ View::make('cabinet.widgets.user-info') @>
-<@ View::make('cabinet.widgets.left-menu') @>
+<?= View::make('cabinet.widgets.user-info') ?>
+<?= View::make('cabinet.widgets.left-menu') ?>
 </div>
 <div id="content" data-canvas="body">
     <div class="outer">
-        <@ TplHelpers::systemMessagesFormatted() @>
+        <?= TplHelpers::systemMessagesFormatted() ?>
         <div class="inner bg-light lter"  style="min-height: 500px;">
-            <@ $body @>
+            <?= $body ?>
         </div>
     </div>
 </div>

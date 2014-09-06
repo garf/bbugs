@@ -9,6 +9,8 @@ return array(
     'issue_status' => 'Status',
     'issue_type' => 'Type',
     'issue_priority' => 'Priority',
+    'project' => 'Project',
+    'updated' => 'Updated',
     'creator' => 'Creator',
     'created' => 'Created',
     'assignee' => 'Assignee',
@@ -26,6 +28,7 @@ return array(
     'files' => 'Files',
     'new_comment' => 'New comment',
     'add_comment' => 'Add comment',
+    'update_issue' => 'Update issue',
 
     'all_opened' => 'All opened',
     'all_closed' => 'All closed',

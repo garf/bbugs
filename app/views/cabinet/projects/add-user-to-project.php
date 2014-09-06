@@ -1,8 +1,8 @@
 <br />
 <script>
-    document.ask = "<@ URL::route('project-users', array('project_id' => $project->id)) @>";
-    document.add = "<@ URL::route('project-add-user') @>";
-    document.remove = "<@ URL::route('project-remove-user') @>";
+    document.ask = "<?= URL::route('project-users', array('project_id' => $project->id)) ?>";
+    document.add = "<?= URL::route('project-add-user') ?>";
+    document.remove = "<?= URL::route('project-remove-user') ?>";
 </script>
 <div ng-controller="AddUserToProjectController" ng-init="list()">
     <div class="text-center alert alert-info" ng-show="isLoading()">
@@ -28,30 +28,30 @@
             </td>
             <td class="text-right">
 
-                <a ng-click="addToProject(<@ $project->id @>, contact.id, 'observer')" ng-hide="contact.already" class="btn btn-labeled btn-info">
+                <a ng-click="addToProject(<?= $project->id ?>, contact.id, 'observer')" ng-hide="contact.already" class="btn btn-labeled btn-info">
                     <span class="btn-label">
                         <i class="fa fa-plus"></i>
                     </span>
-                    <@ trans('projects.observer') @>
+                    <?= trans('projects.observer') ?>
                 </a>
-                <a ng-click="addToProject(<@ $project->id @>, contact.id, 'developer')" ng-hide="contact.already" class="btn btn-labeled btn-success">
+                <a ng-click="addToProject(<?= $project->id ?>, contact.id, 'developer')" ng-hide="contact.already" class="btn btn-labeled btn-success">
                     <span class="btn-label">
                         <i class="fa fa-plus"></i>
                     </span>
-                    <@ trans('projects.developer') @>
+                    <?= trans('projects.developer') ?>
                 </a>
-                <a ng-click="addToProject(<@ $project->id @>, contact.id, 'teamlead')" ng-hide="contact.already" class="btn btn-labeled btn-danger">
+                <a ng-click="addToProject(<?= $project->id ?>, contact.id, 'teamlead')" ng-hide="contact.already" class="btn btn-labeled btn-danger">
                     <span class="btn-label">
                         <i class="fa fa-plus"></i>
                     </span>
-                    <@ trans('projects.teamlead') @>
+                    <?= trans('projects.teamlead') ?>
                 </a>
 
-                <a ng-click="removeFromProject(<@ $project->id @>, contact.id)" ng-show="contact.already" class="btn btn-labeled btn-default">
+                <a ng-click="removeFromProject(<?= $project->id ?>, contact.id)" ng-show="contact.already" class="btn btn-labeled btn-default">
                     <span class="btn-label">
                         <i class="fa fa-minus"></i>
                     </span>
-                    <@ trans('projects.remove_user') @>
+                    <?= trans('projects.remove_user') ?>
                 </a>
             </td>
         </tr>

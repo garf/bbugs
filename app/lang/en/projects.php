@@ -3,11 +3,11 @@
 return array(
     'projects' => 'Projects',
     'create_project' => 'Create project',
-    'delete_project' => 'Delete project',
+    'delete_project' => 'Delete',
     'your_role' => 'Your role',
     'view_info' => 'View info',
-    'add_remove_users' => 'Add/Remove users',
-    'edit_project' => 'Edit project',
+    'users' => 'Users',
+    'edit_project' => 'Edit',
     'created_at' => 'Created at',
     'no_projects' => 'No projects',
     'new_project' => 'New project',
@@ -30,4 +30,8 @@ return array(
     'developer' => 'Developer',
     'observer' => 'Observer',
     'remove_user' => 'Remove from project',
+    'edit_project_title' => 'Edit project ":title"',
+    'info' => '":title" project info',
+    'save' => 'Save changes',
+    'cancel' => 'Cancel',
 );

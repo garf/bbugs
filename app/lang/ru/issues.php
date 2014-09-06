@@ -9,6 +9,8 @@ return array(
     'issue_status' => 'Статус',
     'issue_type' => 'Тип',
     'issue_priority' => 'Приоритет',
+    'project' => 'Проект',
+    'updated' => 'Обновлена',
     'creator' => 'Создатель',
     'created' => 'Создано',
     'assignee' => 'Исполнитель',
@@ -26,6 +28,7 @@ return array(
     'files' => 'Файлы',
     'new_comment' => 'Новый коментарий',
     'add_comment' => 'Добавить коментарий',
+    'update_issue' => 'Обновить задачу',
 
     'all_opened' => 'Все открытые',
     'all_closed' => 'Все закрытые',

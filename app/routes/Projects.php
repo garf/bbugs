@@ -6,26 +6,44 @@ Route::get('/projects', array(
     'uses' => 'ProjectsController@index',
 ));
 
-Route::post('/project-create', array(
+Route::post('/projects/create', array(
     'before' => 'auth',
     'as' => 'create-project',
     'uses' => 'ProjectsController@create',
 ));
 
-Route::get('/projects/delete/{id}', array(
-    'before' => 'auth',
+Route::get('/projects/info/{project_id}', array(
+    'before' => 'auth|project-user',
+    'as' => 'project-info',
+    'uses' => 'ProjectsController@info',
+))->where(array('project_id' => '[0-9]+'));
+
+Route::get('/projects/edit/{project_id}', array(
+    'before' => 'auth|project-user',
+    'as' => 'edit-project',
+    'uses' => 'ProjectsController@edit',
+))->where(array('project_id' => '[0-9]+'));
+
+Route::post('/projects/save/{project_id}', array(
+    'before' => 'auth|project-user',
+    'as' => 'save-project',
+    'uses' => 'ProjectsController@save',
+))->where(array('project_id' => '[0-9]+'));
+
+Route::get('/projects/delete/{project_id}', array(
+    'before' => 'auth|project-user',
     'as' => 'project-delete',
     'uses' => 'ProjectsController@delete',
-))->where(array('id' => '[0-9]+'));
+))->where(array('project_id' => '[0-9]+'));
 
-Route::get('/projects/view/{id}', array(
-    'before' => 'auth',
+Route::get('/projects/view/{project_id}', array(
+    'before' => 'auth|project-user',
     'as' => 'project-view',
     'uses' => 'ProjectsController@view',
-))->where(array('id' => '[0-9]+'));
+))->where(array('project_id' => '[0-9]+'));
 
 Route::get('/projects/{project_id}/add-user', array(
-    'before' => 'auth',
+    'before' => 'auth|project-user',
     'as' => 'add-to-project',
     'uses' => 'ProjectsController@addUser',
 ))->where(array('project_id' => '[0-9]+'));

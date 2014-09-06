@@ -210,6 +210,6 @@ class IssuesController extends BaseController {
             'not_actual' => array('not_actual'),
         );
 
-        return (isset($statsArray[$stats]) ? $statsArray[$stats] : 'not_done');
+        return (isset($statsArray[$stats]) ? $statsArray[$stats] : $statsArray['not_done']);
     }
 }
