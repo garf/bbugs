@@ -75,6 +75,10 @@
         </ul>
     </div>
 </div>
+<br />
+<div class="text-center">
+    <img src="https://www.positivessl.com/images-new/PositiveSSL_tl_trans.png" alt="Positive SSL on a transparent background" title="Positive SSL on a transparent background" border="0" />
+</div>
 <script src="/template/common/js/jquery-1.11.0.js"></script>
 <script src="/template/common/js/bootstrap.min.js"></script>
 
