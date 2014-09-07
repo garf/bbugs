@@ -225,6 +225,7 @@ class ProjectsController extends BaseController {
             'opened_percent' => $opened_percent,
             'closed_percent' => $closed_percent,
             'contacts' => Projects::getInstance()->getProjectUsers($project_id),
+            'is_teamlead' => Projects::getInstance()->isProjectTeamlead(Auth::user()->id, $project_id),
         );
 
         return View::make('cabinet.main', $data)
@@ -267,5 +268,22 @@ class ProjectsController extends BaseController {
         $project->budget = floatval(Input::get('budget', 0));
         $project->save();
         return Redirect::to(URL::route('projects'));
+    }
+    public function setHourCost($project_id, $user_id)
+    {
+        if (!Projects::getInstance()->isProjectTeamlead(Auth::user()->id, $project_id)) {
+            Misc::getInstance()->setSystemMessage(trans('projects.no_access'), 'danger');
+            return Redirect::to(URL::route('project-info', array('project_id' => $project_id)));
+        }
+
+        $params = array(
+            'project_id' => $project_id,
+            'user_id' => $user_id,
+            'hour_cost' => floatval(Input::get('hour_cost', 0)),
+        );
+
+        Projects::getInstance()->setHourCost($params);
+        Misc::getInstance()->setSystemMessage(trans('projects.user_hour_cost_set'), 'success');
+        return Redirect::to(URL::route('project-info', array('project_id' => $project_id)));
     }
 }

@@ -9,6 +9,7 @@ return array(
     'issue_status' => 'Status',
     'issue_type' => 'Type',
     'issue_priority' => 'Priority',
+    'issue_assigned' => 'Assigned',
     'hours_to_complete' => 'Hours to complete',
     'project' => 'Project',
     'updated' => 'Updated',
@@ -21,6 +22,7 @@ return array(
     'you' => 'You',
     'minimize' => 'Minimize',
 
+    'assigned_nobody' => 'Nobody',
     'new_issue' => 'New issue',
     'create_issue' => 'Create issue',
 

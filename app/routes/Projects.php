@@ -54,6 +54,12 @@ Route::get('/projects/{project_id}/users-list', array(
     'uses' => 'ProjectsController@projectUsersList',
 ))->where(array('project_id' => '[0-9]+'));
 
+Route::post('/projects/{project_id}/set-hour-cost/{user_id}', array(
+    'before' => 'auth',
+    'as' => 'set-hour-cost',
+    'uses' => 'ProjectsController@setHourCost',
+))->where(array('project_id' => '[0-9]+', 'user_id' => '[0-9]+'));
+
 Route::post('/projects/add-user', array(
     'before' => 'auth',
     'as' => 'project-add-user',

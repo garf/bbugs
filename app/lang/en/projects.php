@@ -49,4 +49,5 @@ return array(
     'budget' => 'Budget',
     'set' => 'Set',
     'role' => 'Role',
+    'user_hour_cost_set' => 'User\'s hour cost set',
 );

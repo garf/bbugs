@@ -85,7 +85,6 @@ function AddUserToProjectController($scope, $http) {
             }
         )
             .success(function(data, status, headers, config) {
-                console.log(data);
                 $scope.error = data.error;
                 $scope.message = data.message;
                 if(!$scope.error) {

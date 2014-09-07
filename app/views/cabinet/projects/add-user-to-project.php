@@ -16,7 +16,7 @@
             <div class="col-md-1">
                 <img class="img-thumbnail" alt="Gravatar" ng-src="{{ contact.avatar }}">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-8">
                 <div class="clearfix">
                     <div class="text-left">
                         <div>
@@ -26,24 +26,6 @@
                         <div><span class="text-muted"><?= trans('projects.role') ?>:</span> {{ contact.role }}</div>
                         <div>{{ contact.notes }}</div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div ng-show="contact.already">
-                    <form>
-                        <div class=" clearfix">
-                            <div class="form-group">
-                                <label for="projectBudgetInput"><?= trans('projects.hour_cost') ?></label>
-                                <div class="input-group input-group-sm">
-                                    <span class="input-group-addon">$</span>
-                                    <input type="text" name="budget" class="form-control" value="{{ contact.hour_cost }}" id="projectBudgetInput" placeholder="5000.00" />
-                                <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button"><?= trans('projects.set') ?></button>
-                                </span>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
             <div class="col-md-3">

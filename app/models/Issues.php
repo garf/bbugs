@@ -25,7 +25,28 @@ class Issues extends Eloquent {
             WHERE status IN (" . $in . ")
             AND project_id=?
             ORDER BY priority ASC
-            LIMIT 50
+            LIMIT 100
+        ", $where);
+    }
+
+    public function getProjectIssuesWithData($params)
+    {
+        $in = trim(str_repeat('?, ', count($params['statuses'])), ', ');
+        $where = array();
+        $where[] = $params['user_id'];
+        $where = array_merge($where, $params['statuses']);
+        $where[] = $params['project_id'];
+        return DB::select("
+            SELECT i.*, u.name as uname, con.title as utitle
+            FROM lb_issues i
+            LEFT JOIN lb_users u
+            ON i.assigned=u.id
+            LEFT JOIN lb_contacts con
+            ON con.contact_id=u.id AND con.user_id=?
+            WHERE i.status IN (" . $in . ")
+            AND i.project_id=?
+            ORDER BY i.priority ASC
+            LIMIT 100
         ", $where);
     }
 
@@ -144,6 +165,15 @@ class Issues extends Eloquent {
             return false;
         }
         return Projects::getInstance()->isProjectTeamlead($user_id, $issue->project_id);
+    }
+
+    public function isIssueObserver($user_id, $issue_id)
+    {
+        $issue = self::find($issue_id);
+        if(empty($issue)) {
+            return false;
+        }
+        return Projects::getInstance()->isProjectObserver($user_id, $issue->project_id);
     }
 
     public function statsMapper($stats)

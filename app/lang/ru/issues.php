@@ -9,6 +9,7 @@ return array(
     'issue_status' => 'Статус',
     'issue_type' => 'Тип',
     'issue_priority' => 'Приоритет',
+    'issue_assigned' => 'Назначена',
     'hours_to_complete' => 'Часов на завершение',
     'project' => 'Проект',
     'updated' => 'Обновлена',
@@ -47,6 +48,7 @@ return array(
     'quote' => 'Цитировать',
     'edit' => 'Изменить',
 
+    'assigned_nobody' => 'Не назначена',
     'no_issues' => 'Нет задач',
     'no_issues_assigned' => 'Нет задач назначенных мне',
 

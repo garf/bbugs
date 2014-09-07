@@ -1,12 +1,16 @@
 <br />
 <div class="well well-sm">
-    <a href="<?= URL::route('issue-new', array('project_id' => $issue->project_id)); ?>" class="btn btn-danger"><?= trans('issues.new_issue') ?></a>
+    <?php if (!$is_observer) { ?>
+        <a href="<?= URL::route('issue-new', array('project_id' => $issue->project_id)); ?>" class="btn btn-danger"><?= trans('issues.new_issue') ?></a>
+    <?php } ?>
 </div>
 <div class="panel panel-success">
     <div class="panel-heading clearfix">
         <div style="float: left;"><strong><?= $issue->title ?></strong></div>
         <div style="float: right;">
-            <a href="#" class="btn btn-xs btn-warning"><?= trans('issues.edit') ?></a>
+            <?php if (!$is_observer) { ?>
+                <a href="#" class="btn btn-xs btn-warning"><?= trans('issues.edit') ?></a>
+            <?php } ?>
             <a href="#contentBlock" data-toggle="collapse" class="btn btn-xs btn-default minimize-box" title="<?= trans('issues.minimize') ?>">
                 <i class="fa fa-angle-up"></i>
             </a></div>
@@ -112,13 +116,15 @@
                         <tr class="warning">
                             <td colspan="2">
                                 <div class="col-md-4">
-                                    <a href="javascript: ;" class="btn btn-primary btn-line btn-xs quote-comment" data-quote-id="<?= $comment->id ?>"><?= trans('issues.quote') ?></a>&nbsp;
-                                    <?php if ($comment->creator == Auth::user()->id) { ?>
-                                        <a href="<?= URL::route('delete-comment', array('comment_id' => $comment->id)) ?>"
-                                           onclick="return confirm('<?= trans('issues.want_delete_comment') ?>');"
-                                           class="btn btn-danger btn-line btn-xs">
-                                            <?= trans('issues.delete') ?>
-                                        </a>&nbsp;
+                                    <?php if (!$is_observer) { ?>
+                                        <a href="javascript: ;" class="btn btn-primary btn-line btn-xs quote-comment" data-quote-id="<?= $comment->id ?>"><?= trans('issues.quote') ?></a>&nbsp;
+                                        <?php if ($comment->creator == Auth::user()->id) { ?>
+                                            <a href="<?= URL::route('delete-comment', array('comment_id' => $comment->id)) ?>"
+                                               onclick="return confirm('<?= trans('issues.want_delete_comment') ?>');"
+                                               class="btn btn-danger btn-line btn-xs">
+                                                <?= trans('issues.delete') ?>
+                                            </a>&nbsp;
+                                        <?php } ?>
                                     <?php } ?>
                                 </div>
 
@@ -149,127 +155,129 @@
         <hr />
     </div>
 
-    <div id="commentNew" class="panel-body" ng-controller="AddCommentController">
-        <form action="<?= URL::route('update-issue', array('issue_id' => $issue->id)) ?>" method="post" enctype="multipart/form-data">
-            <input type="hidden" id="maxFiles" value="<?= Files::getInstance()->maxUserFiles(Auth::user()->id, 'comment') ?>" />
-            <div class="col-md-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <?= trans('issues.new_comment') ?>
-                    </div>
-                    <div class="panel-body">
-                        <textarea class="form-control"
-                                  id="commentTextarea"
-                                  name="comment"
-                                  placeholder="<?= trans('issues.ph_comment') ?>"></textarea>
+    <?php if (!$is_observer) { ?>
+        <div id="commentNew" class="panel-body" ng-controller="AddCommentController">
+            <form action="<?= URL::route('update-issue', array('issue_id' => $issue->id)) ?>" method="post" enctype="multipart/form-data">
+                <input type="hidden" id="maxFiles" value="<?= Files::getInstance()->maxUserFiles(Auth::user()->id, 'comment') ?>" />
+                <div class="col-md-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <?= trans('issues.new_comment') ?>
+                        </div>
+                        <div class="panel-body">
+                            <textarea class="form-control"
+                                      id="commentTextarea"
+                                      name="comment"
+                                      placeholder="<?= trans('issues.ph_comment') ?>"></textarea>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <?= trans('issues.attach_files') ?>
-                    </div>
-                    <div class="panel-body">
-                        <div>
-                            <div class="col-md-6">
-                                <input type="file" name="userfile[]" />
-                            </div>
-                            <div class="clearfix"></div>
-                            <div ng-repeat="(index, line) in lines">
-                                <div class="col-md-8">
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <?= trans('issues.attach_files') ?>
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                <div class="col-md-6">
                                     <input type="file" name="userfile[]" />
                                 </div>
-                                <div class="col-md-2">
-                                    <a class="btn btn-xs btn-danger" ng-click="removeFile(index)"><i class="fa fa-times"></i></a>
-                                </div>
                                 <div class="clearfix"></div>
+                                <div ng-repeat="(index, line) in lines">
+                                    <div class="col-md-8">
+                                        <input type="file" name="userfile[]" />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a class="btn btn-xs btn-danger" ng-click="removeFile(index)"><i class="fa fa-times"></i></a>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 15px;" class="col-md-12" ng-hide="isMaxMessage()">
+                                <a class="btn btn-xs btn-success btn-labeled" ng-click="addFile();">
+                                    <span class="btn-label"><i class="fa fa-plus"></i></span>
+                                    <?= trans('issues.one_more_file') ?>
+                                </a>
+                            </div>
+                            <div class=" clearfix"></div>
+                            <br />
+                            <div class="alert alert-danger" ng-show="isMaxMessage()"><?= trans('issues.no_more_files') ?></div>
+                            <div class="alert alert-info"><?= trans('issues.max_file_size') ?>: <strong><?= TplHelpers::getMaxFilesize() ?></strong></div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <?= trans('issues.parameters') ?>
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                <div class="form-group">
+                                    <label for="assignedSelect" class="control-label col-lg-4"><?= trans('issues.assign_to') ?></label>
+                                    <div class="col-lg-8">
+                                        <select name="assigned" id="assignedSelect" class="form-control">
+                                            <option value="0"></option>
+                                            <?php foreach ($contacts as $contact) { ?>
+                                                <?php if ($contact->role == 'observer') continue; ?>
+                                                <option value="<?= $contact->id ?>" <?= ($issue->assigned == $contact->id) ? 'selected="selected"' : '' ?>>
+                                                    <?= (trim($contact->title) != '') ? $contact->title : $contact->name ?>
+                                                    <?php if ($contact->id == Auth::user()->id) { ?>
+                                                        (<?= trans('issues.you') ?>)
+                                                    <?php } ?>
+                                                </option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div>
+                                <div class="form-group">
+                                    <label for="statusSelect" class="control-label col-lg-4"><?= trans('issues.change_status') ?></label>
+                                    <div class="col-lg-8">
+                                        <select name="status" id="statusSelect" class="form-control">
+                                            <option value="opened" <?= ($issue->status == 'opened') ? 'selected="selected"' : '' ?>><?= trans('issues.status.opened.title') ?></option>
+                                            <option value="in_work" <?= ($issue->status == 'in_work') ? 'selected="selected"' : '' ?>><?= trans('issues.status.in_work.title') ?></option>
+                                            <option value="need_feedback" <?= ($issue->status == 'need_feedback') ? 'selected="selected"' : '' ?>><?= trans('issues.status.need_feedback.title') ?></option>
+                                            <optgroup label="Closed">
+                                                <option value="closed" <?= ($issue->status == 'closed') ? 'selected="selected"' : '' ?>><?= trans('issues.status.closed.title') ?></option>
+                                                <option value="not_actual" <?= ($issue->status == 'not_actual') ? 'selected="selected"' : '' ?>><?= trans('issues.status.not_actual.title') ?></option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div>
+                                <div class="form-group">
+                                    <label for="prioritySelect" class="control-label col-lg-4"><?= trans('issues.issue_priority') ?></label>
+                                    <div class="col-lg-8">
+                                        <select name="priority" id="prioritySelect" class="form-control">
+                                            <option value="1" <?= ($issue->priority == 1) ? 'selected="selected"' : '' ?>><?= trans('issues.priority.1.title') ?></option>
+                                            <option value="2"<?= ($issue->priority == 2) ? 'selected="selected"' : '' ?>><?= trans('issues.priority.2.title') ?></option>
+                                            <option value="3"<?= ($issue->priority == 3) ? 'selected="selected"' : '' ?>><?= trans('issues.priority.3.title') ?></option>
+                                            <option value="4"<?= ($issue->priority == 4) ? 'selected="selected"' : '' ?>><?= trans('issues.priority.4.title') ?></option>
+                                            <option value="5"<?= ($issue->priority == 5) ? 'selected="selected"' : '' ?>><?= trans('issues.priority.5.title') ?></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div>
+                                <div class="form-group">
+                                    <label for="hoursInpur" class="control-label col-lg-8"><?= trans('issues.hours_to_complete') ?>:</label>
+                                    <div class="col-lg-4">
+                                        <input type="text" name="hours_spent" class="form-control" id="hoursInput" value="<?= $issue->hours_spent ?>" placeholder="0.00" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div style="margin-top: 15px;" class="col-md-12" ng-hide="isMaxMessage()">
-                            <a class="btn btn-xs btn-success btn-labeled" ng-click="addFile();">
-                                <span class="btn-label"><i class="fa fa-plus"></i></span>
-                                <?= trans('issues.one_more_file') ?>
-                            </a>
-                        </div>
-                        <div class=" clearfix"></div>
-                        <br />
-                        <div class="alert alert-danger" ng-show="isMaxMessage()"><?= trans('issues.no_more_files') ?></div>
-                        <div class="alert alert-info"><?= trans('issues.max_file_size') ?>: <strong><?= TplHelpers::getMaxFilesize() ?></strong></div>
                     </div>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <?= trans('issues.parameters') ?>
-                    </div>
-                    <div class="panel-body">
-                        <div>
-                            <div class="form-group">
-                                <label for="assignedSelect" class="control-label col-lg-4"><?= trans('issues.assign_to') ?></label>
-                                <div class="col-lg-8">
-                                    <select name="assigned" id="assignedSelect" class="form-control">
-                                        <option value="0"></option>
-                                        <?php foreach ($contacts as $contact) { ?>
-                                            <?php if ($contact->role == 'observer') continue; ?>
-                                            <option value="<?= $contact->id ?>" <?= ($issue->assigned == $contact->id) ? 'selected="selected"' : '' ?>>
-                                                <?= (trim($contact->title) != '') ? $contact->title : $contact->name ?>
-                                                <?php if ($contact->id == Auth::user()->id) { ?>
-                                                    (<?= trans('issues.you') ?>)
-                                                <?php } ?>
-                                            </option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-                        <div>
-                            <div class="form-group">
-                                <label for="statusSelect" class="control-label col-lg-4"><?= trans('issues.change_status') ?></label>
-                                <div class="col-lg-8">
-                                    <select name="status" id="statusSelect" class="form-control">
-                                        <option value="opened" <?= ($issue->status == 'opened') ? 'selected="selected"' : '' ?>><?= trans('issues.status.opened.title') ?></option>
-                                        <option value="in_work" <?= ($issue->status == 'in_work') ? 'selected="selected"' : '' ?>><?= trans('issues.status.in_work.title') ?></option>
-                                        <option value="need_feedback" <?= ($issue->status == 'need_feedback') ? 'selected="selected"' : '' ?>><?= trans('issues.status.need_feedback.title') ?></option>
-                                        <optgroup label="Closed">
-                                            <option value="closed" <?= ($issue->status == 'closed') ? 'selected="selected"' : '' ?>><?= trans('issues.status.closed.title') ?></option>
-                                            <option value="not_actual" <?= ($issue->status == 'not_actual') ? 'selected="selected"' : '' ?>><?= trans('issues.status.not_actual.title') ?></option>
-                                        </optgroup>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-                        <div>
-                            <div class="form-group">
-                                <label for="prioritySelect" class="control-label col-lg-4"><?= trans('issues.issue_priority') ?></label>
-                                <div class="col-lg-8">
-                                    <select name="priority" id="prioritySelect" class="form-control">
-                                        <option value="1" <?= ($issue->priority == 1) ? 'selected="selected"' : '' ?>><?= trans('issues.priority.1.title') ?></option>
-                                        <option value="2"<?= ($issue->priority == 2) ? 'selected="selected"' : '' ?>><?= trans('issues.priority.2.title') ?></option>
-                                        <option value="3"<?= ($issue->priority == 3) ? 'selected="selected"' : '' ?>><?= trans('issues.priority.3.title') ?></option>
-                                        <option value="4"<?= ($issue->priority == 4) ? 'selected="selected"' : '' ?>><?= trans('issues.priority.4.title') ?></option>
-                                        <option value="5"<?= ($issue->priority == 5) ? 'selected="selected"' : '' ?>><?= trans('issues.priority.5.title') ?></option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-                        <div>
-                            <div class="form-group">
-                                <label for="hoursInpur" class="control-label col-lg-8"><?= trans('issues.hours_to_complete') ?>:</label>
-                                <div class="col-lg-4">
-                                    <input type="text" name="hours_spent" class="form-control" id="hoursInput" value="<?= $issue->hours_spent ?>" placeholder="0.00" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="clearfix"></div>
+                <div class="text-right">
+                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="<?= trans('issues.update_issue') ?>" />
                 </div>
-            </div>
-            <div class="clearfix"></div>
-            <div class="text-right">
-                <input type="submit" class="btn btn-primary btn-lg btn-block" value="<?= trans('issues.update_issue') ?>" />
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
+    <?php } ?>
 </div>

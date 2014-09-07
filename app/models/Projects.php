@@ -67,13 +67,25 @@ class Projects extends Eloquent {
     public function getProjectUsers($project_id)
     {
         return DB::select("
-            SELECT u.*, pu.role, pu.hour_cost
+            SELECT u.*, pu.role, pu.hour_cost, pu.id as puid
             FROM lb_project_user pu
             LEFT JOIN lb_users u
             ON pu.user_id=u.id
             WHERE pu.project_id=?
             ORDER BY u.name ASC
             LIMIT 50
+        ", array($project_id));
+    }
+
+    public function getProjectUser($project_id, $user_id)
+    {
+        return DB::selectOne("
+            SELECT u.*, pu.role, pu.hour_cost, pu.id as puid
+            FROM lb_project_user pu
+            LEFT JOIN lb_users u
+            ON pu.user_id=u.id
+            WHERE pu.project_id=? AND pu.user_id=?
+            LIMIT 1
         ", array($project_id));
     }
 
@@ -124,6 +136,20 @@ class Projects extends Eloquent {
         return !empty($result);
     }
 
+    public function isProjectObserver($user_id, $project_id)
+    {
+        $result = DB::selectOne("
+            SELECT *
+            FROM lb_project_user
+            WHERE user_id=?
+            AND project_id=?
+            AND role='observer'
+            LIMIT 1
+        ", array($user_id, $project_id));
+
+        return !empty($result);
+    }
+
     public function setDeleted($project_id)
     {
         return DB::update("
@@ -134,6 +160,20 @@ class Projects extends Eloquent {
         ", array(
             '0',
             $project_id
+        ));
+    }
+
+    public function setHourCost($params)
+    {
+        return DB::update("
+            UPDATE lb_project_user
+            SET hour_cost=?
+            WHERE project_id=? AND user_id=?
+            LIMIT 1
+        ", array(
+            $params['hour_cost'],
+            $params['project_id'],
+            $params['user_id'],
         ));
     }
 

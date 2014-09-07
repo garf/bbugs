@@ -35,14 +35,17 @@ class IssuesController extends BaseController {
         $params = array(
             'project_id' => $project_id,
             'statuses' => $this->_statsMapper($stats),
+            'user_id' => Auth::user()->id,
         );
-        $issues = Issues::getInstance()->getProjectIssues($params);
+        $issues = Issues::getInstance()->getProjectIssuesWithData($params);
         $data = array(
             'css' => array(),
             'js' => array(),
             'title' => $project->title,
             'project' => $project,
             'issues' => $issues,
+            'is_observer' => Projects::getInstance()->isProjectObserver(Auth::user()->id, $project_id),
+            'is_teamlead' => Projects::getInstance()->isProjectTeamlead(Auth::user()->id, $project_id),
         );
 
         return View::make('cabinet.main', $data)
@@ -78,6 +81,7 @@ class IssuesController extends BaseController {
             'files' => Files::getInstance()->getByIssue(array('issue_id' => $issue_id)),
             'contacts' => Users::getInstance()->getProjectContacts(Auth::user()->id, $issue->project_id),
             'is_teamlead' => Projects::getInstance()->isProjectTeamlead(Auth::user()->id, $issue->project_id),
+            'is_observer' => Projects::getInstance()->isProjectObserver(Auth::user()->id, $issue->project_id),
         );
 
         if($issue->status == 'new' && $issue->assigned == Auth::user()->id) {
