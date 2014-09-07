@@ -20,7 +20,7 @@ $(document).ready(function(){
     $('.quote-comment').click(function(){
         var id = $(this).attr('data-quote-id');
         var ct = $("#commentTextarea");
-        ct.val( ct.val() + $('#commentContent' + id).text().trim() );
+        ct.val( ct.val() + $('#commentContent' + id).text().trim() ).trigger('autosize.resize');
         $("html, body").animate({scrollTop: ct.offset().top }, 200);
     });
 });
