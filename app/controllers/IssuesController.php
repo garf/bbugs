@@ -163,6 +163,9 @@ class IssuesController extends BaseController {
 
     public function updateIssue($issue_id)
     {
+        if (Issues::getInstance()->isIssueObserver(Auth::user()->id, $issue_id)) {
+            return Redirect::to(URL::route('index'));
+        }
         $comment = trim(Input::get('comment', ''));
 
         $userfiles = Input::file('userfile');
