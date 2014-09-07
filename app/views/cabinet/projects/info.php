@@ -38,15 +38,15 @@
                                     <td><?= trans('projects.issues_opened') ?></td>
                                     <td class="text-danger">
                                         <?php
-                                        $opcount = 0;
-                                        foreach($opened as $op) {
-                                            if($op->assigned == $contact->id) {
-                                                $opcount++;
-                                                $hours += $op->hours_spent;
-                                                $user_spent += ($op->hours_spent * $contact->hour_cost);
-                                                $budget_spent += ($op->hours_spent * $contact->hour_cost);
+                                            $opcount = 0;
+                                            foreach($opened as $op) {
+                                                if($op->assigned == $contact->id) {
+                                                    $opcount++;
+                                                    $hours += $op->hours_spent;
+                                                    $user_spent += ($op->hours_spent * $contact->hour_cost);
+                                                    $budget_spent += ($op->hours_spent * $contact->hour_cost);
+                                                }
                                             }
-                                        }
                                         ?>
                                         <?= $opcount ?>
                                     </td>
@@ -102,7 +102,7 @@
                                         <?php
                                             $inv_percent = ($all_count != 0) ? ($opcount + $clcount) * 100 / $all_count : 0;
                                         ?>
-                                        <?= $inv_percent ?>%
+                                        <?= round($inv_percent, 2) ?>%
                                         <span class="text-muted">
                                             ( <?= $hours ?> hours
                                             <?php if ($contact->hour_cost != 0) { ?>

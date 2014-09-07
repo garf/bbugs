@@ -64,7 +64,7 @@ class IssuesController extends BaseController {
         $issue->content = Markupy::parse(e(Input::get('content')));
         $issue->save();
         Issues::getInstance()->changeParams($issue_id, Input::all());
-        
+
         Misc::getInstance()->setSystemMessage(trans('issues.issue_saved'), 'success');
         return Redirect::to(URL::route('issue-view', array('issue_id' => $issue_id)));
     }
