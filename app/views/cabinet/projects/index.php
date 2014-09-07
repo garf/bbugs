@@ -50,6 +50,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form role="form" action="<?= URL::route('create-project') ?>" method="post" id="newProjectForm">
+                <input type="hidden" name="_token" value="<?= $token ?>" />
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                     <h4 class="modal-title" id="myModalLabel"><?= trans('projects.new_project') ?></h4>

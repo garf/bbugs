@@ -17,10 +17,56 @@ class IssuesController extends BaseController {
             'js' => array(),
             'title' => trans('issues.issues_to_me'),
             'issues' => Issues::getInstance()->getByAssignee($params),
+            'token' => csrf_token(),
         );
 
         return View::make('cabinet.main', $data)
             ->nest('body', 'cabinet.issues.index', $data);
+    }
+
+    public function edit($issue_id)
+    {
+        View::share('menu_item', 'issues');
+
+        if(Issues::getInstance()->isIssueObserver(Auth::user()->id, $issue_id)) {
+            Misc::getInstance()->setSystemMessage(trans('errors.not_permitted'), 'danger');
+            return Redirect::to(URL::route('issue-view', array('issue_id' => $issue_id)));
+        }
+
+        $issue = Issues::find($issue_id);
+
+        $data = array(
+            'css' => array(),
+            'js' => array(
+                '/template/common/js/markupy.js',
+                '/template/cabinet/js/issues/edit.js',
+            ),
+            'title' => trans('issues.issue_edit'),
+            'issue' => $issue,
+            'contacts' => Users::getInstance()->getProjectContacts(Auth::user()->id, $issue->project_id),
+            'token' => csrf_token(),
+        );
+
+        return View::make('cabinet.main', $data)
+            ->nest('body', 'cabinet.issues.edit', $data);
+    }
+
+    public function save($issue_id)
+    {
+        if(Issues::getInstance()->isIssueObserver(Auth::user()->id, $issue_id)) {
+            Misc::getInstance()->setSystemMessage(trans('errors.not_permitted'), 'danger');
+            return Redirect::to(URL::route('issue-view', array('issue_id' => $issue_id)));
+        }
+
+        $issue = Issues::find($issue_id);
+
+        $issue->title = e(Input::get('title', 'Untitled'));
+        $issue->content = Markupy::parse(e(Input::get('content')));
+        $issue->save();
+        Issues::getInstance()->changeParams($issue_id, Input::all());
+        
+        Misc::getInstance()->setSystemMessage(trans('issues.issue_saved'), 'success');
+        return Redirect::to(URL::route('issue-view', array('issue_id' => $issue_id)));
     }
 
     public function project($project_id, $stats='not_done')
@@ -46,6 +92,7 @@ class IssuesController extends BaseController {
             'issues' => $issues,
             'is_observer' => Projects::getInstance()->isProjectObserver(Auth::user()->id, $project_id),
             'is_teamlead' => Projects::getInstance()->isProjectTeamlead(Auth::user()->id, $project_id),
+            'token' => csrf_token(),
         );
 
         return View::make('cabinet.main', $data)
@@ -82,6 +129,7 @@ class IssuesController extends BaseController {
             'contacts' => Users::getInstance()->getProjectContacts(Auth::user()->id, $issue->project_id),
             'is_teamlead' => Projects::getInstance()->isProjectTeamlead(Auth::user()->id, $issue->project_id),
             'is_observer' => Projects::getInstance()->isProjectObserver(Auth::user()->id, $issue->project_id),
+            'token' => csrf_token(),
         );
 
         if($issue->status == 'new' && $issue->assigned == Auth::user()->id) {
@@ -111,6 +159,7 @@ class IssuesController extends BaseController {
             'title' => trans('issues.new_issue'),
             'project' => $project,
             'contacts' => Users::getInstance()->getProjectContacts(Auth::user()->id, $project->id),
+            'token' => csrf_token(),
         );
 
         return View::make('cabinet.main', $data)

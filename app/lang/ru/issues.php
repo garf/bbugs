@@ -2,6 +2,7 @@
 
 return array(
     'issues' => 'Задачи',
+    'issue_edit' => 'Редактирование задачи',
     'issues_to_me' => 'Задачи назначенные мне',
 
     'issue_title' => 'Название',
@@ -60,6 +61,7 @@ return array(
     'comment_deleted' => 'Коментарий удален',
     'want_delete_comment' => 'Вы действительно хотите удалить свой коментарий?',
     'want_delete_file' => 'Вы действительно хотите удалить файл :name?',
+    'issue_saved' => 'Изменения задачи сохранены',
 
     'priority' => array(
         '1' => array(

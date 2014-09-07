@@ -79,6 +79,7 @@
                                             </div>
                                             <div style="display:none;" id="editHours<?= $contact->id ?>">
                                                 <form method="post" action="<?= URL::route('set-hour-cost', array('project_id' => $project->id, 'user_id' => $contact->id)) ?>">
+                                                    <input type="hidden" name="_token" value="<?= $token ?>" />
                                                     <div class="clearfix">
                                                         <div class="input-group input-group-sm">
                                                             <span class="input-group-addon">$</span>

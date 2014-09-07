@@ -7,7 +7,7 @@ Route::get('/projects', array(
 ));
 
 Route::post('/projects/create', array(
-    'before' => 'auth',
+    'before' => 'auth/csrf',
     'as' => 'create-project',
     'uses' => 'ProjectsController@create',
 ));
@@ -25,7 +25,7 @@ Route::get('/projects/edit/{project_id}', array(
 ))->where(array('project_id' => '[0-9]+'));
 
 Route::post('/projects/save/{project_id}', array(
-    'before' => 'auth|project-user',
+    'before' => 'auth|csrf|project-user',
     'as' => 'save-project',
     'uses' => 'ProjectsController@save',
 ))->where(array('project_id' => '[0-9]+'));
@@ -55,7 +55,7 @@ Route::get('/projects/{project_id}/users-list', array(
 ))->where(array('project_id' => '[0-9]+'));
 
 Route::post('/projects/{project_id}/set-hour-cost/{user_id}', array(
-    'before' => 'auth',
+    'before' => 'auth|csrf',
     'as' => 'set-hour-cost',
     'uses' => 'ProjectsController@setHourCost',
 ))->where(array('project_id' => '[0-9]+', 'user_id' => '[0-9]+'));

@@ -8,4 +8,6 @@ return array(
     'back' => 'Go Back',
     'home' => 'Go Home',
     'check' => 'Check Availability',
+    'token_wrong' => 'Wrong control token. Please enter data again.',
+    'not_permitted' => 'Action not permitted',
 );

@@ -1,6 +1,7 @@
 <br />
 <div>
     <form action="<?= URL::route('save-project', array('project_id' => $project->id)) ?>" method="post">
+        <input type="hidden" name="_token" value="<?= $token ?>" />
         <div class="form-group">
             <label for="projectTitleInput"><?= trans('projects.project_name') ?> <span class="text-danger">*</span></label>
             <input type="text" name="title" class="form-control" value="<?= Input::old('title', $project->title) ?>" id="projectTitleInput" placeholder="<?= trans('projects.my_awesome_project') ?>" required="required" />

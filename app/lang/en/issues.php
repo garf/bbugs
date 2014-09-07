@@ -2,6 +2,7 @@
 
 return array(
     'issues' => 'Issues',
+    'issue_edit' => 'Edit issue',
     'issues_to_me' => 'Issues assigned to me',
 
     'issue_title' => 'Title',
@@ -60,6 +61,7 @@ return array(
     'comment_deleted' => 'Comment deleted',
     'want_delete_comment' => 'Do you really want to delete your comment?',
     'want_delete_file' => 'Do you really want to delete file :name?',
+    'issue_saved' => 'Issue data saved',
 
     'priority' => array(
         '1' => array(

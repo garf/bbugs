@@ -24,6 +24,7 @@
     <div class="tab-content">
         <div id="login" class="tab-pane active">
             <form action="<?= URL::route('login') ?>" method="post" id="loginForm">
+                <input type="hidden" name="_token" value="<?= $token ?>" />
                 <p class="text-muted text-center">
                     <?= trans('auth.enter_your') ?>
                 </p>
@@ -39,6 +40,7 @@
         </div>
         <div id="recover" class="tab-pane">
             <form action="<?= URL::route('recover') ?>" method="post"  id="recoverForm">
+                <input type="hidden" name="_token" value="<?= $token ?>" />
                 <p class="text-muted text-center"><?= trans('auth.enter_email') ?></p>
                 <input type="email" name="email" maxlength="200" placeholder="mail@domain.com" class="form-control">
                 <br>
@@ -47,6 +49,7 @@
         </div>
         <div id="signup" class="tab-pane">
             <form action="<?= URL::route('signup-post') ?>" method="post" id="signupForm">
+                <input type="hidden" name="_token" value="<?= $token ?>" />
                 <p class="text-muted text-center">
                     <?= trans('auth.registration_greeting') ?>
                     <br />

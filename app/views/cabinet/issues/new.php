@@ -1,6 +1,7 @@
 <br />
 <div ng-controller="NewIssueController">
     <form method="post" action="<?= URL::route('issue-add', array('project_id' => $project->id)) ?>" enctype="multipart/form-data">
+        <input type="hidden" name="_token" value="<?= $token ?>" />
         <input type="hidden" id="maxFiles" value="<?= Files::getInstance()->maxUserFiles(Auth::user()->id, 'new_issue') ?>" />
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -20,7 +21,7 @@
                     <div class="form-group">
                         <label for="contentTextarea" class="control-label col-lg-12"><?= trans('issues.issue_description') ?></label>
                         <div class="col-md-12">
-                            <textarea name="content" id="contentTextarea" class="form-control"><?= Input::old('description') ?></textarea>
+                            <textarea name="content" id="contentTextarea" class="form-control"><?= Input::old('content') ?></textarea>
                         </div>
                     </div>
                 </div>

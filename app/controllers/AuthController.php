@@ -18,6 +18,7 @@ class AuthController extends BaseController {
             ),
             'body_class' => 'login',
             'title' => trans('auth.authorization'),
+            'token' => csrf_token(),
         );
         return View::make('cabinet/auth/login', $data);
     }

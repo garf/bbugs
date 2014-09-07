@@ -9,7 +9,7 @@
         <div style="float: left;"><strong><?= $issue->title ?></strong></div>
         <div style="float: right;">
             <?php if (!$is_observer) { ?>
-                <a href="#" class="btn btn-xs btn-warning"><?= trans('issues.edit') ?></a>
+                <a href="<?= URL::route('issue-edit', array('issue_id' => $issue->id)) ?>" class="btn btn-xs btn-warning"><?= trans('issues.edit') ?></a>
             <?php } ?>
             <a href="#contentBlock" data-toggle="collapse" class="btn btn-xs btn-default minimize-box" title="<?= trans('issues.minimize') ?>">
                 <i class="fa fa-angle-up"></i>
@@ -158,6 +158,7 @@
     <?php if (!$is_observer) { ?>
         <div id="commentNew" class="panel-body" ng-controller="AddCommentController">
             <form action="<?= URL::route('update-issue', array('issue_id' => $issue->id)) ?>" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="_token" value="<?= $token ?>" />
                 <input type="hidden" id="maxFiles" value="<?= Files::getInstance()->maxUserFiles(Auth::user()->id, 'comment') ?>" />
                 <div class="col-md-8">
                     <div class="panel panel-default">

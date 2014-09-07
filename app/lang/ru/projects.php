@@ -28,7 +28,7 @@ return array(
     'user_already_in_project' => 'Пользователь уже в проекте',
     'teamlead' => 'Тимлид',
     'developer' => 'Разработчки',
-    'observer' => 'Только просмотр',
+    'observer' => 'Наблюдатель',
     'remove_user' => 'Удалить из проекта',
     'edit_project_title' => 'Редактирование проекта ":title"',
     'info' => 'Информация о проекте ":title"',

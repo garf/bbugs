@@ -98,7 +98,7 @@ class Issues extends Eloquent {
     public function changeParams($id, $params)
     {
         $priorities = array('1','2','3','4','5');
-        $statuses = array('opened', 'in_work', 'need_feedback', 'closed', 'not_actual');
+        $statuses = array('new', 'opened', 'in_work', 'need_feedback', 'closed', 'not_actual');
         $types = array('bug', 'task', 'research');
 
         $issue = Issues::find($id);

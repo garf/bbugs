@@ -12,6 +12,7 @@ class ProjectsController extends BaseController {
             ),
             'title' => trans('projects.projects'),
             'projects' => Projects::getInstance()->getUserProjects(Auth::user()->id),
+            'token' => csrf_token(),
         );
 
         return View::make('cabinet.main', $data)
@@ -31,6 +32,7 @@ class ProjectsController extends BaseController {
             'description' => e(Input::get('description', '')),
             'budget' => floatval(Input::get('budget', 0)),
             'role' => 'teamlead',
+            'token' => csrf_token(),
         );
         $project_id = Projects::getInstance()->addProject($params);
 
@@ -63,6 +65,7 @@ class ProjectsController extends BaseController {
             'js' => array(),
             'title' => $project->title,
             'project' => $project,
+            'token' => csrf_token(),
         );
 
         return View::make('cabinet.main', $data)
@@ -87,6 +90,7 @@ class ProjectsController extends BaseController {
             ),
             'title' => trans('projects.add_user_to_project', array('title' => $project->title)),
             'project' => $project,
+            'token' => csrf_token(),
         );
 
         return View::make('cabinet.main', $data)
@@ -226,6 +230,7 @@ class ProjectsController extends BaseController {
             'closed_percent' => $closed_percent,
             'contacts' => Projects::getInstance()->getProjectUsers($project_id),
             'is_teamlead' => Projects::getInstance()->isProjectTeamlead(Auth::user()->id, $project_id),
+            'token' => csrf_token(),
         );
 
         return View::make('cabinet.main', $data)
@@ -248,6 +253,7 @@ class ProjectsController extends BaseController {
             'js' => array(),
             'title' => trans('projects.edit_project_title', array('title' => $project->title)),
             'project' => $project,
+            'token' => csrf_token(),
         );
 
         return View::make('cabinet.main', $data)

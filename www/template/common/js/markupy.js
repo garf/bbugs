@@ -19,51 +19,51 @@
             tag_php: true
         },options||{});
         //  panel
-        var text = '<div id="makupy_bar" class="btn-group">'
+        var text = '<div id="makupy_bar" class="btn-group">';
         if(options.tag_bold){
-            text += '<a href="#" class="btn btn-default btn-sm" id="b" data-start="***" data-end="***" title="Bold">';
+            text += '<a class="btn btn-default btn-sm" id="b" data-start="***" data-end="***" title="Bold">';
             text += '<i class="fa fa-bold"></i>';
             text += '</a>';
         }
         if(options.tag_italic){
-            text += '<a href="#" class="btn btn-default btn-sm" id="i" data-start="|||" data-end="|||" title="Italic">';
+            text += '<a class="btn btn-default btn-sm" id="i" data-start="|||" data-end="|||" title="Italic">';
             text += '<i class="fa fa-italic"></i>';
             text += '</a>';
         }
         if(options.tag_underline){
-            text += '<a href="#" class="btn btn-default btn-sm" id="u" data-start="+++" data-end="+++" title="Underline">';
+            text += '<a class="btn btn-default btn-sm" id="u" data-start="+++" data-end="+++" title="Underline">';
             text += '<i class="fa fa-underline"></i>';
             text += '</a>';
         }
         if(options.tag_striked){
-            text += '<a href="#" class="btn btn-default btn-sm" id="s" data-start="---" data-end="---" title="Striked">';
+            text += '<a class="btn btn-default btn-sm" id="s" data-start="---" data-end="---" title="Striked">';
             text += '<i class="fa fa-strikethrough"></i>';
             text += '</a>';
         }
         text += '</div> <div id="makupy_bar" class="btn-group">';
         if(options.tag_h1){
-            text += '<a href="#" class="btn btn-default btn-sm" id="s" data-start="====" data-end="====" title="H1">';
+            text += '<a class="btn btn-default btn-sm" id="s" data-start="====" data-end="====" title="H1">';
             text += 'H1';
             text += '</a>';
         }
         if(options.tag_h2){
-            text += '<a href="#" class="btn btn-default btn-sm" id="s" data-start="===" data-end="===" title="H2">';
+            text += '<a class="btn btn-default btn-sm" id="s" data-start="===" data-end="===" title="H2">';
             text += 'H2';
             text += '</a>';
         }
         if(options.tag_h3){
-            text += '<a href="#" class="btn btn-default btn-sm" id="s" data-start="==" data-end="==" title="H3">';
+            text += '<a class="btn btn-default btn-sm" id="s" data-start="==" data-end="==" title="H3">';
             text += 'H3';
             text += '</a>';
         }
         text += '</div> <div id="makupy_bar" class="btn-group">';
         if(options.tag_code){
-            text += '<a href="#" class="btn btn-default btn-sm" id="s" data-start="@ \r\n" data-end="\r\n @" title="Code">';
+            text += '<a class="btn btn-default btn-sm" id="s" data-start="@ \r\n" data-end="\r\n @" title="Code">';
             text += '<i class="fa fa-code"></i>';
             text += '</a>';
         }
         if(options.tag_php){
-            text += '<a href="#" class="btn btn-default btn-sm" id="s" data-start="@=php \r\n" data-end="\r\n @" title="PHP Code">';
+            text += '<a class="btn btn-default btn-sm" id="s" data-start="@=php \r\n" data-end="\r\n @" title="PHP Code">';
             text += 'php';
             text += '</a>';
         }
@@ -82,7 +82,7 @@
 
             insert(start, end, e);
             return false;
-        });
+        }).trigger('autosize.resize');
     }
     function insert(start, end, element) {
         if (document.selection) {
