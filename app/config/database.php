@@ -60,7 +60,7 @@ return array(
 			'password'  => 'BbN39BDJvaFcNzzA',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_general_ci',
-			'prefix'    => 'lb_',
+			'prefix'    => '',
 		),
 
 		'pgsql' => array(
@@ -70,7 +70,7 @@ return array(
 			'username' => 'licence_keys',
 			'password' => '',
 			'charset'  => 'utf8',
-			'prefix'   => 'lb_',
+			'prefix'   => '',
 			'schema'   => 'public',
 		),
 
