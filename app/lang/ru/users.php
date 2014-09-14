@@ -45,4 +45,22 @@ return array(
 
     'password_changed' => 'Ваш пароль успещно изменен на новый',
 
+    'view_project_info' => 'Просматривать информацию проектов',
+    'view_project' => 'Просматривать проекты',
+    'edit_project' => 'Редактировать проекты',
+    'delete_project' => 'Удалять проекты',
+    'manage_project_members' => 'Редактировать участников проекта',
+
+    'view_issue' => 'Смотреть задачи',
+    'add_issue' => 'Добавлять задачи',
+    'edit_issue' => 'Редактировать задачи',
+    'update_issue' => 'Обновлять задачи',
+    'delete_issue' => 'Удалять задачи',
+
+    'view_files_list' => 'Видеть список файлов',
+    'upload_files' => 'Закачивать файлы',
+    'download_files' => 'Скачивать файлы',
+    'delete_files' => 'Удалять файлы',
+
+
 );

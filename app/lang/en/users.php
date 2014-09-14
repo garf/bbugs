@@ -45,4 +45,21 @@ return array(
 
     'password_changed' => 'Your password changed to new one',
 
+    'view_project_info' => 'View project info',
+    'view_project' => 'View project',
+    'edit_project' => 'Edit project',
+    'delete_project' => 'Delete project',
+    'manage_project_members' => 'Manage project members',
+
+    'view_issue' => 'View issue',
+    'add_issue' => 'Add issue',
+    'edit_issue' => 'Edit issue',
+    'update_issue' => 'Update issue',
+    'delete_issue' => 'Delete issue',
+
+    'view_files_list' => 'View files list',
+    'upload_files' => 'Upload Files',
+    'download_files' => 'Download files',
+    'delete_files' => 'Delete files',
+
 );
