@@ -127,8 +127,8 @@ return array(
         'Mews\Captcha\CaptchaServiceProvider',
         'Torann\GeoIP\GeoIPServiceProvider',
         'Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider',
-        'Zizaco\Entrust\EntrustServiceProvider',
-        'Barryvdh\DomPDF\ServiceProvider',
+        'Zizaco\Entrust\EntrustServiceProvider', //https://github.com/Zizaco/entrust
+        'Barryvdh\DomPDF\ServiceProvider', //https://github.com/barryvdh/laravel-dompdf
 
 	),
 

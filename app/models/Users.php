@@ -1,6 +1,10 @@
 <?php
 
+use Zizaco\Entrust\HasRole;
+
 class Users extends Eloquent {
+
+    use HasRole;
 
     public static $_instance = null;
     protected $table = 'lb_users';
