@@ -99,6 +99,15 @@ function AddUserToProjectController($scope, $http) {
             });
     };
 
+    $scope.roleClass = function(role) {
+        var roles = {
+            observer: 'label-info',
+            developer: 'label-success',
+            teamlead: 'label-danger'
+        };
+        return roles[role];
+    };
+
     $scope.isLoading = function() {
         return $scope.loading;
     };
