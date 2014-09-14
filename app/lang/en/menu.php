@@ -5,7 +5,7 @@ return array(
     'search_ph' => 'Search...',
     'dashboard' => 'Dashboard',
     'projects' => 'Projects',
-    'issues' => 'Issues',
+    'issues' => 'My Issues',
     'contacts' => 'Contact List',
 
 );

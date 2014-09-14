@@ -6,7 +6,7 @@ return array(
     'delete_project' => 'Удалить',
     'your_role' => 'Ваша роль',
     'view_info' => 'Информация',
-    'users' => 'Пользователи',
+    'users' => 'Участники',
     'edit_project' => 'Редактировать',
     'created_at' => 'Создан',
     'no_projects' => 'Нет созданных проектов',

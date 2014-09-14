@@ -127,6 +127,8 @@ return array(
         'Mews\Captcha\CaptchaServiceProvider',
         'Torann\GeoIP\GeoIPServiceProvider',
         'Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider',
+        'Zizaco\Entrust\EntrustServiceProvider',
+        'Barryvdh\DomPDF\ServiceProvider',
 
 	),
 
@@ -198,6 +200,8 @@ return array(
         'Captcha'         => 'Mews\Captcha\Facades\Captcha',
         'GeoIP'           => 'Torann\GeoIP\GeoIPFacade',
         'Gravatar'        => 'Thomaswelton\LaravelGravatar\Facades\Gravatar',
+        'Entrust'         => 'Zizaco\Entrust\EntrustFacade',
+        'PDF'             => 'Barryvdh\DomPDF\Facade',
 
 	),
 );

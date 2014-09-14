@@ -5,7 +5,7 @@ return array(
     'search_ph' => 'Поиск...',
     'dashboard' => 'Сводка',
     'projects' => 'Проекты',
-    'issues' => 'Задачи',
+    'issues' => 'Мои задачи',
     'contacts' => 'Контакт-лист',
     'language' => 'Язык',
 );

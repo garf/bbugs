@@ -6,7 +6,7 @@ return array(
     'delete_project' => 'Delete',
     'your_role' => 'Your role',
     'view_info' => 'View info',
-    'users' => 'Users',
+    'users' => 'Members',
     'edit_project' => 'Edit',
     'created_at' => 'Created at',
     'no_projects' => 'No projects',
