@@ -63,9 +63,13 @@
                     <td>
                         <div style="float: left;">
                         <i class="fa fa-file"></i>
-                            <a href="<?= URL::route('download', array('file_id' => $file->salt . '-' . $file->id)) ?>">
+                            <?php if($is_observer) { ?>
                                 <?= $file->file_title ?>
-                            </a>
+                            <?php } else { ?>
+                                <a href="<?= URL::route('download', array('file_id' => $file->salt . '-' . $file->id)) ?>">
+                                    <?= $file->file_title ?>
+                                </a>
+                            <?php } ?>
                         (<?= round($file->file_size, 2) ?> kb)
                         </div>
                         <?php if($is_teamlead) { ?>
