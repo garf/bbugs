@@ -4,6 +4,14 @@
     document.add = "<?= URL::route('project-add-user') ?>";
     document.remove = "<?= URL::route('project-remove-user') ?>";
 </script>
+<div class="panel panel-success">
+    <div class="panel-heading"><a onclick="$('#rulesLegend').slideToggle(100);" class="btn btn-xs btn-success"><?= trans('projects.access_rules'); ?></a></div>
+    <div class="panel-body" id="rulesLegend" style="display: none;">
+        <table>
+            <tr></tr>
+        </table>
+    </div>
+</div>
 <div ng-controller="AddUserToProjectController" ng-init="list()">
     <div class="text-center alert alert-info" ng-show="isLoading()">
         <img src="/template/common/img/loaders/220x20.gif" alt="Loading..." />

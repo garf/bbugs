@@ -50,4 +50,6 @@ return array(
     'set' => 'Set',
     'role' => 'Role',
     'user_hour_cost_set' => 'User\'s hour cost set',
+    'access_rules' => 'Access rules',
+
 );
