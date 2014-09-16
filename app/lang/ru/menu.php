@@ -8,4 +8,5 @@ return array(
     'issues' => 'Мои задачи',
     'contacts' => 'Контакт-лист',
     'language' => 'Язык',
+    'search' => 'Поиск',
 );

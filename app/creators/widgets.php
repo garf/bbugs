@@ -35,6 +35,13 @@
                 'icon' => 'fa-book',
                 'menu_item' => 'contacts',
             ),
+            array(
+                'lang_key' => 'menu.search',
+                'url' => URL::route('search-index'),
+                'counter' => '',
+                'icon' => 'fa-search',
+                'menu_item' => 'search',
+            ),
         );
         $view->with('items', $menuItems);
     });

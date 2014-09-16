@@ -7,5 +7,6 @@ return array(
     'projects' => 'Projects',
     'issues' => 'My Issues',
     'contacts' => 'Contact List',
+    'search' => 'Search',
 
 );
