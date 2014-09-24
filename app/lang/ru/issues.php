@@ -32,6 +32,7 @@ return array(
     'new_comment' => 'Новый коментарий',
     'add_comment' => 'Добавить коментарий',
     'update_issue' => 'Обновить задачу',
+    'edit_issue' => 'Изменить задачу',
 
     'all_opened' => 'Все открытые',
     'all_closed' => 'Все закрытые',
@@ -62,6 +63,9 @@ return array(
     'want_delete_comment' => 'Вы действительно хотите удалить свой коментарий?',
     'want_delete_file' => 'Вы действительно хотите удалить файл :name?',
     'issue_saved' => 'Изменения задачи сохранены',
+
+    'markup' => 'Разметка',
+    'preview' => 'Предпросмотр',
 
     'priority' => array(
         '1' => array(

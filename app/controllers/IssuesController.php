@@ -36,9 +36,14 @@ class IssuesController extends BaseController {
         $issue = Issues::find($issue_id);
 
         $data = array(
-            'css' => array(),
+            'css' => array(
+                '/template/common/js/metis/pagedown-bootstrap/css/jquery.pagedown-bootstrap.css',
+            ),
             'js' => array(
-                '/template/common/js/markupy.js',
+//                '/template/common/js/metis/pagedown-bootstrap/js/Markdown.Sanitizer.js',
+//                '/template/common/js/metis/pagedown-bootstrap/js/Markdown.Editor.js',
+//                '/template/common/js/metis/pagedown-bootstrap/js/Markdown.Converter.js',
+                '/template/common/js/metis/pagedown-bootstrap/js/jquery.pagedown-bootstrap.combined.min.js',
                 '/template/cabinet/js/issues/edit.js',
             ),
             'title' => trans('issues.issue_edit'),
@@ -61,7 +66,7 @@ class IssuesController extends BaseController {
         $issue = Issues::find($issue_id);
 
         $issue->title = e(Input::get('title', 'Untitled'));
-        $issue->content = Markupy::parse(e(Input::get('content')));
+        $issue->content = e(Input::get('content'));
         $issue->save();
         Issues::getInstance()->changeParams($issue_id, Input::all());
 
@@ -115,9 +120,14 @@ class IssuesController extends BaseController {
         );
 
         $data = array(
-            'css' => array(),
+            'css' => array(
+                '/template/common/js/metis/pagedown-bootstrap/css/jquery.pagedown-bootstrap.css',
+            ),
             'js' => array(
-                '/template/common/js/markupy.js',
+//                '/template/common/js/metis/pagedown-bootstrap/js/Markdown.Sanitizer.js',
+//                '/template/common/js/metis/pagedown-bootstrap/js/Markdown.Editor.js',
+//                '/template/common/js/metis/pagedown-bootstrap/js/Markdown.Converter.js',
+                '/template/common/js/metis/pagedown-bootstrap/js/jquery.pagedown-bootstrap.combined.js',
                 '/template/cabinet/js/issues/view.js',
             ),
             'title' => '#' . $issue->id . ' : ' . $issue->title,
@@ -151,9 +161,14 @@ class IssuesController extends BaseController {
         }
 
         $data = array(
-            'css' => array(),
+            'css' => array(
+                '/template/common/js/metis/pagedown-bootstrap/css/jquery.pagedown-bootstrap.css',
+            ),
             'js' => array(
-                '/template/common/js/markupy.js',
+//                '/template/common/js/metis/pagedown-bootstrap/js/Markdown.Sanitizer.js',
+//                '/template/common/js/metis/pagedown-bootstrap/js/Markdown.Editor.js',
+//                '/template/common/js/metis/pagedown-bootstrap/js/Markdown.Converter.js',
+                '/template/common/js/metis/pagedown-bootstrap/js/jquery.pagedown-bootstrap.combined.min.js',
                 '/template/cabinet/js/issues/new.js',
             ),
             'title' => trans('issues.new_issue'),
@@ -183,7 +198,7 @@ class IssuesController extends BaseController {
         $params = array(
             'project_id' => $project_id,
             'title' => e(Input::get('title', 'Untitled')),
-            'content' => Markupy::parse(e(Input::get('content', ''))),
+            'content' => e(Input::get('content', '')),
             'issue_type' => Input::get('issue_type'),
             'priority' => Input::get('priority'),
             'status' => Input::get('status'),
@@ -215,14 +230,14 @@ class IssuesController extends BaseController {
         if (Issues::getInstance()->isIssueObserver(Auth::user()->id, $issue_id)) {
             return Redirect::to(URL::route('index'));
         }
-        $comment = trim(Input::get('comment', ''));
+        $comment = Input::get('comment', '');
 
         $userfiles = Input::file('userfile');
 
         if(Input::hasFile('userfile') || $comment != '') {
             $params = array(
                 'creator' => Auth::user()->id,
-                'comment' => Markupy::parse(e($comment)),
+                'comment' => e($comment),
                 'files_count' => (Input::hasFile('userfile')) ? count($userfiles) : 0,
                 'issue_id' => intval($issue_id),
             );

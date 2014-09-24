@@ -1037,7 +1037,7 @@
 
 			// The main dialog box.
 			dialog = doc.createElement("div");
-			dialog.className = "modal fade";
+			dialog.className = "modal";
 
 			// The modal-dialog div.
 			var div_dialog = doc.createElement("div");

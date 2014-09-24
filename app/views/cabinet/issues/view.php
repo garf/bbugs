@@ -17,7 +17,9 @@
     </div>
     <div id="contentBlock" class="body collapse in">
         <div class="panel-body">
-            <?= nl2br($issue->content) ?>
+            <div id="wmdContent">
+                <?= nl2br($issue->content) ?>
+            </div>
         </div>
     </div>
 
@@ -113,8 +115,8 @@
                             <td class="col-md-1">
                                 <img src="<?= e(Gravatar::src($comment->email, 64)) ?>" alt="" />
                             </td>
-                            <td id="commentContent<?= $comment->id ?>">
-                                <?= $comment->comment ?>
+                            <td id="commentContent<?= $comment->id ?>" class="comment-text">
+                                <?= trim($comment->comment) ?>
                             </td>
                         </tr>
                         <tr class="warning">
@@ -164,19 +166,31 @@
             <form action="<?= URL::route('update-issue', array('issue_id' => $issue->id)) ?>" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="<?= $token ?>" />
                 <input type="hidden" id="maxFiles" value="<?= Files::getInstance()->maxUserFiles(Auth::user()->id, 'comment') ?>" />
-                <div class="col-md-8">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <?= trans('issues.new_comment') ?>
-                        </div>
-                        <div class="panel-body">
-                            <textarea class="form-control"
-                                      id="commentTextarea"
-                                      name="comment"
-                                      placeholder="<?= trans('issues.ph_comment') ?>"></textarea>
+
+                    <div class="col-lg-8">
+                        <div class="box">
+                            <header>
+                                <h5><?= trans('issues.new_comment') ?></h5>
+                                <ul class="nav nav-tabs pull-right">
+                                    <li class="active">
+                                        <a href="#markdown" data-toggle="tab"><?= trans('issues.markup') ?></a>
+                                    </li>
+                                    <li class=""> <a href="#preview" data-toggle="tab"><?= trans('issues.preview') ?></a>  </li>
+                                </ul>
+                            </header>
+                            <div id="div-3" class="body tab-content">
+                                <div class="tab-pane fade active in" id="markdown">
+                                    <div class="wmd-panel">
+                                        <div id="wmd-button-bar" class="btn-toolbar"></div>
+                                        <textarea class="form-control wmd-input" rows="10" name="comment" id="wmd-input"></textarea>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="preview">
+                                    <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
                 <div class="col-md-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">

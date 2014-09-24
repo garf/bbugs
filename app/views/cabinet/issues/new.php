@@ -18,10 +18,31 @@
                     <br />
                     <br />
                     <br />
-                    <div class="form-group">
-                        <label for="contentTextarea" class="control-label col-lg-12"><?= trans('issues.issue_description') ?></label>
-                        <div class="col-md-12">
-                            <textarea name="content" id="contentTextarea" class="form-control"><?= Input::old('content') ?></textarea>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="box">
+                                <header>
+                                    <h5><?= trans('issues.issue_description') ?></h5>
+                                    <ul class="nav nav-tabs pull-right">
+                                        <li class="active">
+                                            <a href="#markdown" data-toggle="tab"><?= trans('issues.markup') ?></a>
+                                        </li>
+                                        <li class=""> <a href="#preview" data-toggle="tab"><?= trans('issues.preview') ?></a>  </li>
+                                    </ul>
+                                </header>
+                                <div id="div-3" class="body tab-content">
+                                    <div class="tab-pane fade active in" id="markdown">
+                                        <div class="wmd-panel">
+                                            <div id="wmd-button-bar" class="btn-toolbar"></div>
+                                            <textarea class="form-control wmd-input" rows="10" name="content" id="wmd-input"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="preview">
+                                        <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

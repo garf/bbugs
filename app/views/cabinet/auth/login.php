@@ -81,7 +81,6 @@
 </div>
 <script src="/template/common/js/jquery-1.11.0.js"></script>
 <script src="/template/common/js/bootstrap.min.js"></script>
-
 <?php if(isset($js)){echo TplHelpers::addJs($js);} ?>
 </body>
 </html>

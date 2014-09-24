@@ -33,6 +33,7 @@ return array(
     'new_comment' => 'New comment',
     'add_comment' => 'Add comment',
     'update_issue' => 'Update issue',
+    'edit_issue' => 'Edit issue',
 
     'all_opened' => 'All opened',
     'all_closed' => 'All closed',
@@ -62,6 +63,9 @@ return array(
     'want_delete_comment' => 'Do you really want to delete your comment?',
     'want_delete_file' => 'Do you really want to delete file :name?',
     'issue_saved' => 'Issue data saved',
+
+    'markup' => 'Markup',
+    'preview' => 'Preview',
 
     'priority' => array(
         '1' => array(

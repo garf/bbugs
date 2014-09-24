@@ -16,6 +16,9 @@ function NewIssueController($scope) {
         return $scope.lines.length >= (max - 1);
     }
 }
-$(document).ready(function(){
-    $("#contentTextarea").markupy();
-});
+
+/*----------- BEGIN Markdown.Editor CODE -------------------------*/
+var converter = Markdown.getSanitizingConverter();
+var editor = new Markdown.Editor(converter);
+editor.run();
+/*----------- END Markdown.Editor CODE -------------------------*/
