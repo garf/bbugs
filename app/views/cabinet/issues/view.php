@@ -17,9 +17,7 @@
     </div>
     <div id="contentBlock" class="body collapse in">
         <div class="panel-body">
-            <div id="wmdContent">
-                <?= nl2br($issue->content) ?>
-            </div>
+            <div id="wmdContent"><?= $issue->content ?></div>
         </div>
     </div>
 
@@ -92,7 +90,7 @@
 <?php } ?>
 <div class="panel panel-default">
     <div class="panel-heading clearfix">
-        <div class=""style="float: left;"><?= trans('issues.comments') ?></div>
+        <div class="" style="float: left;"><?= trans('issues.comments') ?></div>
         <div class="" style="float: right;" >
             <a href="#commentsBlock" data-toggle="collapse" class="btn btn-xs btn-default minimize-box" title="<?= trans('issues.minimize') ?>">
                 <i class="fa fa-angle-up"></i>
@@ -115,9 +113,7 @@
                             <td class="col-md-1">
                                 <img src="<?= e(Gravatar::src($comment->email, 64)) ?>" alt="" />
                             </td>
-                            <td id="commentContent<?= $comment->id ?>" class="comment-text">
-                                <?= trim($comment->comment) ?>
-                            </td>
+                            <td id="commentContent<?= $comment->id ?>" data-comment-id="<?= $comment->id ?>" class="comment-text"><?= $comment->comment ?></td>
                         </tr>
                         <tr class="warning">
                             <td colspan="2">

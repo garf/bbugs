@@ -33,7 +33,7 @@
                                     <div class="tab-pane fade active in" id="markdown">
                                         <div class="wmd-panel">
                                             <div id="wmd-button-bar" class="btn-toolbar"></div>
-                                            <textarea class="form-control wmd-input" rows="10" name="content" id="wmd-input"></textarea>
+                                            <textarea class="form-control wmd-input" rows="10" name="content" id="wmd-input"><?= $issue->content ?></textarea>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="preview">

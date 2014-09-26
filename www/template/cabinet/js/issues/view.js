@@ -18,17 +18,15 @@ function AddCommentController($scope) {
 
 /*----------- BEGIN Markdown.Editor CODE -------------------------*/
 var converter = new Markdown.getSanitizingConverter();
-var cont = $("#wmdContent");
-var context = cont.text();
-cont.html(converter.makeHtml(context));
+var contSelector = $("#wmdContent");
+var context = contSelector.text();
+contSelector.html(converter.makeHtml(context));
 
 
 $.each($('.comment-text'), function(key, value){
     var contextComment = $(value).text();
-//    console.log(contextComment);
     $(this).html(converter.makeHtml(contextComment));
 });
-
 
 var editor = new Markdown.Editor(converter);
 editor.run();
