@@ -62,7 +62,7 @@ class Issues extends Eloquent {
             ON i.project_id=p.id
             WHERE i.status IN (" . $in . ")
             AND i.assigned=?
-            ORDER BY i.updated DESC
+            ORDER BY i.priority ASC, i.updated DESC
             LIMIT 100
         ", $where);
     }
