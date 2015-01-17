@@ -32,9 +32,9 @@
     <?= View::make('cabinet.widgets.navbar') ?>
     <header class="head">
         <div class="search-bar">
-            <form class="main-search" action="">
+            <form class="main-search" action="<?= URL::route('search-create-url') ?>" method="post">
                 <div class="input-group">
-                    <input type="text" class="form-control disabled" placeholder="<?= trans('menu.search_ph') ?>" disabled="disabled">
+                    <input type="text" class="form-control" placeholder="<?= trans('menu.search_ph') ?>">
                 <span class="input-group-btn">
             <button class="btn btn-primary btn-sm text-muted" type="button">
                 <i class="fa fa-search"></i>

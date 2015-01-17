@@ -2,6 +2,7 @@
 <?php if (count($issues) != 0) { ?>
     <div>
         <table class="table table-hover" id="dataTable">
+            <thead>
             <tr>
                 <th>ID</th>
                 <th><?= trans('issues.issue_title') ?></th>
@@ -11,6 +12,8 @@
                 <th><?= trans('issues.issue_type') ?></th>
                 <th><?= trans('issues.updated') ?></th>
             </tr>
+            </thead>
+            <tbody>
             <?php foreach ($issues as $issue) { ?>
                 <tr class="<?= ($issue->status == 'new') ? 'info' : ''; ?> <?= ($issue->priority == '1') ? 'danger' : ''; ?>">
                     <td>#<?= $issue->id ?></td>
@@ -24,6 +27,7 @@
                     <td><?= date(trans('common.datetime_format'), $issue->updated) ?></td>
                 </tr>
             <?php } ?>
+            </tbody>
         </table>
     </div>
 <?php } else { ?>

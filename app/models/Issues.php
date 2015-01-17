@@ -67,6 +67,41 @@ class Issues extends Eloquent {
         ", $where);
     }
 
+    public function project()
+    {
+        return $this->hasOne('Project');
+    }
+
+    public function searchByQ($params)
+    {
+        $request = DB::table('lb_issues AS i')
+            ->join('lb_projects AS p', 'i.project_id', '=', 'p.id')
+            ->whereIn('i.status', $params['statuses'])
+            ->where('i.title', '%' . $params['q'] . '%')
+            ->orderBy('i.title', 'asc')
+        ;
+
+        return $request->get();
+//
+//
+//        $in = trim(str_repeat('?, ', count($params['statuses'])), ', ');
+//        $where = $params['statuses'];
+//        $where[] = $params['assigned'];
+//
+//
+//
+//        return DB::select("
+//            SELECT i.*, p.title as ptitle
+//            FROM lb_issues i
+//            LEFT JOIN lb_projects p
+//            ON i.project_id=p.id
+//            WHERE i.status IN (" . $in . ")
+//            AND i.assigned=?
+//            ORDER BY i.priority ASC, i.updated DESC
+//            LIMIT 100
+//        ", $where);
+    }
+
     public function changeAssignee($id, $user_id)
     {
         return DB::update("
