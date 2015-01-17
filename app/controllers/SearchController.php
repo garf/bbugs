@@ -4,7 +4,8 @@ class SearchController extends BaseController {
 
     public function searchCreateUrl()
     {
-        return Redirect::to(URL::route('search', array('q' => '')));
+        $q = Input::get('q', null);
+        return Redirect::to(URL::route('search', array('q' => $q)));
     }
 
     public function search($q=null)
