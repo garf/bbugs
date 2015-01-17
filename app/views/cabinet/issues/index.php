@@ -20,7 +20,7 @@
                     <td><a href="<?= URL::route('issues-project', array($issue->project_id)) ?>"><?= $issue->ptitle ?></a></td>
                     <td><?= trans('issues.status.' . $issue->status . '.title') ?></td>
                     <td class="<?= trans('issues.priority.' . $issue->priority . '.class') ?>"><?= trans('issues.priority.' . $issue->priority . '.title') ?></td>
-                    <td><?= trans('issues.type.' . $issue->issue_type . '.title') ?></td>
+                    <td><i class="<?= trans('issues.type.' . $issue->issue_type . '.bs_icon_class') ?>"></i> <?= trans('issues.type.' . $issue->issue_type . '.title') ?></td>
                     <td><?= date(trans('common.datetime_format'), $issue->updated) ?></td>
                 </tr>
             <?php } ?>

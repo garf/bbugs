@@ -111,12 +111,18 @@ return array(
     'type' => array(
         'task' => array(
             'title' => 'Задача',
+            'icon' => '',
+            'bs_icon_class' => 'fa fa-bullseye text-success',
         ),
         'bug' => array(
             'title' => 'Баг',
+            'icon' => '',
+            'bs_icon_class' => 'fa fa-bug text-danger',
         ),
         'research' => array(
             'title' => 'Исследование',
+            'icon' => '',
+            'bs_icon_class' => 'fa fa-search text-info',
         ),
     ),
 );

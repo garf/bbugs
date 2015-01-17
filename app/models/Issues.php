@@ -208,4 +208,30 @@ class Issues extends Eloquent {
         return (isset($statsArray[$stats]) ? $statsArray[$stats] : 'not_done');
     }
 
+    public function typesMapper($stats)
+    {
+        $statsArray = array(
+            'task' => array(
+                'closed',
+                'not_actual'
+            ),
+            'bug' => array(
+                'new',
+                'opened',
+                'in_work',
+                'need_feedback',
+            ),
+            'research' => array(
+                'new',
+                'opened',
+                'in_work',
+                'need_feedback',
+                'closed',
+                'not_actual'
+            ),
+        );
+
+        return (isset($statsArray[$stats]) ? $statsArray[$stats] : 'not_done');
+    }
+
 }
