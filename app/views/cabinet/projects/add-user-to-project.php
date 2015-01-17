@@ -24,7 +24,7 @@
                             <strong>{{ contact.title }}</strong>
                             <span class="text-muted">{{ contact.name }}</span>
                         </div>
-                        <div ng-show="contact.already"><span class="text-muted"><?= trans('projects.role') ?>:</span> <span class="label" ng-class="roleClass(contact.role)">{{ contact.role }}</span></div>
+                        <div ng-show="contact.already"><span class="text-muted"><?= trans('projects.role') ?>:</span> <span class="label label-{{roleClass(contact.role)}}" ng-class="">{{ contact.role }}</span></div>
                         <div>{{ contact.notes }}</div>
                     </div>
                 </div>

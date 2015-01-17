@@ -101,9 +101,9 @@ function AddUserToProjectController($scope, $http) {
 
     $scope.roleClass = function(role) {
         var roles = {
-            observer: 'label-info',
-            developer: 'label-success',
-            teamlead: 'label-danger'
+            observer: 'info',
+            developer: 'success',
+            teamlead: 'danger'
         };
         return roles[role];
     };

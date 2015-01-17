@@ -2,8 +2,8 @@
     <?php foreach ($items as $item) { ?>
         <li class="<?= ($item['menu_item'] == $menu_item) ? 'active' : '' ?>">
             <a href="<?= $item['url'] ?>">
-                <i class="fa <?= $item['icon'] ?>"></i><span class="link-title">&nbsp;<?= trans($item['lang_key']) ?></span>
-                <span class="badge"><?= $item['counter'] ?></span>
+                <i class="fa <?= $item['icon'] ?>"></i><span class="link-title">&nbsp;<?= trans($item['lang_key']) ?> <span class="badge"><?= $item['counter'] ?></span></span>
+
             </a>
         </li>
     <?php } ?>
