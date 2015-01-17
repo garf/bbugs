@@ -34,7 +34,7 @@
         </div>
         <div class="col-md-2">
             <span class="text-muted"><?= trans('issues.issue_type') ?>: </span>
-            <span><?= trans('issues.type.' . $issue->issue_type . '.title') ?></span>
+            <span><i class="<?= trans('issues.type.' . $issue->issue_type . '.bs_icon_class') ?>"></i> <?= trans('issues.type.' . $issue->issue_type . '.title') ?></span>
         </div>
         <div class="col-md-3">
             <span class="text-muted"><?= trans('issues.creator') ?>: </span>

@@ -93,7 +93,7 @@
                     <?php } ?>
                 </td>
                 <td><?= trans('issues.status.' . $issue->status . '.title') ?></td>
-                <td><?= trans('issues.type.' . $issue->issue_type . '.title') ?></td>
+                <td><i class="<?= trans('issues.type.' . $issue->issue_type . '.bs_icon_class') ?>"></i> <?= trans('issues.type.' . $issue->issue_type . '.title') ?></td>
                 <td>
                     <span class="<?= trans('issues.priority.' . $issue->priority . '.class') ?>">
                         <?= trans('issues.priority.' . $issue->priority . '.title') ?>
