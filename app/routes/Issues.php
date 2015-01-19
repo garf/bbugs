@@ -24,7 +24,7 @@ Route::post('/issues/save/{issue_id}', array(
     'uses' => 'IssuesController@save',
 ))->where(array('issue_id' => '[0-9]+'));
 
-Route::get('/issues/new/{project_id}', array(
+Route::get('/issues/create/{project_id}', array(
     'before' => 'auth|project-user',
     'as' => 'issue-new',
     'uses' => 'IssuesController@newIssue',
