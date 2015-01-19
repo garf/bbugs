@@ -32,14 +32,14 @@
     <?= View::make('cabinet.widgets.navbar') ?>
     <header class="head">
         <div class="search-bar">
-            <form class="main-search" action="<?= URL::route('search-create-url') ?>" method="post">
+            <form class="main-search" action="<?= URL::route('search-create-url') ?>" method="post" id="mainSearch">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="<?= trans('menu.search_ph') ?>" name="q">
                 <span class="input-group-btn">
-            <button class="btn btn-primary btn-sm text-muted" type="button">
-                <i class="fa fa-search"></i>
-            </button>
-        </span>
+                    <button class="btn btn-primary btn-sm text-muted" type="button" onclick="$('#mainSearch').submit();">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
                 </div>
             </form>
         </div>

@@ -50,6 +50,7 @@ return array(
     'quote' => 'Цитировать',
     'edit' => 'Изменить',
 
+    'assigned' => 'Назначено',
     'assigned_nobody' => 'Не назначена',
     'no_issues' => 'Нет задач',
     'no_issues_assigned' => 'Нет задач назначенных мне',

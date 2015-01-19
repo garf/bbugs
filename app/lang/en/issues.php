@@ -23,6 +23,7 @@ return array(
     'you' => 'You',
     'minimize' => 'Minimize',
 
+    'assigned' => 'Assigned',
     'assigned_nobody' => 'Nobody',
     'new_issue' => 'New issue',
     'create_issue' => 'Create issue',

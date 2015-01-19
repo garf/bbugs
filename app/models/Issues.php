@@ -75,31 +75,20 @@ class Issues extends Eloquent {
     public function searchByQ($params)
     {
         $request = DB::table('lb_issues AS i')
-            ->join('lb_projects AS p', 'i.project_id', '=', 'p.id')
-            ->whereIn('i.status', $params['statuses'])
-            ->where('i.title', '%' . $params['q'] . '%')
+            ->select('i.*', 'p.title AS ptitle', 'p.id AS pid', 'u.name AS uname')
+            ->leftJoin('lb_projects AS p', 'i.project_id', '=', 'p.id')
+            ->leftJoin('lb_users AS u', 'i.assigned', '=', 'u.id')
+            ->whereIn('i.status', $params['statuses']);
+        if (!empty($params['assigned'])) {
+            $request = $request->where("i.assigned", '=', $params['assigned']);
+        }
+        $request = $request
+            ->where("i.title", 'LIKE', '%' . $params['q'] . '%')
             ->orderBy('i.title', 'asc')
-        ;
+            ->get();
+//        dd(DB::getQueryLog());
 
-        return $request->get();
-//
-//
-//        $in = trim(str_repeat('?, ', count($params['statuses'])), ', ');
-//        $where = $params['statuses'];
-//        $where[] = $params['assigned'];
-//
-//
-//
-//        return DB::select("
-//            SELECT i.*, p.title as ptitle
-//            FROM lb_issues i
-//            LEFT JOIN lb_projects p
-//            ON i.project_id=p.id
-//            WHERE i.status IN (" . $in . ")
-//            AND i.assigned=?
-//            ORDER BY i.priority ASC, i.updated DESC
-//            LIMIT 100
-//        ", $where);
+        return $request;
     }
 
     public function changeAssignee($id, $user_id)
