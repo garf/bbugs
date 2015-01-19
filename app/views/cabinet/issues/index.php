@@ -13,7 +13,7 @@
             </ul>
         </div>
     <?php } ?>
-    <a class="btn btn-success" data-toggle="modal" data-target="#newProjectModal"><?= trans('projects.create_project') ?></a>
+    <a href="<?= URL::route('projects') ?>" class="btn btn-success"><?= trans('menu.projects') ?></a>
 </div>
 <strong><?= trans('issues.filter') ?>:</strong>
 <div class="btn-group">
