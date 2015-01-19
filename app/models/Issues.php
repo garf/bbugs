@@ -56,7 +56,7 @@ class Issues extends Eloquent {
         $where = $params['statuses'];
         $where[] = $params['assigned'];
         return DB::select("
-            SELECT i.*, p.title as ptitle
+            SELECT i.*, p.title as ptitle, p.id as pid
             FROM lb_issues i
             LEFT JOIN lb_projects p
             ON i.project_id=p.id

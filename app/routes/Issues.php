@@ -1,10 +1,10 @@
 <?php
 
-Route::get('/issues', array(
+Route::get('/issues/{stats?}', array(
     'before' => 'auth',
     'as' => 'issues',
     'uses' => 'IssuesController@index',
-));
+))->where(array('stats' => '[_a-z0-9]+'));
 
 Route::get('/project/{project_id}/issues/{stats?}', array(
     'before' => 'auth|project-user',

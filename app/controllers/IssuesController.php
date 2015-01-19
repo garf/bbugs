@@ -3,13 +3,13 @@
 class IssuesController extends BaseController {
 
 
-    public function index()
+    public function index($stats='not_done')
     {
         View::share('menu_item', 'issues');
 
         $params = array(
             'assigned' => Auth::user()->id,
-            'statuses' => Issues::getInstance()->statsMapper('not_done'),
+            'statuses' => Issues::getInstance()->statsMapper($stats),
         );
 
         $data = array(
@@ -18,6 +18,7 @@ class IssuesController extends BaseController {
             'title' => trans('issues.issues_to_me'),
             'issues' => Issues::getInstance()->getByAssignee($params),
             'token' => csrf_token(),
+            'aprojects' => Projects::getInstance()->getEditableProjects(Auth::user()->id)
         );
 
         return View::make('cabinet.main', $data)
@@ -171,7 +172,7 @@ class IssuesController extends BaseController {
                 '/template/common/js/metis/pagedown-bootstrap/js/jquery.pagedown-bootstrap.combined.min.js',
                 '/template/cabinet/js/issues/new.js',
             ),
-            'title' => trans('issues.new_issue'),
+            'title' => $project->title . ' : ' . trans('issues.new_issue'),
             'project' => $project,
             'contacts' => Users::getInstance()->getProjectContacts(Auth::user()->id, $project->id),
             'token' => csrf_token(),
