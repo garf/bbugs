@@ -118,7 +118,7 @@ Route::filter('guest', function()
 
 Route::filter('csrf', function()
 {
-    if (Session::token() != Input::get('_token'))
+    if (Session::token() !== Input::get('_token'))
     {
         Misc::getInstance()->setSystemMessage(trans('errors.token_wrong'), "danger");
         return Redirect::back()->withInput();
