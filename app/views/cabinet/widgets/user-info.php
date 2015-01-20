@@ -10,8 +10,7 @@
         <div class="media-body">
             <h5 class="media-heading"><?= e(Auth::user()->name) ?></h5>
             <ul class="list-unstyled user-info">
-<!--                <li> <a href="#">{{{trans('users.roles.' . Auth::user()->role)}}}</a>  </li>-->
-                <li><a href="http://gravatar.com" target="_blank"><?= trans('user-info.change_avatar') ?></a></li>
+                <li><a href="<?= trans('user-info.gravatar_link') ?>" target="_blank"><?= trans('user-info.change_avatar') ?></a></li>
                 <li><?= trans('user-info.last_access') ?> :
                     <br>
                     <small>
