@@ -12,7 +12,7 @@
                     <div class="form-group">
                         <label for="titleInput" class="control-label col-lg-12"><?= trans('issues.issue_title') ?></label>
                         <div class="col-md-12">
-                            <input type="text" name="title" id="titleInput" class="form-control" value="<?= Input::old('title') ?>" required="required" />
+                            <input type="text" name="title" tabindex="1" id="titleInput" class="form-control" value="<?= Input::old('title') ?>" required="required" />
                         </div>
                     </div>
                     <br />
@@ -35,7 +35,7 @@
                                     <div class="tab-pane fade active in" id="markdown">
                                         <div class="wmd-panel">
                                             <div id="wmd-button-bar" class="btn-toolbar"></div>
-                                            <textarea class="form-control wmd-input" rows="10" name="content" id="wmd-input"></textarea>
+                                            <textarea tabindex="2" class="form-control wmd-input" rows="10" name="content" id="wmd-input"></textarea>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="preview">
@@ -57,7 +57,7 @@
                     <div class="form-group">
                         <label for="typeSelect" class="control-label col-lg-4"><?= trans('issues.issue_type') ?></label>
                         <div class="col-md-8">
-                            <select name="issue_type" class="form-control" id="typeSelect">
+                            <select name="issue_type" class="form-control" id="typeSelect" tabindex="3">
                                 <option value="task"><?= trans('issues.type.task.title') ?></option>
                                 <option value="bug"><?= trans('issues.type.bug.title') ?></option>
                                 <option value="research"><?= trans('issues.type.research.title') ?></option>
@@ -69,7 +69,7 @@
                     <div class="form-group">
                         <label for="statusSelect" class="control-label col-lg-4"><?= trans('issues.issue_status') ?></label>
                         <div class="col-md-8">
-                            <select name="status" class="form-control" id="statusSelect">
+                            <select name="status" class="form-control" id="statusSelect"  tabindex="4">
                                 <option value="new"><?= trans('issues.status.new.title') ?></option>
                                 <option value="opened"><?= trans('issues.status.opened.title') ?></option>
                                 <option value="in_work"><?= trans('issues.status.in_work.title') ?></option>
@@ -84,7 +84,7 @@
                     <div class="form-group">
                         <label for="prioritySelect" class="control-label col-lg-4"><?= trans('issues.issue_priority') ?></label>
                         <div class="col-md-8">
-                            <select name="priority" class="form-control" id="prioritySelect">
+                            <select name="priority" class="form-control" id="prioritySelect"  tabindex="5">
                                 <option value="1"><?= trans('issues.priority.1.title') ?></option>
                                 <option value="2"><?= trans('issues.priority.2.title') ?></option>
                                 <option value="3"><?= trans('issues.priority.3.title') ?></option>
