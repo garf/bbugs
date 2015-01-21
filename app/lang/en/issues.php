@@ -59,6 +59,7 @@ return array(
     'files_were_uploaded' => ':num :pl ',
     'files_pl' => 'file uploaded|files uploaded',
 
+    'no_assignee' => 'Issue is not assigned to anyone. Do you want to keep it?',
     'cant_delete_comment' => 'Can\'t delete comment',
     'comment_deleted' => 'Comment deleted',
     'want_delete_comment' => 'Do you really want to delete your comment?',

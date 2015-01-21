@@ -1,4 +1,7 @@
 <br />
+<script>
+    var lang_no_assignee = '<?= trans('issues.no_assignee') ?>';
+</script>
 <div ng-controller="NewIssueController">
     <form method="post" action="<?= URL::route('issue-add', array('project_id' => $project->id)) ?>" enctype="multipart/form-data">
         <input type="hidden" name="_token" value="<?= $token ?>" />
@@ -153,7 +156,7 @@
             </div>
         </div>
         <div class="clearfix">
-            <input type="submit" value="<?= trans('issues.create_issue') ?>" class="btn btn-block btn-lg btn-primary" />
+            <input type="submit" value="<?= trans('issues.create_issue') ?>" onclick="return ($('#assigneeSelect option:selected').val() == '0' ? confirm(lang_no_assignee) : true);" class="btn btn-block btn-lg btn-primary" />
         </div>
         <br />
     </form>
