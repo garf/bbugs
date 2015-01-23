@@ -122,7 +122,7 @@ class Issues extends Eloquent {
     public function changeParams($id, $params)
     {
         $priorities = array('1','2','3','4','5');
-        $statuses = array('new', 'opened', 'in_work', 'need_feedback', 'closed', 'not_actual');
+        $statuses = array('new', 'opened', 'in_work', 'need_feedback', 'rework', 'realized', 'closed', 'not_actual');
         $types = array('bug', 'task', 'research');
 
         $issue = Issues::find($id);
@@ -212,12 +212,16 @@ class Issues extends Eloquent {
                 'opened',
                 'in_work',
                 'need_feedback',
+                'rework',
+                'realized',
             ),
             'all' => array(
                 'new',
                 'opened',
                 'in_work',
                 'need_feedback',
+                'realized',
+                'rework',
                 'closed',
                 'not_actual'
             ),
@@ -225,6 +229,8 @@ class Issues extends Eloquent {
             'opened' => array('opened'),
             'in_work' => array('in_work'),
             'need_feedback' => array('need_feedback'),
+            'realized' => array('realized'),
+            'rework' => array('rework'),
             'closed' => array('closed'),
             'not_actual' => array('not_actual'),
         );

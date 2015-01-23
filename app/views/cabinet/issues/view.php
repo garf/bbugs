@@ -1,8 +1,14 @@
 <br />
-<div class="well well-sm">
-    <?php if (!$is_observer) { ?>
-        <a href="<?= URL::route('issue-new', array('project_id' => $issue->project_id)); ?>" class="btn btn-danger"><?= trans('issues.new_issue') ?></a>
-    <?php } ?>
+<div class="well well-sm clearfix">
+    <div class="col-md-9">
+        <?php if (!$is_observer) { ?>
+            <a href="<?= URL::route('issue-new', array('project_id' => $issue->project_id)); ?>" class="btn btn-danger"><?= trans('issues.new_issue') ?></a>
+        <?php } ?>
+    </div>
+    <div class="col-md-3 text-right">
+        <h5><a href="<?= URL::route('issues-project', array('project_id' => $project->id)) ?>"><?= $project->title ?></a></h5>
+    </div>
+
 </div>
 <div class="panel panel-success">
     <div class="panel-heading clearfix">
@@ -250,10 +256,14 @@
                                     <label for="statusSelect" class="control-label col-lg-4"><?= trans('issues.change_status') ?></label>
                                     <div class="col-lg-8">
                                         <select name="status" id="statusSelect" class="form-control">
-                                            <option value="opened" <?= ($issue->status == 'opened') ? 'selected="selected"' : '' ?>><?= trans('issues.status.opened.title') ?></option>
-                                            <option value="in_work" <?= ($issue->status == 'in_work') ? 'selected="selected"' : '' ?>><?= trans('issues.status.in_work.title') ?></option>
-                                            <option value="need_feedback" <?= ($issue->status == 'need_feedback') ? 'selected="selected"' : '' ?>><?= trans('issues.status.need_feedback.title') ?></option>
-                                            <optgroup label="Closed">
+                                            <optgroup label="<?= trans('issues.opened_group') ?>">
+                                                <option value="opened" <?= ($issue->status == 'opened') ? 'selected="selected"' : '' ?>><?= trans('issues.status.opened.title') ?></option>
+                                                <option value="in_work" <?= ($issue->status == 'in_work') ? 'selected="selected"' : '' ?>><?= trans('issues.status.in_work.title') ?></option>
+                                                <option value="need_feedback" <?= ($issue->status == 'need_feedback') ? 'selected="selected"' : '' ?>><?= trans('issues.status.need_feedback.title') ?></option>
+                                                <option value="realized" <?= ($issue->status == 'realized') ? 'selected="selected"' : '' ?>><?= trans('issues.status.realized.title') ?></option>
+                                                <option value="rework" <?= ($issue->status == 'rework') ? 'selected="selected"' : '' ?>><?= trans('issues.status.rework.title') ?></option>
+                                            </optgroup>
+                                            <optgroup label="<?= trans('issues.closed_group') ?>">
                                                 <option value="closed" <?= ($issue->status == 'closed') ? 'selected="selected"' : '' ?>><?= trans('issues.status.closed.title') ?></option>
                                                 <option value="not_actual" <?= ($issue->status == 'not_actual') ? 'selected="selected"' : '' ?>><?= trans('issues.status.not_actual.title') ?></option>
                                             </optgroup>

@@ -133,6 +133,7 @@ class IssuesController extends BaseController {
             ),
             'title' => '#' . $issue->id . ' : ' . $issue->title,
             'issue' => $issue,
+            'project' => Projects::find($issue->project_id),
             'creator' => Users::getInstance()->getContact(Auth::user()->id, $issue->creator),
             'assigned' => Users::getInstance()->getContact(Auth::user()->id, $issue->assigned),
             'comments' => Comments::getInstance()->getComments($commentsParams),

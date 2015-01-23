@@ -46,6 +46,16 @@
                 <?= trans('issues.status.need_feedbacks.title') ?>
             </a>
         </li>
+        <li>
+            <a href="<?= URL::route('issues', array('stat' => 'realized')) ?>">
+                <?= trans('issues.status.realizeds.title') ?>
+            </a>
+        </li>
+        <li>
+            <a href="<?= URL::route('issues', array('stat' => 'rework')) ?>">
+                <?= trans('issues.status.reworks.title') ?>
+            </a>
+        </li>
     </ul>
 </div>
 <div class="btn-group">

@@ -73,12 +73,17 @@
                         <label for="statusSelect" class="control-label col-lg-4"><?= trans('issues.issue_status') ?></label>
                         <div class="col-md-8">
                             <select name="status" class="form-control" id="statusSelect" tabindex="4">
-                                <option value="new"><?= trans('issues.status.new.title') ?></option>
-                                <option value="opened"><?= trans('issues.status.opened.title') ?></option>
-                                <option value="in_work"><?= trans('issues.status.in_work.title') ?></option>
-                                <option value="need_feedback"><?= trans('issues.status.need_feedback.title') ?></option>
-                                <option value="closed"><?= trans('issues.status.closed.title') ?></option>
-                                <option value="not_actual"><?= trans('issues.status.not_actual.title') ?></option>
+                                <optgroup label="<?= trans('issues.opened_group') ?>">
+                                    <option value="new"><?= trans('issues.status.new.title') ?></option>
+                                    <option value="opened"><?= trans('issues.status.opened.title') ?></option>
+                                    <option value="in_work"><?= trans('issues.status.in_work.title') ?></option>
+                                    <option value="need_feedback"><?= trans('issues.status.need_feedback.title') ?></option>
+                                    <option value="realized"><?= trans('issues.status.realized.title') ?></option>
+                                </optgroup>
+                                <optgroup label="<?= trans('issues.closed_group') ?>">
+                                    <option value="closed"><?= trans('issues.status.closed.title') ?></option>
+                                    <option value="not_actual"><?= trans('issues.status.not_actual.title') ?></option>
+                                </optgroup>
                             </select>
                         </div>
                     </div>
