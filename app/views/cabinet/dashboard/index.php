@@ -21,10 +21,13 @@
                         <?= trans(History::getInstance()->historyTypeText($item->act_type), array(
                             'user_name' => $item->user_name,
                             'issue_id' => $item->issue_id,
-                            'url' => URL::route('issue-view', array('issue_id' => $item->issue_id)),
+                            'url' => URL::route('issue-view', array(
+                                'issue_id' => $item->issue_id,
+                                '#comment' . $item->comment_id,
+                            )),
                         )) ?>
                     </td>
-                    <td><?= $item->project_title ?></td>
+                    <td><a href="<?= URL::route('issues-project', array('project_id' => $item->project_id)) ?>"><?= $item->project_title ?></a></td>
                     <td><?= date(trans('common.datetime_format'), $item->act_time) ?></td>
                     <td><?= ($item->to_id == Auth::user()->id) ? trans('history.issue_to_you') :  $item->assignee_name ?> </td>
                 </tr>

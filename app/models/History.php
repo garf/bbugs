@@ -36,7 +36,7 @@ class History extends Eloquent {
 //        ", array($user_id));
 
         return DB::table('lb_history AS h')
-            ->select('h.issue_id', 'h.to_id', 'h.comment_id', 'h.act_type', 'h.act_time',
+            ->select('h.user_id', 'h.project_id', 'h.issue_id', 'h.to_id', 'h.comment_id', 'h.act_type', 'h.act_time',
             'p.title as project_title', 'u.name as user_name', 'a.name as assignee_name')
             ->leftJoin('lb_projects AS p', 'h.project_id', '=', 'p.id')
             ->leftJoin('lb_users AS u', 'h.user_id', '=', 'u.id')
