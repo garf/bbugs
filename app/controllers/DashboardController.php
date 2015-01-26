@@ -10,6 +10,7 @@ class DashboardController extends BaseController {
             'css' => array(),
             'js' => array(),
             'title' => trans('dashboard.dashboard'),
+            'history' => History::getInstance()->getByUser(Auth::user()->id),
         );
 
         return View::make('cabinet.main', $data)

@@ -71,6 +71,18 @@ class IssuesController extends BaseController {
         $issue->save();
         Issues::getInstance()->changeParams($issue_id, Input::all());
 
+        //Add History
+        $toHistory = array(
+            'user_id' => Auth::user()->id,
+            'to_id' => Input::get('assigned', null),
+            'project_id' => $issue->project_id,
+            'issue_id' => $issue->id,
+            'act_type' => 'issue_edit',
+        );
+
+        History::getInstance()->add($toHistory);
+
+
         Misc::getInstance()->setSystemMessage(trans('issues.issue_saved'), 'success');
         return Redirect::to(URL::route('issue-view', array('issue_id' => $issue_id)));
     }
@@ -197,6 +209,7 @@ class IssuesController extends BaseController {
             return Redirect::to(URL::route('projects'));
         }
 
+        //Add Issue
         $params = array(
             'project_id' => $project_id,
             'title' => e(Input::get('title', 'Untitled')),
@@ -210,6 +223,17 @@ class IssuesController extends BaseController {
 
         $issue_id = Issues::getInstance()->addIssue($params);
 
+        //Add History
+        $toHistory = array(
+            'user_id' => Auth::user()->id,
+            'project_id' => $project_id,
+            'issue_id' => $issue_id,
+            'act_type' => 'new_issue',
+        );
+
+        History::getInstance()->add($toHistory);
+
+        //Upload Files
         if(Input::hasFile('userfile')) {
             $params = array(
                 'file_object' => Input::file('userfile'),
@@ -232,11 +256,31 @@ class IssuesController extends BaseController {
         if (Issues::getInstance()->isIssueObserver(Auth::user()->id, $issue_id)) {
             return Redirect::to(URL::route('index'));
         }
+
+        $issue = Issues::find($issue_id);
+
         $comment = Input::get('comment', '');
 
         $userfiles = Input::file('userfile');
 
+        //Change issue params
+        Issues::getInstance()->changeParams($issue_id, Input::all());
+
+        //Add History
+        $toHistory = array(
+            'user_id' => Auth::user()->id,
+            'project_id' => $issue->project_id,
+            'issue_id' => $issue->id,
+            'to_id' => Input::get('assigned', null),
+            'act_type' => 'issue_update',
+        );
+
+        History::getInstance()->add($toHistory);
+
+
         if(Input::hasFile('userfile') || $comment != '') {
+
+            //Add comment
             $params = array(
                 'creator' => Auth::user()->id,
                 'comment' => e($comment),
@@ -244,12 +288,23 @@ class IssuesController extends BaseController {
                 'issue_id' => intval($issue_id),
             );
             $commentId = Comments::getInstance()->addComment($params);
+
+            //Add History
+            $toHistory = array(
+                'user_id' => Auth::user()->id,
+                'project_id' => $issue->project_id,
+                'issue_id' => $issue->id,
+                'comment_id' => $commentId,
+                'act_type' => 'new_comment',
+            );
+
+            History::getInstance()->add($toHistory);
+
         } else {
             $commentId = null;
         }
 
-        Issues::getInstance()->changeParams($issue_id, Input::all());
-
+        //Upload Files
         if(Input::hasFile('userfile') && count($userfiles) <= Files::getInstance()->maxUserFiles(Auth::user()->id, 'comment')) {
             $params = array(
                 'file_object' => $userfiles,
@@ -258,6 +313,17 @@ class IssuesController extends BaseController {
                 'user_id' => Auth::user()->id,
             );
             Files::getInstance()->uploadCommentFiles($params);
+
+            //Add History
+            $toHistory = array(
+                'user_id' => Auth::user()->id,
+                'project_id' => $issue->project_id,
+                'issue_id' => $issue->id,
+                'comment_id' => $commentId,
+                'act_type' => 'new_file',
+            );
+
+            History::getInstance()->add($toHistory);
         }
 
         return Redirect::to(URL::route('issue-view', array('issue_id' => $issue_id, '#comment' . $commentId)));
