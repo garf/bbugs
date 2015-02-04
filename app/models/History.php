@@ -44,7 +44,7 @@ class History extends Eloquent {
             ->leftJoin('lb_project_user AS pu', 'h.project_id', '=', 'pu.project_id')
             ->where('pu.user_id', '=', $user_id)
             ->orderBy('h.act_time', 'desc')
-            ->paginate(20);
+            ->paginate(10);
 
     }
 

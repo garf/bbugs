@@ -12,4 +12,11 @@ return array(
         'issue_update' => ':user_name updated issue <a href=":url">#:issue_id</a>',
         'issue_edit' => ':user_name changed issue details <a href=":url">#:issue_id</a>',
     ),
+
+    'titles' => array(
+        'changes' => 'Changes',
+        'project' => 'Project',
+        'date' => 'Date',
+        'assigned' => 'Assigned',
+    ),
 );
