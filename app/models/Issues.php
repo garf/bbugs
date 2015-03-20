@@ -46,7 +46,7 @@ class Issues extends Eloquent {
             WHERE i.status IN (" . $in . ")
             AND i.project_id=?
             ORDER BY i.priority ASC
-            LIMIT 100
+            LIMIT 200
         ", $where);
     }
 

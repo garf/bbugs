@@ -113,9 +113,6 @@
             </tr>
         <?php } ?>
     </table>
-    <div class="text-right">
-        <?= $issues->links(); ?>
-    </div>
 <?php } else { ?>
     <div class="alert alert-info"><?= trans('issues.no_issues') ?></div>
 <?php } ?>
