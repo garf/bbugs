@@ -23,9 +23,7 @@
     </div>
     <div id="contentBlock" class="body collapse in">
         <div class="panel-body">
-            <div>
-                <div id="wmdContent"><?= $issue->content ?></div>
-            </div>
+            <div id="wmdContent"><?= $issue->content ?></div>
         </div>
     </div>
 
