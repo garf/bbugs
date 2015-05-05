@@ -11,14 +11,15 @@
 /**
  * Generated when a message is being sent.
  *
- * @package    Swift
- * @subpackage Events
  * @author     Chris Corbyn
  */
 class Swift_Events_SendEvent extends Swift_Events_EventObject
 {
     /** Sending has yet to occur */
     const RESULT_PENDING = 0x0001;
+
+    /** Email is spooled, ready to be sent */
+    const RESULT_SPOOLED = 0x0011;
 
     /** Sending was successful */
     const RESULT_SUCCESS = 0x0010;

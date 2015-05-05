@@ -15,7 +15,7 @@ use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\Debug\Exception\ContextErrorException;
 
 /**
- * ErrorHandlerTest
+ * ErrorHandlerTest.
  *
  * @author Robert Schönthal <seroscho@googlemail.com>
  */
@@ -26,21 +26,14 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
      */
     protected $errorReporting;
 
-    /**
-     * @var string Display errors setting before running tests.
-     */
-    protected $displayErrors;
-
     public function setUp()
     {
         $this->errorReporting = error_reporting(E_ALL | E_STRICT);
-        $this->displayErrors = ini_get('display_errors');
-        ini_set('display_errors', '1');
+        $this->iniSet('display_errors', '1');
     }
 
     public function tearDown()
     {
-        ini_set('display_errors', $this->displayErrors);
         error_reporting($this->errorReporting);
     }
 
@@ -206,6 +199,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $m->setAccessible(true);
         $m->invoke($handler, array($exceptionHandler, 'handle'), $error);
 
+        restore_error_handler();
         $this->assertInstanceof($class, $exceptionHandler->e);
         // class names are case insensitive and PHP/HHVM do not return the same
         $this->assertSame(strtolower($translatedMessage), strtolower($exceptionHandler->e->getMessage()));

@@ -31,11 +31,13 @@
                                 <a href="<?= URL::route('add-to-project', array('project_id' => $project->id)) ?>" class="btn btn-xs btn-success btn-block ">
                                     <?= trans('projects.users') ?>
                                 </a>
+                                <?php if ($project->creator == Auth::user()->id) { ?>
                                 <a data-url="<?= URL::route('project-delete', array('id' => $project->id )) ?>"
                                    data-message="<?= trans('projects.delete_confirm', array('title' => $project->title)) ?>"
                                    class="btn btn-xs btn-danger btn-block delete-project">
                                     <?= trans('projects.delete_project') ?>
                                 </a>
+                                <?php } ?>
                         <?php } ?>
                     </div>
                 </div>

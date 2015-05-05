@@ -1,10 +1,32 @@
 <?php namespace Illuminate\Support;
 
+use Patchwork\Utf8;
 use Illuminate\Support\Traits\MacroableTrait;
 
 class Str {
 
 	use MacroableTrait;
+
+	/**
+	 * The cache of snake-cased words.
+	 *
+	 * @var array
+	 */
+	protected static $snakeCache = [];
+
+	/**
+	 * The cache of camel-cased words.
+	 *
+	 * @var array
+	 */
+	protected static $camelCache = [];
+
+	/**
+	 * The cache of studly-cased words.
+	 *
+	 * @var array
+	 */
+	protected static $studlyCache = [];
 
 	/**
 	 * Transliterate a UTF-8 value to ASCII.
@@ -14,7 +36,7 @@ class Str {
 	 */
 	public static function ascii($value)
 	{
-		return \Patchwork\Utf8::toAscii($value);
+		return Utf8::toAscii($value);
 	}
 
 	/**
@@ -25,7 +47,12 @@ class Str {
 	 */
 	public static function camel($value)
 	{
-		return lcfirst(static::studly($value));
+		if (isset(static::$camelCache[$value]))
+		{
+			return static::$camelCache[$value];
+		}
+
+		return static::$camelCache[$value] = lcfirst(static::studly($value));
 	}
 
 	/**
@@ -146,9 +173,7 @@ class Str {
 	{
 		preg_match('/^\s*+(?:\S++\s*+){1,'.$words.'}/u', $value, $matches);
 
-		if ( ! isset($matches[0])) return $value;
-
-		if (strlen($value) == strlen($matches[0])) return $value;
+		if ( ! isset($matches[0]) || strlen($value) === strlen($matches[0])) return $value;
 
 		return rtrim($matches[0]).$end;
 	}
@@ -214,7 +239,7 @@ class Str {
 	{
 		$pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-		return substr(str_shuffle(str_repeat($pool, 5)), 0, $length);
+		return substr(str_shuffle(str_repeat($pool, $length)), 0, $length);
 	}
 
 	/**
@@ -284,9 +309,21 @@ class Str {
 	 */
 	public static function snake($value, $delimiter = '_')
 	{
-		$replace = '$1'.$delimiter.'$2';
+		$key = $value.$delimiter;
 
-		return ctype_lower($value) ? $value : strtolower(preg_replace('/(.)([A-Z])/', $replace, $value));
+		if (isset(static::$snakeCache[$key]))
+		{
+			return static::$snakeCache[$key];
+		}
+
+		if ( ! ctype_lower($value))
+		{
+			$replace = '$1'.$delimiter.'$2';
+
+			$value = strtolower(preg_replace('/(.)([A-Z])/', $replace, $value));
+		}
+
+		return static::$snakeCache[$key] = $value;
 	}
 
 	/**
@@ -314,9 +351,16 @@ class Str {
 	 */
 	public static function studly($value)
 	{
+		$key = $value;
+
+		if (isset(static::$studlyCache[$key]))
+		{
+			return static::$studlyCache[$key];
+		}
+
 		$value = ucwords(str_replace(array('-', '_'), ' ', $value));
 
-		return str_replace(' ', '', $value);
+		return static::$studlyCache[$key] = str_replace(' ', '', $value);
 	}
 
 }

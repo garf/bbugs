@@ -1,10 +1,10 @@
 <?php
 
-Route::get('/issues', array(
+Route::get('/issues/{stats?}', array(
     'before' => 'auth',
     'as' => 'issues',
     'uses' => 'IssuesController@index',
-));
+))->where(array('stats' => '[_a-z0-9]+'));
 
 Route::get('/project/{project_id}/issues/{stats?}', array(
     'before' => 'auth|project-user',
@@ -24,7 +24,7 @@ Route::post('/issues/save/{issue_id}', array(
     'uses' => 'IssuesController@save',
 ))->where(array('issue_id' => '[0-9]+'));
 
-Route::get('/issues/new/{project_id}', array(
+Route::get('/issues/create/{project_id}', array(
     'before' => 'auth|project-user',
     'as' => 'issue-new',
     'uses' => 'IssuesController@newIssue',

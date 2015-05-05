@@ -11,7 +11,6 @@
 /**
  * Stores Messages in a queue.
  *
- * @package Swift
  * @author  Fabien Potencier
  */
 class Swift_Transport_SpoolTransport implements Swift_Transport
@@ -99,7 +98,7 @@ class Swift_Transport_SpoolTransport implements Swift_Transport
         $success = $this->_spool->queueMessage($message);
 
         if ($evt) {
-            $evt->setResult($success ? Swift_Events_SendEvent::RESULT_SUCCESS : Swift_Events_SendEvent::RESULT_FAILED);
+            $evt->setResult($success ? Swift_Events_SendEvent::RESULT_SPOOLED : Swift_Events_SendEvent::RESULT_FAILED);
             $this->_eventDispatcher->dispatchEvent($evt, 'sendPerformed');
         }
 

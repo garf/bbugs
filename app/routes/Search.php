@@ -1,12 +1,13 @@
 <?php
 
-Route::get('/search', array(
+Route::get('/search/{q?}/{statuses?}/{assignee?}', array(
     'before' => 'auth',
-    'as' => 'search-index',
-    'uses' => 'SearchController@index',
-));
-Route::post('/search', array(
-    'before' => 'auth',
-    'as' => 'search-do',
+    'as' => 'search',
     'uses' => 'SearchController@search',
+));
+
+Route::post('/search-create-url', array(
+    'before' => 'auth',
+    'as' => 'search-create-url',
+    'uses' => 'SearchController@searchCreateUrl',
 ));

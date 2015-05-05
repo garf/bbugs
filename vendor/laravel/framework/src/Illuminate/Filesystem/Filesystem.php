@@ -3,8 +3,6 @@
 use FilesystemIterator;
 use Symfony\Component\Finder\Finder;
 
-class FileNotFoundException extends \Exception {}
-
 class Filesystem {
 
 	/**
@@ -64,11 +62,12 @@ class Filesystem {
 	 *
 	 * @param  string  $path
 	 * @param  string  $contents
+	 * @param  bool  $lock
 	 * @return int
 	 */
-	public function put($path, $contents)
+	public function put($path, $contents, $lock = false)
 	{
-		return file_put_contents($path, $contents);
+		return file_put_contents($path, $contents, $lock ? LOCK_EX : 0);
 	}
 
 	/**
@@ -84,10 +83,8 @@ class Filesystem {
 		{
 			return $this->put($path, $data.$this->get($path));
 		}
-		else
-		{
-			return $this->put($path, $data);
-		}
+
+		return $this->put($path, $data);
 	}
 
 	/**
@@ -141,6 +138,17 @@ class Filesystem {
 	public function copy($path, $target)
 	{
 		return copy($path, $target);
+	}
+
+	/**
+	 * Extract the file name from a file path.
+	 *
+	 * @param  string  $path
+	 * @return string
+	 */
+	public function name($path)
+	{
+		return pathinfo($path, PATHINFO_FILENAME);
 	}
 
 	/**
@@ -297,10 +305,8 @@ class Filesystem {
 		{
 			return @mkdir($path, $mode, $recursive);
 		}
-		else
-		{
-			return mkdir($path, $mode, $recursive);
-		}
+
+		return mkdir($path, $mode, $recursive);
 	}
 
 	/**

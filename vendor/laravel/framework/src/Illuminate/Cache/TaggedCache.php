@@ -70,7 +70,10 @@ class TaggedCache implements StoreInterface {
 	{
 		$minutes = $this->getMinutes($minutes);
 
-		return $this->store->put($this->taggedItemKey($key), $value, $minutes);
+		if ( ! is_null($minutes))
+		{
+			$this->store->put($this->taggedItemKey($key), $value, $minutes);
+		}
 	}
 
 	/**
@@ -131,11 +134,11 @@ class TaggedCache implements StoreInterface {
 	 * Remove an item from the cache.
 	 *
 	 * @param  string  $key
-	 * @return void
+	 * @return bool
 	 */
 	public function forget($key)
 	{
-		$this->store->forget($this->taggedItemKey($key));
+		return $this->store->forget($this->taggedItemKey($key));
 	}
 
 	/**
@@ -161,7 +164,7 @@ class TaggedCache implements StoreInterface {
 		// If the item exists in the cache we will just return this immediately
 		// otherwise we will execute the given Closure and cache the result
 		// of that execution for the given number of minutes in storage.
-		if ($this->has($key)) return $this->get($key);
+		if ( ! is_null($value = $this->get($key))) return $value;
 
 		$this->put($key, $value = $callback(), $minutes);
 
@@ -192,7 +195,7 @@ class TaggedCache implements StoreInterface {
 		// If the item exists in the cache we will just return this immediately
 		// otherwise we will execute the given Closure and cache the result
 		// of that execution for the given number of minutes. It's easy.
-		if ($this->has($key)) return $this->get($key);
+		if ( ! is_null($value = $this->get($key))) return $value;
 
 		$this->forever($key, $value = $callback());
 
@@ -207,7 +210,7 @@ class TaggedCache implements StoreInterface {
 	 */
 	public function taggedItemKey($key)
 	{
-		return $this->getPrefix().sha1($this->tags->getNamespace()).':'.$key;
+		return sha1($this->tags->getNamespace()).':'.$key;
 	}
 
 	/**
@@ -224,16 +227,18 @@ class TaggedCache implements StoreInterface {
 	 * Calculate the number of minutes with the given duration.
 	 *
 	 * @param  \DateTime|int  $duration
-	 * @return int
+	 * @return int|null
 	 */
 	protected function getMinutes($duration)
 	{
 		if ($duration instanceof DateTime)
 		{
-			return max(0, Carbon::instance($duration)->diffInMinutes());
+			$fromNow = Carbon::instance($duration)->diffInMinutes();
+
+			return $fromNow > 0 ? $fromNow : null;
 		}
 
-		return is_string($duration) ? intval($duration) : $duration;
+		return is_string($duration) ? (int) $duration : $duration;
 	}
 
 }

@@ -45,7 +45,7 @@ class MorphToMany extends BelongsToMany {
 	{
 		$this->inverse = $inverse;
 		$this->morphType = $name.'_type';
-		$this->morphClass = $inverse ? get_class($query->getModel()) : get_class($parent);
+		$this->morphClass = $inverse ? $query->getModel()->getMorphClass() : $parent->getMorphClass();
 
 		parent::__construct($query, $parent, $table, $foreignKey, $otherKey, $relationName);
 	}
@@ -128,9 +128,9 @@ class MorphToMany extends BelongsToMany {
 	{
 		$pivot = new MorphPivot($this->parent, $attributes, $this->table, $exists);
 
-		$pivot->setPivotKeys($this->foreignKey, $this->otherKey);
-
-		$pivot->setMorphType($this->morphType);
+		$pivot->setPivotKeys($this->foreignKey, $this->otherKey)
+			  ->setMorphType($this->morphType)
+			  ->setMorphClass($this->morphClass);
 
 		return $pivot;
 	}

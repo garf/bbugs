@@ -57,7 +57,7 @@ class Files extends Eloquent {
         try {
             $uploadPath = base_path() . '/files/';
             foreach($params['file_object'] as $index=>$file) {
-                if($index > ($this->maxUserFiles($params['user_id'], 'comment') - 2)) {
+                if($index > ($this->maxUserFiles($params['user_id'], 'comment') - 1)) {
                     break;
                 }
                 $extension = $file->getClientOriginalExtension();

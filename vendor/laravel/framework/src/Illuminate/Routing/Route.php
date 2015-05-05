@@ -157,14 +157,7 @@ class Route {
 	{
 		preg_match_all('/\{(\w+?)\?\}/', $this->uri, $matches);
 
-		$optional = array();
-
-		if (isset($matches[1]))
-		{
-			foreach ($matches[1] as $key) { $optional[$key] = null; }
-		}
-
-		return $optional;
+		return isset($matches[1]) ? array_fill_keys($matches[1], null) : [];
 	}
 
 	/**
@@ -564,9 +557,13 @@ class Route {
 	 */
 	protected function addFilters($type, $filters)
 	{
+		$filters = static::explodeFilters($filters);
+
 		if (isset($this->action[$type]))
 		{
-			$this->action[$type] .= '|'.$filters;
+			$existing = static::explodeFilters($this->action[$type]);
+
+			$this->action[$type] = array_merge($existing, $filters);
 		}
 		else
 		{

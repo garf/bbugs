@@ -3,8 +3,6 @@
 use Symfony\Component\Security\Core\Util\StringUtils;
 use Symfony\Component\Security\Core\Util\SecureRandom;
 
-class DecryptException extends \RuntimeException {}
-
 class Encrypter {
 
 	/**
@@ -43,7 +41,7 @@ class Encrypter {
 	 */
 	public function __construct($key)
 	{
-		$this->key = $key;
+		$this->key = (string) $key;
 	}
 
 	/**
@@ -138,12 +136,12 @@ class Encrypter {
 		// to decrypt the given value. We'll also check the MAC for this encryption.
 		if ( ! $payload || $this->invalidPayload($payload))
 		{
-			throw new DecryptException("Invalid data.");
+			throw new DecryptException('Invalid data.');
 		}
 
 		if ( ! $this->validMac($payload))
 		{
-			throw new DecryptException("MAC is invalid.");
+			throw new DecryptException('MAC is invalid.');
 		}
 
 		return $payload;
@@ -268,7 +266,7 @@ class Encrypter {
 	 */
 	public function setKey($key)
 	{
-		$this->key = $key;
+		$this->key = (string) $key;
 	}
 
 	/**

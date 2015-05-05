@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="/template/common/js/metis/datatables/3/dataTables.bootstrap.css" />
 <div class="well well-sm">
     <?php if (!$is_observer) { ?>
-    <a href="<?= URL::route('issue-new', array('project_id' => $project->id)); ?>" class="btn btn-danger"><?= trans('issues.new_issue') ?></a>
+        <a href="<?= URL::route('issue-new', array('project_id' => $project->id)); ?>" class="btn btn-danger"><?= trans('issues.new_issue') ?></a>
     <?php } ?>
     <a href="<?= URL::route('project-info', array('project_id' => $project->id)) ?>" class="btn btn-info"><?= trans('projects.view_info') ?></a>
     <?php if ($is_teamlead) { ?>
@@ -41,6 +41,16 @@
         <li>
             <a href="<?= URL::route('issues-project', array('project_id' => $project->id, 'stat' => 'need_feedback')) ?>">
                 <?= trans('issues.status.need_feedbacks.title') ?>
+            </a>
+        </li>
+        <li>
+            <a href="<?= URL::route('issues-project', array('project_id' => $project->id, 'stat' => 'realized')) ?>">
+                <?= trans('issues.status.realizeds.title') ?>
+            </a>
+        </li>
+        <li>
+            <a href="<?= URL::route('issues-project', array('project_id' => $project->id, 'stat' => 'rework')) ?>">
+                <?= trans('issues.status.reworks.title') ?>
             </a>
         </li>
     </ul>
@@ -93,7 +103,7 @@
                     <?php } ?>
                 </td>
                 <td><?= trans('issues.status.' . $issue->status . '.title') ?></td>
-                <td><?= trans('issues.type.' . $issue->issue_type . '.title') ?></td>
+                <td><i class="<?= trans('issues.type.' . $issue->issue_type . '.bs_icon_class') ?>"></i> <?= trans('issues.type.' . $issue->issue_type . '.title') ?></td>
                 <td>
                     <span class="<?= trans('issues.priority.' . $issue->priority . '.class') ?>">
                         <?= trans('issues.priority.' . $issue->priority . '.title') ?>

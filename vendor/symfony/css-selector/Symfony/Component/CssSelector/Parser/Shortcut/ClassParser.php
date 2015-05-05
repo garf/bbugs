@@ -19,7 +19,7 @@ use Symfony\Component\CssSelector\Parser\ParserInterface;
 /**
  * CSS selector class parser shortcut.
  *
- * This component is a port of the Python cssselector library,
+ * This component is a port of the Python cssselect library,
  * which is copyright Ian Bicking, @see https://github.com/SimonSapin/cssselect.
  *
  * @author Jean-François Simon <jeanfrancois.simon@sensiolabs.com>
@@ -41,7 +41,7 @@ class ClassParser implements ParserInterface
         //     4 => string 'ab6bd_field' (length=11)
         if (preg_match('/^(([a-z]+)\|)?([\w-]+|\*)?\.([\w-]+)$/i', trim($source), $matches)) {
             return array(
-                new SelectorNode(new ClassNode(new ElementNode($matches[2] ?: null, $matches[3] ?: null), $matches[4]))
+                new SelectorNode(new ClassNode(new ElementNode($matches[2] ?: null, $matches[3] ?: null), $matches[4])),
             );
         }
 

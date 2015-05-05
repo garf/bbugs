@@ -101,6 +101,19 @@ class Projects extends Eloquent {
         return !empty($result);
     }
 
+    public function getEditableProjects($user_id)
+    {
+        return DB::select('
+            SELECT *
+            FROM lb_project_user pu
+            LEFT JOIN lb_projects p
+            ON pu.project_id=p.id
+            WHERE pu.user_id=? AND pu.role IN (?, ?)
+            ORDER BY p.title ASC
+        ', array($user_id, 'developer', 'teamlead'));
+
+    }
+
     public function isProjectCreator($user_id, $project_id)
     {
         $result = DB::selectOne('

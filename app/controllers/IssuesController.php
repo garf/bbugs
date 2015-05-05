@@ -3,13 +3,13 @@
 class IssuesController extends BaseController {
 
 
-    public function index()
+    public function index($stats='not_done')
     {
         View::share('menu_item', 'issues');
 
         $params = array(
             'assigned' => Auth::user()->id,
-            'statuses' => Issues::getInstance()->statsMapper('not_done'),
+            'statuses' => Issues::getInstance()->statsMapper($stats),
         );
 
         $data = array(
@@ -18,6 +18,7 @@ class IssuesController extends BaseController {
             'title' => trans('issues.issues_to_me'),
             'issues' => Issues::getInstance()->getByAssignee($params),
             'token' => csrf_token(),
+            'aprojects' => Projects::getInstance()->getEditableProjects(Auth::user()->id)
         );
 
         return View::make('cabinet.main', $data)
@@ -36,9 +37,14 @@ class IssuesController extends BaseController {
         $issue = Issues::find($issue_id);
 
         $data = array(
-            'css' => array(),
+            'css' => array(
+                '/template/common/js/metis/pagedown-bootstrap/css/jquery.pagedown-bootstrap.css',
+            ),
             'js' => array(
-                '/template/common/js/markupy.js',
+//                '/template/common/js/metis/pagedown-bootstrap/js/Markdown.Sanitizer.js',
+//                '/template/common/js/metis/pagedown-bootstrap/js/Markdown.Editor.js',
+//                '/template/common/js/metis/pagedown-bootstrap/js/Markdown.Converter.js',
+                '/template/common/js/metis/pagedown-bootstrap/js/jquery.pagedown-bootstrap.combined.min.js',
                 '/template/cabinet/js/issues/edit.js',
             ),
             'title' => trans('issues.issue_edit'),
@@ -61,9 +67,21 @@ class IssuesController extends BaseController {
         $issue = Issues::find($issue_id);
 
         $issue->title = e(Input::get('title', 'Untitled'));
-        $issue->content = Markupy::parse(e(Input::get('content')));
+        $issue->content = e(Input::get('content'));
         $issue->save();
         Issues::getInstance()->changeParams($issue_id, Input::all());
+
+        //Add History
+        $toHistory = array(
+            'user_id' => Auth::user()->id,
+            'to_id' => Input::get('assigned', null),
+            'project_id' => $issue->project_id,
+            'issue_id' => $issue->id,
+            'act_type' => 'issue_edit',
+        );
+
+        History::getInstance()->add($toHistory);
+
 
         Misc::getInstance()->setSystemMessage(trans('issues.issue_saved'), 'success');
         return Redirect::to(URL::route('issue-view', array('issue_id' => $issue_id)));
@@ -115,13 +133,19 @@ class IssuesController extends BaseController {
         );
 
         $data = array(
-            'css' => array(),
+            'css' => array(
+                '/template/common/js/metis/pagedown-bootstrap/css/jquery.pagedown-bootstrap.css',
+            ),
             'js' => array(
-                '/template/common/js/markupy.js',
+//                '/template/common/js/metis/pagedown-bootstrap/js/Markdown.Sanitizer.js',
+//                '/template/common/js/metis/pagedown-bootstrap/js/Markdown.Editor.js',
+//                '/template/common/js/metis/pagedown-bootstrap/js/Markdown.Converter.js',
+                '/template/common/js/metis/pagedown-bootstrap/js/jquery.pagedown-bootstrap.combined.js',
                 '/template/cabinet/js/issues/view.js',
             ),
             'title' => '#' . $issue->id . ' : ' . $issue->title,
             'issue' => $issue,
+            'project' => Projects::find($issue->project_id),
             'creator' => Users::getInstance()->getContact(Auth::user()->id, $issue->creator),
             'assigned' => Users::getInstance()->getContact(Auth::user()->id, $issue->assigned),
             'comments' => Comments::getInstance()->getComments($commentsParams),
@@ -151,12 +175,17 @@ class IssuesController extends BaseController {
         }
 
         $data = array(
-            'css' => array(),
+            'css' => array(
+                '/template/common/js/metis/pagedown-bootstrap/css/jquery.pagedown-bootstrap.css',
+            ),
             'js' => array(
-                '/template/common/js/markupy.js',
+//                '/template/common/js/metis/pagedown-bootstrap/js/Markdown.Sanitizer.js',
+//                '/template/common/js/metis/pagedown-bootstrap/js/Markdown.Editor.js',
+//                '/template/common/js/metis/pagedown-bootstrap/js/Markdown.Converter.js',
+                '/template/common/js/metis/pagedown-bootstrap/js/jquery.pagedown-bootstrap.combined.min.js',
                 '/template/cabinet/js/issues/new.js',
             ),
-            'title' => trans('issues.new_issue'),
+            'title' => $project->title . ' : ' . trans('issues.new_issue'),
             'project' => $project,
             'contacts' => Users::getInstance()->getProjectContacts(Auth::user()->id, $project->id),
             'token' => csrf_token(),
@@ -180,10 +209,11 @@ class IssuesController extends BaseController {
             return Redirect::to(URL::route('projects'));
         }
 
+        //Add Issue
         $params = array(
             'project_id' => $project_id,
             'title' => e(Input::get('title', 'Untitled')),
-            'content' => Markupy::parse(e(Input::get('content', ''))),
+            'content' => e(Input::get('content', '')),
             'issue_type' => Input::get('issue_type'),
             'priority' => Input::get('priority'),
             'status' => Input::get('status'),
@@ -193,6 +223,17 @@ class IssuesController extends BaseController {
 
         $issue_id = Issues::getInstance()->addIssue($params);
 
+        //Add History
+        $toHistory = array(
+            'user_id' => Auth::user()->id,
+            'project_id' => $project_id,
+            'issue_id' => $issue_id,
+            'act_type' => 'new_issue',
+        );
+
+        History::getInstance()->add($toHistory);
+
+        //Upload Files
         if(Input::hasFile('userfile')) {
             $params = array(
                 'file_object' => Input::file('userfile'),
@@ -215,24 +256,55 @@ class IssuesController extends BaseController {
         if (Issues::getInstance()->isIssueObserver(Auth::user()->id, $issue_id)) {
             return Redirect::to(URL::route('index'));
         }
-        $comment = trim(Input::get('comment', ''));
+
+        $issue = Issues::find($issue_id);
+
+        $comment = Input::get('comment', '');
 
         $userfiles = Input::file('userfile');
 
+        //Change issue params
+        Issues::getInstance()->changeParams($issue_id, Input::all());
+
+        //Add History
+        $toHistory = array(
+            'user_id' => Auth::user()->id,
+            'project_id' => $issue->project_id,
+            'issue_id' => $issue->id,
+            'to_id' => Input::get('assigned', null),
+            'act_type' => 'issue_update',
+        );
+
+        History::getInstance()->add($toHistory);
+
+
         if(Input::hasFile('userfile') || $comment != '') {
+
+            //Add comment
             $params = array(
                 'creator' => Auth::user()->id,
-                'comment' => Markupy::parse(e($comment)),
+                'comment' => e($comment),
                 'files_count' => (Input::hasFile('userfile')) ? count($userfiles) : 0,
                 'issue_id' => intval($issue_id),
             );
             $commentId = Comments::getInstance()->addComment($params);
+
+            //Add History
+            $toHistory = array(
+                'user_id' => Auth::user()->id,
+                'project_id' => $issue->project_id,
+                'issue_id' => $issue->id,
+                'comment_id' => $commentId,
+                'act_type' => 'new_comment',
+            );
+
+            History::getInstance()->add($toHistory);
+
         } else {
             $commentId = null;
         }
 
-        Issues::getInstance()->changeParams($issue_id, Input::all());
-
+        //Upload Files
         if(Input::hasFile('userfile') && count($userfiles) <= Files::getInstance()->maxUserFiles(Auth::user()->id, 'comment')) {
             $params = array(
                 'file_object' => $userfiles,
@@ -241,6 +313,17 @@ class IssuesController extends BaseController {
                 'user_id' => Auth::user()->id,
             );
             Files::getInstance()->uploadCommentFiles($params);
+
+            //Add History
+            $toHistory = array(
+                'user_id' => Auth::user()->id,
+                'project_id' => $issue->project_id,
+                'issue_id' => $issue->id,
+                'comment_id' => $commentId,
+                'act_type' => 'new_file',
+            );
+
+            History::getInstance()->add($toHistory);
         }
 
         return Redirect::to(URL::route('issue-view', array('issue_id' => $issue_id, '#comment' . $commentId)));

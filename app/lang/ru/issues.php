@@ -32,6 +32,7 @@ return array(
     'new_comment' => 'Новый коментарий',
     'add_comment' => 'Добавить коментарий',
     'update_issue' => 'Обновить задачу',
+    'edit_issue' => 'Изменить задачу',
 
     'all_opened' => 'Все открытые',
     'all_closed' => 'Все закрытые',
@@ -49,6 +50,7 @@ return array(
     'quote' => 'Цитировать',
     'edit' => 'Изменить',
 
+    'assigned' => 'Назначено',
     'assigned_nobody' => 'Не назначена',
     'no_issues' => 'Нет задач',
     'no_issues_assigned' => 'Нет задач назначенных мне',
@@ -57,11 +59,15 @@ return array(
     'files_were_uploaded' => ':num :pl',
     'files_pl' => 'файл загружен|файла загружено|файлов загружено',
 
+    'no_assignee' => 'Задача никому не присвоена. Хотите оставить это так?',
     'cant_delete_comment' => 'Невозможно удалить коментарий',
     'comment_deleted' => 'Коментарий удален',
     'want_delete_comment' => 'Вы действительно хотите удалить свой коментарий?',
     'want_delete_file' => 'Вы действительно хотите удалить файл :name?',
     'issue_saved' => 'Изменения задачи сохранены',
+
+    'markup' => 'Разметка',
+    'preview' => 'Предпросмотр',
 
     'priority' => array(
         '1' => array(
@@ -90,29 +96,41 @@ return array(
             'class' => 'priority_low',
         ),
     ),
+    'opened_group' => 'Открыто',
+    'closed_group' => 'Закрыто',
     'status' => array(
         'new' => array('title' => 'Новая'),
-        'opened' => array('title' => 'Открытая'),
-        'in_work' => array('title' => 'В работе'),
-        'need_feedback' => array('title' => 'Нужен ответ'),
-        'closed' => array('title' => 'Закрытая'),
-        'not_actual' => array('title' => 'Не актуальная'),
         'news' => array('title' => 'Новые'),
+        'opened' => array('title' => 'Открытая'),
         'openeds' => array('title' => 'Открытые'),
+        'in_work' => array('title' => 'В работе'),
         'in_works' => array('title' => 'В работе'),
+        'need_feedback' => array('title' => 'Нужен ответ'),
         'need_feedbacks' => array('title' => 'Нужен ответ'),
+        'closed' => array('title' => 'Закрытая'),
         'closeds' => array('title' => 'Закрытые'),
+        'not_actual' => array('title' => 'Не актуальная'),
         'not_actuals' => array('title' => 'Не актуальные'),
+        'realized' => array('title' => 'Сделано'),
+        'realizeds' => array('title' => 'Сделаны'),
+        'rework' => array('title' => 'На доработку'),
+        'reworks' => array('title' => 'На доработку'),
     ),
     'type' => array(
         'task' => array(
             'title' => 'Задача',
+            'icon' => '',
+            'bs_icon_class' => 'fa fa-bullseye text-success',
         ),
         'bug' => array(
             'title' => 'Баг',
+            'icon' => '',
+            'bs_icon_class' => 'fa fa-bug text-danger',
         ),
         'research' => array(
             'title' => 'Исследование',
+            'icon' => '',
+            'bs_icon_class' => 'fa fa-search text-info',
         ),
     ),
 );

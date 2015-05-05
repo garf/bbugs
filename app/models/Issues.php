@@ -46,7 +46,7 @@ class Issues extends Eloquent {
             WHERE i.status IN (" . $in . ")
             AND i.project_id=?
             ORDER BY i.priority ASC
-            LIMIT 100
+            LIMIT 200
         ", $where);
     }
 
@@ -56,7 +56,7 @@ class Issues extends Eloquent {
         $where = $params['statuses'];
         $where[] = $params['assigned'];
         return DB::select("
-            SELECT i.*, p.title as ptitle
+            SELECT i.*, p.title as ptitle, p.id as pid
             FROM lb_issues i
             LEFT JOIN lb_projects p
             ON i.project_id=p.id
@@ -65,6 +65,30 @@ class Issues extends Eloquent {
             ORDER BY i.priority ASC, i.updated DESC
             LIMIT 100
         ", $where);
+    }
+
+    public function project()
+    {
+        return $this->hasOne('Project');
+    }
+
+    public function searchByQ($params)
+    {
+        $request = DB::table('lb_issues AS i')
+            ->select('i.*', 'p.title AS ptitle', 'p.id AS pid', 'u.name AS uname')
+            ->leftJoin('lb_projects AS p', 'i.project_id', '=', 'p.id')
+            ->leftJoin('lb_users AS u', 'i.assigned', '=', 'u.id')
+            ->whereIn('i.status', $params['statuses']);
+        if (!empty($params['assigned'])) {
+            $request = $request->where("i.assigned", '=', $params['assigned']);
+        }
+        $request = $request
+            ->where("i.title", 'LIKE', '%' . $params['q'] . '%')
+            ->orderBy('i.title', 'asc')
+            ->get();
+//        dd(DB::getQueryLog());
+
+        return $request;
     }
 
     public function changeAssignee($id, $user_id)
@@ -98,7 +122,7 @@ class Issues extends Eloquent {
     public function changeParams($id, $params)
     {
         $priorities = array('1','2','3','4','5');
-        $statuses = array('new', 'opened', 'in_work', 'need_feedback', 'closed', 'not_actual');
+        $statuses = array('new', 'opened', 'in_work', 'need_feedback', 'rework', 'realized', 'closed', 'not_actual');
         $types = array('bug', 'task', 'research');
 
         $issue = Issues::find($id);
@@ -188,12 +212,16 @@ class Issues extends Eloquent {
                 'opened',
                 'in_work',
                 'need_feedback',
+                'rework',
+                'realized',
             ),
             'all' => array(
                 'new',
                 'opened',
                 'in_work',
                 'need_feedback',
+                'realized',
+                'rework',
                 'closed',
                 'not_actual'
             ),
@@ -201,8 +229,36 @@ class Issues extends Eloquent {
             'opened' => array('opened'),
             'in_work' => array('in_work'),
             'need_feedback' => array('need_feedback'),
+            'realized' => array('realized'),
+            'rework' => array('rework'),
             'closed' => array('closed'),
             'not_actual' => array('not_actual'),
+        );
+
+        return (isset($statsArray[$stats]) ? $statsArray[$stats] : 'not_done');
+    }
+
+    public function typesMapper($stats)
+    {
+        $statsArray = array(
+            'task' => array(
+                'closed',
+                'not_actual'
+            ),
+            'bug' => array(
+                'new',
+                'opened',
+                'in_work',
+                'need_feedback',
+            ),
+            'research' => array(
+                'new',
+                'opened',
+                'in_work',
+                'need_feedback',
+                'closed',
+                'not_actual'
+            ),
         );
 
         return (isset($statsArray[$stats]) ? $statsArray[$stats] : 'not_done');

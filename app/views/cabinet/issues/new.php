@@ -1,4 +1,7 @@
 <br />
+<script>
+    var lang_no_assignee = '<?= trans('issues.no_assignee') ?>';
+</script>
 <div ng-controller="NewIssueController">
     <form method="post" action="<?= URL::route('issue-add', array('project_id' => $project->id)) ?>" enctype="multipart/form-data">
         <input type="hidden" name="_token" value="<?= $token ?>" />
@@ -12,16 +15,37 @@
                     <div class="form-group">
                         <label for="titleInput" class="control-label col-lg-12"><?= trans('issues.issue_title') ?></label>
                         <div class="col-md-12">
-                            <input type="text" name="title" id="titleInput" class="form-control" value="<?= Input::old('title') ?>" required="required" />
+                            <input type="text" name="title" tabindex="1" id="titleInput" class="form-control" value="<?= Input::old('title') ?>" required="required" />
                         </div>
                     </div>
                     <br />
                     <br />
                     <br />
-                    <div class="form-group">
-                        <label for="contentTextarea" class="control-label col-lg-12"><?= trans('issues.issue_description') ?></label>
-                        <div class="col-md-12">
-                            <textarea name="content" id="contentTextarea" class="form-control"><?= Input::old('content') ?></textarea>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="box">
+                                <header>
+                                    <h5><?= trans('issues.issue_description') ?></h5>
+                                    <ul class="nav nav-tabs pull-right">
+                                        <li class="active">
+                                            <a href="#markdown" data-toggle="tab"><?= trans('issues.markup') ?></a>
+                                        </li>
+                                        <li class=""> <a href="#preview" data-toggle="tab"><?= trans('issues.preview') ?></a>  </li>
+                                    </ul>
+                                </header>
+                                <div id="div-3" class="body tab-content">
+                                    <div class="tab-pane fade active in" id="markdown">
+                                        <div class="wmd-panel">
+                                            <div id="wmd-button-bar" class="btn-toolbar"></div>
+                                            <textarea tabindex="2" class="form-control wmd-input" rows="10" name="content" id="wmd-input"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="preview">
+                                        <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -36,7 +60,7 @@
                     <div class="form-group">
                         <label for="typeSelect" class="control-label col-lg-4"><?= trans('issues.issue_type') ?></label>
                         <div class="col-md-8">
-                            <select name="issue_type" class="form-control" id="typeSelect">
+                            <select name="issue_type" class="form-control" id="typeSelect" tabindex="3">
                                 <option value="task"><?= trans('issues.type.task.title') ?></option>
                                 <option value="bug"><?= trans('issues.type.bug.title') ?></option>
                                 <option value="research"><?= trans('issues.type.research.title') ?></option>
@@ -48,13 +72,18 @@
                     <div class="form-group">
                         <label for="statusSelect" class="control-label col-lg-4"><?= trans('issues.issue_status') ?></label>
                         <div class="col-md-8">
-                            <select name="status" class="form-control" id="statusSelect">
-                                <option value="new"><?= trans('issues.status.new.title') ?></option>
-                                <option value="opened"><?= trans('issues.status.opened.title') ?></option>
-                                <option value="in_work"><?= trans('issues.status.in_work.title') ?></option>
-                                <option value="need_feedback"><?= trans('issues.status.need_feedback.title') ?></option>
-                                <option value="closed"><?= trans('issues.status.closed.title') ?></option>
-                                <option value="not_actual"><?= trans('issues.status.not_actual.title') ?></option>
+                            <select name="status" class="form-control" id="statusSelect" tabindex="4">
+                                <optgroup label="<?= trans('issues.opened_group') ?>">
+                                    <option value="new"><?= trans('issues.status.new.title') ?></option>
+                                    <option value="opened"><?= trans('issues.status.opened.title') ?></option>
+                                    <option value="in_work"><?= trans('issues.status.in_work.title') ?></option>
+                                    <option value="need_feedback"><?= trans('issues.status.need_feedback.title') ?></option>
+                                    <option value="realized"><?= trans('issues.status.realized.title') ?></option>
+                                </optgroup>
+                                <optgroup label="<?= trans('issues.closed_group') ?>">
+                                    <option value="closed"><?= trans('issues.status.closed.title') ?></option>
+                                    <option value="not_actual"><?= trans('issues.status.not_actual.title') ?></option>
+                                </optgroup>
                             </select>
                         </div>
                     </div>
@@ -63,7 +92,7 @@
                     <div class="form-group">
                         <label for="prioritySelect" class="control-label col-lg-4"><?= trans('issues.issue_priority') ?></label>
                         <div class="col-md-8">
-                            <select name="priority" class="form-control" id="prioritySelect">
+                            <select name="priority" class="form-control" id="prioritySelect" tabindex="5">
                                 <option value="1"><?= trans('issues.priority.1.title') ?></option>
                                 <option value="2"><?= trans('issues.priority.2.title') ?></option>
                                 <option value="3"><?= trans('issues.priority.3.title') ?></option>
@@ -77,7 +106,7 @@
                     <div class="form-group">
                         <label for="assigneeSelect" class="control-label col-lg-4"><?= trans('issues.assignee') ?></label>
                         <div class="col-md-8">
-                            <select name="assigned" class="form-control" id="assigneeSelect">
+                            <select name="assigned" class="form-control" id="assigneeSelect" tabindex="6">
                                 <option value="0"></option>
                                 <?php foreach ($contacts as $contact) { ?>
                                     <?php if ($contact->role == 'observer') continue; ?>
@@ -132,8 +161,11 @@
             </div>
         </div>
         <div class="clearfix">
-            <input type="submit" value="<?= trans('issues.create_issue') ?>" class="btn btn-block btn-lg btn-primary" />
+            <input type="submit" value="<?= trans('issues.create_issue') ?>" onclick="return ($('#assigneeSelect option:selected').val() == '0' ? confirm(lang_no_assignee) : true);" class="btn btn-block btn-lg btn-primary" />
         </div>
         <br />
     </form>
 </div>
+<script>
+    $('#titleInput').focus();
+</script>

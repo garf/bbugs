@@ -1,21 +1,43 @@
-## Laravel PHP Framework
+## LastBugs Bugtracker
 
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/version.png)](https://packagist.org/packages/laravel/framework) [![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.png)](https://packagist.org/packages/laravel/framework) [![Build Status](https://travis-ci.org/laravel/framework.png)](https://travis-ci.org/laravel/framework) [![License](https://poser.pugx.org/laravel/framework/license.png)](https://packagist.org/packages/laravel/framework)
+This bug tracking system not better than others. Maybe even worse. But I try to do it much easier to use not only for developers, but for users far from programming.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, and caching.
+This bug tracker is based on Laravel 4 and for now has 2 languages: English and Russian.
 
-Laravel aims to make the development process a pleasing one for the developer without sacrificing application functionality. Happy developers make the best code. To this end, we've attempted to combine the very best of what we have seen in other web frameworks, including frameworks implemented in other languages, such as Ruby on Rails, ASP.NET MVC, and Sinatra.
+### Installation
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+There are no installer, but you only have to use laravel migrations to install bug tracker. Use your favorite web-server such as Apache or Nginx. You have to point it to public folder.
 
-## Official Documentation
+After that, in terminal you have to type:
 
-Documentation for the entire framework can be found on the [Laravel website](http://laravel.com/docs).
+    php artisan migrate
+    
+If you use production environment, it will ask you to confirm. Press **y**.
 
-### Contributing To Laravel
+Artisan will create necessary tables in database. After that, you tracker installed successfully.
 
-**All issues and pull requests should be filed on the [laravel/framework](http://github.com/laravel/framework) repository.**
+### Usage
 
-### License
+After that, register and create your first project, where you can add issues.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+There are no superadmin in this system. Every user has it's own sandbox with projects and issues and can add other users from contacts list to it's sandbox, f.e. it's team members.
+
+To contacts list users can be added by email address.
+
+Every team member has access permissions. There are 3 roles:
+
+- Teamlead
+- Developer
+- Observer
+
+Permission information can be explored in user management screen of project.
+
+----
+
+BBug can estimate budget of the project, percent of completion, effectiveness and overload of every team member in project.
+
+You can find this information in  project info tab.
+
+### Contribution
+
+Every help in development would make me happy.

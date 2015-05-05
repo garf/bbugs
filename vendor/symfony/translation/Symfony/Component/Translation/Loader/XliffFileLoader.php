@@ -75,7 +75,7 @@ class XliffFileLoader implements LoaderInterface
     }
 
     /**
-     * Validates and parses the given file into a SimpleXMLElement
+     * Validates and parses the given file into a SimpleXMLElement.
      *
      * @param string $file
      *
@@ -116,15 +116,16 @@ class XliffFileLoader implements LoaderInterface
 
         $dom->normalizeDocument();
 
+        libxml_clear_errors();
         libxml_use_internal_errors($internalErrors);
 
         return array(simplexml_import_dom($dom), strtoupper($dom->encoding));
     }
 
     /**
-     * Returns the XML errors of the internal XML parser
+     * Returns the XML errors of the internal XML parser.
      *
-     * @param bool    $internalErrors
+     * @param bool $internalErrors
      *
      * @return array An array of errors
      */

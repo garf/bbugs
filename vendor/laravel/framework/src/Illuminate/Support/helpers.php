@@ -244,6 +244,21 @@ if ( ! function_exists('array_get'))
 	}
 }
 
+if ( ! function_exists('array_has'))
+{
+	/**
+	 * Check if an item exists in an array using "dot" notation.
+	 *
+	 * @param  array   $array
+	 * @param  string  $key
+	 * @return bool
+	 */
+	function array_has($array, $key)
+	{
+		return Arr::has($array, $key);
+	}
+}
+
 if ( ! function_exists('array_only'))
 {
 	/**
@@ -436,10 +451,8 @@ if ( ! function_exists('csrf_token'))
 		{
 			return $session->getToken();
 		}
-		else
-		{
-			throw new RuntimeException("Application session store not set.");
-		}
+
+		throw new RuntimeException("Application session store not set.");
 	}
 }
 
@@ -492,7 +505,7 @@ if ( ! function_exists('dd'))
 	/**
 	 * Dump the passed variables and end the script.
 	 *
-	 * @param  dynamic  mixed
+	 * @param  mixed
 	 * @return void
 	 */
 	function dd()
@@ -693,13 +706,15 @@ if ( ! function_exists('route'))
 	/**
 	 * Generate a URL to a named route.
 	 *
-	 * @param  string  $route
+	 * @param  string  $name
 	 * @param  array   $parameters
+	 * @param  bool  $absolute
+	 * @param  \Illuminate\Routing\Route $route
 	 * @return string
 	 */
-	function route($route, $parameters = array())
+	function route($name, $parameters = array(), $absolute = true, $route = null)
 	{
-		return app('url')->route($route, $parameters);
+		return app('url')->route($name, $parameters, $absolute, $route);
 	}
 }
 

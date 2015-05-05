@@ -37,7 +37,7 @@
             ),
             array(
                 'lang_key' => 'menu.search',
-                'url' => URL::route('search-index'),
+                'url' => URL::route('search'),
                 'counter' => '',
                 'icon' => 'fa-search',
                 'menu_item' => 'search',
