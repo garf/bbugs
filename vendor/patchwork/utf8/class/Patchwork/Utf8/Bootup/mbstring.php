@@ -28,13 +28,12 @@ function mb_encoding_aliases($encoding) {return s\Mbstring::mb_encoding_aliases(
 function mb_check_encoding($var = INF, $encoding = INF) {return s\Mbstring::mb_check_encoding($var, $encoding);}
 function mb_detect_encoding($str, $encoding_list = INF, $strict = false) {return s\Mbstring::mb_detect_encoding($str, $encoding_list, $strict);}
 function mb_detect_order($encoding_list = INF) {return s\Mbstring::mb_detect_order($encoding_list);}
-function mb_parse_str($s, &$result = array()) {return parse_str($s, $result);};
+function mb_parse_str($s, &$result = array()) {parse_str($s, $result);};
 function mb_strlen($s, $enc = INF) {return s\Mbstring::mb_strlen($s, $enc);};
 function mb_strpos($s, $needle, $offset = 0, $enc = INF) {return s\Mbstring::mb_strpos($s, $needle, $offset, $enc);};
 function mb_strtolower($s, $enc = INF) {return s\Mbstring::mb_strtolower($s, $enc);};
 function mb_strtoupper($s, $enc = INF) {return s\Mbstring::mb_strtoupper($s, $enc);};
 function mb_substitute_character($char = INF) {return s\Mbstring::mb_substitute_character($char);};
-function mb_substr_count($s, $needle) {return substr_count($s, $needle);};
 function mb_substr($s, $start, $length = 2147483647, $enc = INF) {return s\Mbstring::mb_substr($s, $start, $length, $enc);};
 function mb_stripos($s, $needle, $offset = 0, $enc = INF) {return s\Mbstring::mb_stripos($s, $needle, $offset, $enc);};
 function mb_stristr($s, $needle, $part = false, $enc = INF) {return s\Mbstring::mb_stristr($s, $needle, $part, $enc);};
@@ -43,3 +42,9 @@ function mb_strrichr($s, $needle, $part = false, $enc = INF) {return s\Mbstring:
 function mb_strripos($s, $needle, $offset = 0, $enc = INF) {return s\Mbstring::mb_strripos($s, $needle, $offset, $enc);};
 function mb_strrpos($s, $needle, $offset = 0, $enc = INF) {return s\Mbstring::mb_strrpos($s, $needle, $offset, $enc);};
 function mb_strstr($s, $needle, $part = false, $enc = INF) {return s\Mbstring::mb_strstr($s, $needle, $part, $enc);};
+function mb_get_info($type = 'all') {return s\Mbstring::mb_get_info($type);}
+function mb_http_output($enc = INF) {return s\Mbstring::mb_http_output($enc);}
+function mb_strwidth($s, $enc = INF) {return s\Mbstring::mb_strwidth($s, $enc);}
+function mb_substr_count($haystack, $needle, $enc = INF) {return s\Mbstring::mb_substr_count($haystack, $needle, $enc);}
+function mb_output_handler($contents, $status) {return s\Mbstring::mb_output_handler($contents, $status);}
+function mb_http_input($type = '') {return s\Mbstring::mb_http_input($type);}

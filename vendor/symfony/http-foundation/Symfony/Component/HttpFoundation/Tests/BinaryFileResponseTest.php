@@ -20,7 +20,7 @@ class BinaryFileResponseTest extends ResponseTestCase
 {
     public function testConstruction()
     {
-        $file = __DIR__ . '/../README.md';
+        $file = __DIR__.'/../README.md';
         $response = new BinaryFileResponse($file, 404, array('X-Header' => 'Foo'), true, null, true, true);
         $this->assertEquals(404, $response->getStatusCode());
         $this->assertEquals('Foo', $response->headers->get('X-Header'));
@@ -77,7 +77,6 @@ class BinaryFileResponseTest extends ResponseTestCase
         $response->sendContent();
 
         $this->assertEquals(206, $response->getStatusCode());
-        $this->assertEquals('binary', $response->headers->get('Content-Transfer-Encoding'));
         $this->assertEquals($responseRange, $response->headers->get('Content-Range'));
     }
 
@@ -113,7 +112,6 @@ class BinaryFileResponseTest extends ResponseTestCase
         $response->sendContent();
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('binary', $response->headers->get('Content-Transfer-Encoding'));
     }
 
     public function provideFullFileRanges()
@@ -144,7 +142,6 @@ class BinaryFileResponseTest extends ResponseTestCase
         $response->sendContent();
 
         $this->assertEquals(416, $response->getStatusCode());
-        $this->assertEquals('binary', $response->headers->get('Content-Transfer-Encoding'));
         #$this->assertEquals('', $response->headers->get('Content-Range'));
     }
 
@@ -152,7 +149,7 @@ class BinaryFileResponseTest extends ResponseTestCase
     {
         return array(
             array('bytes=-40'),
-            array('bytes=30-40')
+            array('bytes=30-40'),
         );
     }
 
@@ -162,7 +159,7 @@ class BinaryFileResponseTest extends ResponseTestCase
         $request->headers->set('X-Sendfile-Type', 'X-Sendfile');
 
         BinaryFileResponse::trustXSendfileTypeHeader();
-        $response = BinaryFileResponse::create(__DIR__ . '/../README.md');
+        $response = BinaryFileResponse::create(__DIR__.'/../README.md');
         $response->prepare($request);
 
         $this->expectOutputString('');
@@ -193,6 +190,35 @@ class BinaryFileResponseTest extends ResponseTestCase
         $this->assertEquals($virtual, $response->headers->get('X-Accel-Redirect'));
     }
 
+    public function testSplFileObject()
+    {
+        $filePath = __DIR__.'/File/Fixtures/test';
+        $file = new \SplFileObject($filePath);
+
+        $response = new BinaryFileResponse($file);
+
+        $this->assertEquals(realpath($response->getFile()->getPathname()), realpath($filePath));
+    }
+
+    public function testAcceptRangeOnUnsafeMethods()
+    {
+        $request = Request::create('/', 'POST');
+        $response = BinaryFileResponse::create(__DIR__.'/File/Fixtures/test.gif');
+        $response->prepare($request);
+
+        $this->assertEquals('none', $response->headers->get('Accept-Ranges'));
+    }
+
+    public function testAcceptRangeNotOverriden()
+    {
+        $request = Request::create('/', 'POST');
+        $response = BinaryFileResponse::create(__DIR__.'/File/Fixtures/test.gif');
+        $response->headers->set('Accept-Ranges', 'foo');
+        $response->prepare($request);
+
+        $this->assertEquals('foo', $response->headers->get('Accept-Ranges'));
+    }
+
     public function getSampleXAccelMappings()
     {
         return array(
@@ -203,6 +229,6 @@ class BinaryFileResponseTest extends ResponseTestCase
 
     protected function provideResponse()
     {
-        return new BinaryFileResponse(__DIR__ . '/../README.md');
+        return new BinaryFileResponse(__DIR__.'/../README.md');
     }
 }

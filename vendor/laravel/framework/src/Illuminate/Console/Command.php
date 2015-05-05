@@ -89,7 +89,7 @@ class Command extends \Symfony\Component\Console\Command\Command {
 	 *
 	 * @param  \Symfony\Component\Console\Input\InputInterface  $input
 	 * @param  \Symfony\Component\Console\Output\OutputInterface  $output
-	 * @return integer
+	 * @return int
 	 */
 	public function run(InputInterface $input, OutputInterface $output)
 	{
@@ -117,7 +117,7 @@ class Command extends \Symfony\Component\Console\Command\Command {
 	 *
 	 * @param  string  $command
 	 * @param  array   $arguments
-	 * @return integer
+	 * @return int
 	 */
 	public function call($command, array $arguments = array())
 	{
@@ -133,7 +133,7 @@ class Command extends \Symfony\Component\Console\Command\Command {
 	 *
 	 * @param  string  $command
 	 * @param  array   $arguments
-	 * @return integer
+	 * @return int
 	 */
 	public function callSilent($command, array $arguments = array())
 	{
@@ -177,7 +177,7 @@ class Command extends \Symfony\Component\Console\Command\Command {
 	 * @param  bool    $default
 	 * @return bool
 	 */
-	public function confirm($question, $default = true)
+	public function confirm($question, $default = false)
 	{
 		$helper = $this->getHelperSet()->get('question');
 
@@ -260,14 +260,14 @@ class Command extends \Symfony\Component\Console\Command\Command {
 		return $helper->ask($this->input, $this->output, $question);
 	}
 
-    /**
-     * Format input to textual table
-     *
-     * @param  array   $headers
-     * @param  array   $rows
-     * @param  string  $style
-     * @return void
-     */
+	/**
+	 * Format input to textual table
+	 *
+	 * @param  array   $headers
+	 * @param  array   $rows
+	 * @param  string  $style
+	 * @return void
+	 */
 	public function table(array $headers, array $rows, $style = 'default')
 	{
 		$table = new Table($this->output);

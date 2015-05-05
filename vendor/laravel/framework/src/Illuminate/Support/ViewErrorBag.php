@@ -12,6 +12,17 @@ class ViewErrorBag implements Countable {
 	protected $bags = [];
 
 	/**
+	 * Checks if a named MessageBag exists in the bags.
+	 *
+	 * @param  string  $key
+	 * @return bool
+	 */
+	public function hasBag($key = 'default')
+	{
+		return isset($this->bags[$key]);
+	}
+
+	/**
 	 * Get a MessageBag instance from the bags.
 	 *
 	 * @param  string  $key
@@ -20,6 +31,16 @@ class ViewErrorBag implements Countable {
 	public function getBag($key)
 	{
 		return array_get($this->bags, $key, new MessageBag);
+	}
+
+	/**
+	 * Get all the bags.
+	 *
+	 * @return array
+	 */
+	public function getBags()
+	{
+		return $this->bags;
 	}
 
 	/**

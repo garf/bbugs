@@ -9,24 +9,19 @@ use Illuminate\Routing\UrlGenerator;
  */
 class JavascriptRenderer extends BaseJavascriptRenderer
 {
+    // Use XHR handler by default, instead of jQuery
+    protected $ajaxHandlerBindToJquery = false;
+    protected $ajaxHandlerBindToXHR = true;
+    
     /** @var \Illuminate\Routing\UrlGenerator */
     protected $url;
-
-    protected $cssVendors = array(
-        // 'vendor/font-awesome/css/font-awesome.min.css',  // Removed until font is embedded
-        'vendor/highlightjs/styles/github.css'
-    );
-
-    // Removed 'openhandler.js' until new release is tagged.
-    protected $jsFiles = array('debugbar.js', 'widgets.js');
 
     public function __construct(DebugBar $debugBar, $baseUrl = null, $basePath = null)
     {
         parent::__construct($debugBar, $baseUrl, $basePath);
 
-        $this->cssFiles[] = __DIR__ . '/Resources/laravel-debugbar.css';
-        $this->jsFiles[] = __DIR__ . '/Resources/openhandler.js';
-        $this->cssVendors[] = __DIR__ . '/Resources/vendor/font-awesome/style.css';
+        $this->cssFiles['laravel'] = __DIR__ . '/Resources/laravel-debugbar.css';
+        $this->cssVendors['fontawesome'] = __DIR__ . '/Resources/vendor/font-awesome/style.css';
     }
 
     /**
@@ -134,5 +129,4 @@ class JavascriptRenderer extends BaseJavascriptRenderer
         }
         return rtrim($root, '/') . "/$uri";
     }
-
 }

@@ -26,7 +26,7 @@ abstract class Queue {
 	}
 
 	/**
-	 * Push a new an array of jobs onto the queue.
+	 * Push an array of jobs onto the queue.
 	 *
 	 * @param  array   $jobs
 	 * @param  mixed   $data
@@ -55,10 +55,8 @@ abstract class Queue {
 		{
 			return json_encode($this->createClosurePayload($job, $data));
 		}
-		else
-		{
-			return json_encode(array('job' => $job, 'data' => $data));
-		}
+
+		return json_encode(array('job' => $job, 'data' => $data));
 	}
 
 	/**
@@ -102,10 +100,8 @@ abstract class Queue {
 		{
 			return max(0, $delay->getTimestamp() - $this->getTime());
 		}
-		else
-		{
-			return intval($delay);
-		}
+
+		return (int) $delay;
 	}
 
 	/**

@@ -6,11 +6,9 @@
     "require": {
         "laravel/framework": "4.2.*",
         "barryvdh/laravel-debugbar": "1.*",
-        "mews/captcha": "dev-master",
-        "torann/geoip": "dev-master",
         "thomaswelton/laravel-gravatar": "0.1.x",
         "barryvdh/laravel-dompdf": "0.4.*",
-        "zizaco/entrust": "1.2.*@dev"
+        "xethron/migrations-generator": "dev-master"
     },
     "autoload": {
         "classmap": [

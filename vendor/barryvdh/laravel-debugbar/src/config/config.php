@@ -20,14 +20,18 @@ return array(
      | Storage settings
      |--------------------------------------------------------------------------
      |
-     | DebugBar stores data for session/ajax requests in a directory.
+     | DebugBar stores data for session/ajax requests.
      | You can disable this, so the debugbar stores data in headers/session,
      | but this can cause problems with large data collectors.
+     | By default, file storage (in the storage folder) is used. Redis and PDO
+     | can also be used. For PDO, run the package migrations first.
      |
      */
     'storage' => array(
         'enabled' => true,
-        'path' => storage_path() . '/debugbar',
+        'driver' => 'file', // redis, file, pdo
+        'path' => storage_path() . '/debugbar', // For file driver
+        'connection' => null,   // Leave null for default connection (Redis/PDO)
     ),
 
     /*
@@ -117,6 +121,11 @@ return array(
             'with_params'       => true,   // Render SQL with the parameters substituted
             'timeline'          => false,  // Add the queries to the timeline
             'backtrace'         => false,  // EXPERIMENTAL: Use a backtrace to find the origin of the query in your files.
+            'explain' => array(            // EXPERIMENTAL: Show EXPLAIN output on queries
+                'enabled' => false,
+                'types' => array('SELECT'), // array('SELECT', 'INSERT', 'UPDATE', 'DELETE'); for MySQL 5.6.3+
+            ),
+            'hints'             => true,    // Show hints for common mistakes
         ),
         'mail' => array(
             'full_log' => false

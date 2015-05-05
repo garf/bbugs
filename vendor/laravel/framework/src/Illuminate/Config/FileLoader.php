@@ -74,7 +74,7 @@ class FileLoader implements LoaderInterface {
 
 		if ($this->files->exists($file))
 		{
-			$items = $this->files->getRequire($file);
+			$items = $this->getRequire($file);
 		}
 
 		// Finally we're ready to check for the environment specific configuration
@@ -99,7 +99,7 @@ class FileLoader implements LoaderInterface {
 	 */
 	protected function mergeEnvironment(array $items, $file)
 	{
-		return array_replace_recursive($items, $this->files->getRequire($file));
+		return array_replace_recursive($items, $this->getRequire($file));
 	}
 
 	/**
@@ -159,7 +159,9 @@ class FileLoader implements LoaderInterface {
 
 		if ($this->files->exists($path = $this->defaultPath.'/'.$file))
 		{
-			$items = array_merge($items, $this->getRequire($path));
+			$items = array_merge(
+				$items, $this->getRequire($path)
+			);
 		}
 
 		// Once we have merged the regular package configuration we need to look for
@@ -169,7 +171,9 @@ class FileLoader implements LoaderInterface {
 
 		if ($this->files->exists($path))
 		{
-			$items = array_merge($items, $this->getRequire($path));
+			$items = array_merge(
+				$items, $this->getRequire($path)
+			);
 		}
 
 		return $items;

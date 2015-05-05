@@ -1,7 +1,7 @@
 <?php
 /**
  * @author    Jim Wigginton <terrafrost@php.net>
- * @copyright MMXIV Jim Wigginton
+ * @copyright 2014 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
@@ -267,5 +267,26 @@ class Unit_File_ASN1Test extends PhpseclibTestCase
         $asn1 = new File_ASN1();
         $decoded = $asn1->decodeBER(base64_decode($str));
         $this->assertCount(3, $decoded[0]['content']);
+    }
+
+    /**
+    * @group github477
+    */
+    public function testContextSpecificNonConstructed()
+    {
+        $asn1 = new File_ASN1();
+        $decoded = $asn1->decodeBER(base64_decode('MBaAFJtUo7c00HsI5EPZ4bkICfkOY2Pv'));
+        $this->assertInternalType('string', $decoded[0]['content'][0]['content']);
+    }
+
+    /**
+    * @group github602
+    */
+    public function testEmptyContextTag()
+    {
+        $asn1 = new File_ASN1();
+        $decoded = $asn1->decodeBER("\xa0\x00");
+        $this->assertInternalType('array', $decoded);
+        $this->assertCount(0, $decoded[0]['content']);
     }
 }

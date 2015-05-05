@@ -124,10 +124,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
         'Barryvdh\Debugbar\ServiceProvider',
-        'Mews\Captcha\CaptchaServiceProvider',
-        'Torann\GeoIP\GeoIPServiceProvider',
         'Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider',
-        'Zizaco\Entrust\EntrustServiceProvider', //https://github.com/Zizaco/entrust
         'Barryvdh\DomPDF\ServiceProvider', //https://github.com/barryvdh/laravel-dompdf
 
 	),
@@ -197,10 +194,7 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 
         'Debugbar'        => 'Barryvdh\Debugbar\Facade',
-        'Captcha'         => 'Mews\Captcha\Facades\Captcha',
-        'GeoIP'           => 'Torann\GeoIP\GeoIPFacade',
         'Gravatar'        => 'Thomaswelton\LaravelGravatar\Facades\Gravatar',
-        'Entrust'         => 'Zizaco\Entrust\EntrustFacade',
         'PDF'             => 'Barryvdh\DomPDF\Facade',
 
 	),

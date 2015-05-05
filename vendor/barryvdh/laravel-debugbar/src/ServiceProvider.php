@@ -2,7 +2,6 @@
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
-
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -18,10 +17,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
         $app = $this->app;
+
         $app['config']->package('barryvdh/laravel-debugbar', __DIR__ . '/config');
 
         if ($app->runningInConsole()) {
-            if ($this->app['config']->get('laravel-debugbar::config.capture_console')) {
+            if ($this->app['config']->get('laravel-debugbar::config.capture_console') && method_exists($app, 'shutdown')) {
                 $app->shutdown(
                     function ($app) {
                         /** @var LaravelDebugbar $debugbar */
@@ -33,7 +33,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 $this->app['config']->set('laravel-debugbar::config.enabled', false);
             }
         } elseif (!$this->shouldUseMiddleware()) {
-            $app->after(
+            $app['router']->after(
                 function ($request, $response) use ($app) {
                     /** @var LaravelDebugbar $debugbar */
                     $debugbar = $app['debugbar'];
@@ -70,14 +70,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             /** @var LaravelDebugbar $debugbar */
             $debugbar = $this->app['debugbar'];
             $debugbar->boot();
-
         }
-    }
-
-    protected function shouldUseMiddleware()
-    {
-        $app = $this->app;
-        return !$app->runningInConsole() && version_compare($app::VERSION, '4.1', '>=');
     }
 
     /**
@@ -87,6 +80,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function register()
     {
+        $this->app->alias(
+            'DebugBar\DataFormatter\DataFormatter',
+            'DebugBar\DataFormatter\DataFormatterInterface'
+        );
+        
         $this->app['debugbar'] = $this->app->share(
             function ($app) {
                 $debugbar = new LaravelDebugBar($app);
@@ -101,9 +99,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $this->app['command.debugbar.publish'] = $this->app->share(
             function ($app) {
-                //Make sure the asset publisher is registered.
-                $app->register('Illuminate\Foundation\Providers\PublisherServiceProvider');
-                return new Console\PublishCommand($app['asset.publisher']);
+                return new Console\PublishCommand();
             }
         );
 
@@ -116,8 +112,20 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->commands(array('command.debugbar.publish', 'command.debugbar.clear'));
 
         if ($this->shouldUseMiddleware()) {
-            $this->app->middleware('Barryvdh\Debugbar\Middleware', array($this->app));
+            $this->app->middleware('Barryvdh\Debugbar\Middleware\Stack', array($this->app));
         }
+    }
+
+    /**
+     * Detect if the Middelware should be used.
+     * 
+     * @return bool
+     */
+    protected function shouldUseMiddleware()
+    {
+        $app = $this->app;
+        $version = $app::VERSION;
+        return !$app->runningInConsole() && version_compare($version, '4.1-dev', '>=') && version_compare($version, '5.0-dev', '<');
     }
 
     /**
@@ -129,5 +137,4 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         return array('debugbar', 'command.debugbar.publish', 'command.debugbar.clear');
     }
-
 }

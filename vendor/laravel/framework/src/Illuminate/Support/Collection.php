@@ -66,6 +66,8 @@ class Collection implements ArrayAccess, ArrayableInterface, Countable, Iterator
 
 		foreach ($this->items as $values)
 		{
+			if ($values instanceof Collection) $values = $values->all();
+
 			$results = array_merge($results, $values);
 		}
 
@@ -147,10 +149,8 @@ class Collection implements ArrayAccess, ArrayableInterface, Countable, Iterator
 		{
 			return count($this->items) > 0 ? reset($this->items) : null;
 		}
-		else
-		{
-			return array_first($this->items, $callback, $default);
-		}
+
+		return array_first($this->items, $callback, $default);
 	}
 
 	/**
@@ -193,7 +193,7 @@ class Collection implements ArrayAccess, ArrayableInterface, Countable, Iterator
 	 */
 	public function get($key, $default = null)
 	{
-		if (array_key_exists($key, $this->items))
+		if ($this->offsetExists($key))
 		{
 			return $this->items[$key];
 		}
@@ -213,12 +213,28 @@ class Collection implements ArrayAccess, ArrayableInterface, Countable, Iterator
 
 		foreach ($this->items as $key => $value)
 		{
-			$key = is_callable($groupBy) ? $groupBy($value, $key) : data_get($value, $groupBy);
-
-			$results[$key][] = $value;
+			$results[$this->getGroupByKey($groupBy, $key, $value)][] = $value;
 		}
 
 		return new static($results);
+	}
+
+	/**
+	 * Get the "group by" key value.
+	 *
+	 * @param  callable|string  $groupBy
+	 * @param  string  $key
+	 * @param  mixed  $value
+	 * @return string
+	 */
+	protected function getGroupByKey($groupBy, $key, $value)
+	{
+		if ( ! is_string($groupBy) && is_callable($groupBy))
+		{
+			return $groupBy($value, $key);
+		}
+
+		return data_get($value, $groupBy);
 	}
 
 	/**
@@ -249,7 +265,7 @@ class Collection implements ArrayAccess, ArrayableInterface, Countable, Iterator
 	 */
 	public function has($key)
 	{
-		return array_key_exists($key, $this->items);
+		return $this->offsetExists($key);
 	}
 
 	/**
@@ -261,8 +277,6 @@ class Collection implements ArrayAccess, ArrayableInterface, Countable, Iterator
 	 */
 	public function implode($value, $glue = null)
 	{
-		if (is_null($glue)) return implode($this->lists($value));
-
 		return implode($glue, $this->lists($value));
 	}
 
@@ -405,6 +419,8 @@ class Collection implements ArrayAccess, ArrayableInterface, Countable, Iterator
 	 */
 	public function random($amount = 1)
 	{
+		if ($this->isEmpty()) return null;
+
 		$keys = array_rand($this->items, $amount);
 
 		return is_array($keys) ? array_intersect_key($this->items, array_flip($keys)) : $this->items[$keys];
@@ -423,31 +439,25 @@ class Collection implements ArrayAccess, ArrayableInterface, Countable, Iterator
 	}
 
 	/**
-	 * Create a colleciton of all elements that do not pass a given truth test.
+	 * Create a collection of all elements that do not pass a given truth test.
 	 *
 	 * @param  \Closure|mixed  $callback
 	 * @return static
 	 */
 	public function reject($callback)
 	{
-		$results = [];
-
-		foreach ($this->items as $key => $value)
+		if ($callback instanceof Closure)
 		{
-			if ($callback instanceof Closure)
+			return $this->filter(function($item) use ($callback)
 			{
-				if ( ! $callback($value))
-				{
-					$results[$key] = $value;
-				}
-			}
-			elseif ($callback != $value)
-			{
-				$results[$key] = $value;
-			}
+				return ! $callback($item);
+			});
 		}
 
-		return new static($results);
+		return $this->filter(function($item) use ($callback)
+		{
+			return $item != $callback;
+		});
 	}
 
 	/**
@@ -609,8 +619,13 @@ class Collection implements ArrayAccess, ArrayableInterface, Countable, Iterator
 	 * @param  \Closure  $callback
 	 * @return mixed
 	 */
-	public function sum($callback)
+	public function sum($callback = null)
 	{
+		if (is_null($callback))
+		{
+			return array_sum($this->items);
+		}
+
 		if (is_string($callback))
 		{
 			$callback = $this->valueRetriever($callback);
@@ -723,7 +738,7 @@ class Collection implements ArrayAccess, ArrayableInterface, Countable, Iterator
 	/**
 	 * Get an iterator for the items.
 	 *
-	 * @return ArrayIterator
+	 * @return \ArrayIterator
 	 */
 	public function getIterator()
 	{
