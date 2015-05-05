@@ -6,7 +6,7 @@ This bug tracker is based on Laravel 4 and for now has 2 languages: English and 
 
 ### Installation
 
-There are no installer, but you only have to use laravel migrations to install bug tracker. Use your favorite web-server such as Apache or Nginx. You have to point it to public folder.
+There are no installer, but you only have to use Laravel migrations to install bug tracker. Use your favorite web-server such as Apache or Nginx. You have to point it to public folder.
 
 After that, in terminal you have to type:
 

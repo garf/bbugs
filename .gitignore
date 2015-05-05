@@ -4,3 +4,4 @@
 .env.*.php
 .env.php
 files/
+.directory
