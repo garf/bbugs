@@ -126,6 +126,8 @@ return array(
         'Barryvdh\Debugbar\ServiceProvider',
         'Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider',
         'Barryvdh\DomPDF\ServiceProvider', //https://github.com/barryvdh/laravel-dompdf
+        'Way\Generators\GeneratorsServiceProvider',
+        'Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider',
 
 	),
 
